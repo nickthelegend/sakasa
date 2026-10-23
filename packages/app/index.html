@@ -1,15 +1,54 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="theme-color" content="#0b0d10" />
     <link rel="icon" href="data:," />
-    <title>app</title>
+    <title>Sakasa</title>
+    <style>
+      @font-face { font-family: 'Albert Sans'; src: url('./fonts/AlbertSans-Regular.ttf') format('truetype'); font-weight: 400; }
+      @font-face { font-family: 'Albert Sans'; src: url('./fonts/AlbertSans-SemiBold.ttf') format('truetype'); font-weight: 600; }
+      @font-face { font-family: 'B612 Mono'; src: url('./fonts/B612Mono-Regular.ttf') format('truetype'); font-weight: 400; }
+      :root { --ink: #0b0d10; --flip: #22b8ff; --paper: #e9f6fd; }
+      html, body { margin: 0; height: 100%; background: var(--ink); color: var(--paper); }
+      body { font-family: 'Albert Sans', system-ui, sans-serif; }
+      #splash {
+        position: fixed; inset: 0; z-index: 10; display: flex; flex-direction: column;
+        justify-content: flex-end; gap: 20px; padding: 32px 24px; box-sizing: border-box;
+        background: var(--ink);
+      }
+      #splash .rail {
+        position: absolute; top: 24px; right: 20px; writing-mode: vertical-rl;
+        font-family: 'B612 Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.2em;
+        color: var(--flip);
+      }
+      #splash h1 {
+        margin: 0; font-weight: 600; font-size: clamp(56px, 14vw, 128px); letter-spacing: -0.04em;
+        line-height: 0.9; transform: rotate(180deg); transform-origin: center; align-self: flex-start;
+      }
+      #splash p { margin: 0; max-width: 34ch; font-size: 18px; line-height: 1.45; color: #a9c7d6; }
+      #enter {
+        align-self: flex-start; font: 600 18px 'Albert Sans', sans-serif; color: var(--ink);
+        background: var(--flip); border: 0; border-radius: 999px; padding: 16px 28px; cursor: pointer;
+        min-height: 48px;
+      }
+      #enter:focus-visible { outline: 3px solid var(--paper); outline-offset: 3px; }
+      #status { font-family: 'B612 Mono', monospace; font-size: 12px; color: #6d8a99; min-height: 1em; }
+      @media (prefers-reduced-motion: no-preference) {
+        #splash h1 { animation: flip 900ms cubic-bezier(.2,.8,.2,1) both; }
+        @keyframes flip { from { transform: rotate(0deg); } to { transform: rotate(180deg); } }
+      }
+    </style>
   </head>
-  <body style="margin: 0">
+  <body>
+    <div id="splash">
+      <div class="rail">SAKASA / GRAVITY IS A CHOICE</div>
+      <h1>Sakasa</h1>
+      <p>Your room is the level. Point at a real surface, pinch, and it becomes down. Hands only, on Meta Quest 3 or Meta VR Glasses.</p>
+      <button id="enter" type="button">Enter your room</button>
+      <div id="status" role="status"></div>
+    </div>
     <div id="scene-container"></div>
     <script type="module" src="/src/index.ts"></script>
   </body>

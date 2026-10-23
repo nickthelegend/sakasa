@@ -1,0 +1,153 @@
+<!--
+  Sakasa HUD. Ink panel, paper type, flip-blue accents (BRANDS.md).
+  Fonts: Albert Sans + B612 Mono TTFs (OFL), turned into MSDF atlases at load.
+  Text-free onboarding: the guide row shows which way to point (arrow) and
+  the pinch glyph; words are a two-word caption at most.
+-->
+<style>
+  @font-face { font-family: albert; src: url(../fonts/AlbertSans-Regular.ttf); font-weight: 400; }
+  @font-face { font-family: albert; src: url(../fonts/AlbertSans-SemiBold.ttf); font-weight: 600; }
+  @font-face { font-family: b612; src: url(../fonts/B612Mono-Regular.ttf); font-weight: 400; }
+  @font-face { font-family: b612; src: url(../fonts/B612Mono-Bold.ttf); font-weight: 700; }
+
+  .hud {
+    flex-direction: column;
+    width: 440;
+    padding-top: 18;
+    padding-bottom: 18;
+    padding-left: 22;
+    padding-right: 22;
+    gap: 10;
+    background-color: #0b0d10;
+    border-radius: 26;
+    border-width: 2;
+    border-color: #1d4f6b;
+    font-family: albert;
+  }
+  .top {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .eyebrow {
+    font-family: b612;
+    font-weight: 700;
+    font-size: 13;
+    letter-spacing: 2;
+    color: #22b8ff;
+  }
+  .stats {
+    font-family: b612;
+    font-size: 14;
+    color: #e9f6fd;
+  }
+  .guide {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 18;
+    padding-top: 6;
+    padding-bottom: 6;
+  }
+  .glyph {
+    width: 64;
+    height: 64;
+    border-radius: 32;
+    background-color: #12324a;
+    align-items: center;
+    justify-content: center;
+    color: #22b8ff;
+  }
+  .title {
+    font-size: 30;
+    font-weight: 600;
+    color: #e9f6fd;
+    letter-spacing: -0.5;
+  }
+  .body {
+    font-size: 18;
+    line-height: 1.35;
+    color: #a9c7d6;
+  }
+  .stars {
+    flex-direction: row;
+    gap: 8;
+    color: #22b8ff;
+  }
+  .buttons {
+    flex-direction: row;
+    gap: 10;
+    padding-top: 4;
+  }
+  .btn {
+    flex-grow: 1;
+    height: 56;
+    border-radius: 28;
+    background-color: #22b8ff;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    gap: 8;
+    cursor: pointer;
+  }
+  .btn:hover {
+    background-color: #6fd2ff;
+  }
+  .btn:active {
+    background-color: #e9f6fd;
+  }
+  .btn-label {
+    font-size: 19;
+    font-weight: 600;
+    color: #0b0d10;
+  }
+  .ghost {
+    background-color: #12324a;
+  }
+  .ghost:hover {
+    background-color: #1d4f6b;
+  }
+  .ghost-label {
+    font-size: 19;
+    font-weight: 600;
+    color: #e9f6fd;
+  }
+  .icon-btn {
+    width: 56;
+    height: 56;
+    border-radius: 28;
+    background-color: #12324a;
+    align-items: center;
+    justify-content: center;
+    color: #e9f6fd;
+    cursor: pointer;
+  }
+  .icon-btn:hover {
+    background-color: #1d4f6b;
+  }
+</style>
+<div id="hud-root" class="hud">
+  <div class="top">
+    <div id="hud-eyebrow" class="eyebrow">SAKASA</div>
+    <div id="hud-stats" class="stats"></div>
+  </div>
+  <div id="hud-guide" class="guide">
+    <div id="g-up" class="glyph"><ArrowUp></ArrowUp></div>
+    <div id="g-side" class="glyph"><ArrowLeftRight></ArrowLeftRight></div>
+    <div id="g-down" class="glyph"><ArrowDown></ArrowDown></div>
+    <div id="g-point" class="glyph"><Pointer></Pointer></div>
+    <div id="g-pinch" class="glyph"><Hand></Hand></div>
+  </div>
+  <div id="hud-title" class="title">Scanning your room</div>
+  <div id="hud-body" class="body">Look around for a moment.</div>
+  <div id="hud-stars" class="stars">
+    <div id="star-1"><Star></Star></div>
+    <div id="star-2"><Star></Star></div>
+    <div id="star-3"><Star></Star></div>
+  </div>
+  <div id="hud-buttons" class="buttons">
+    <div id="btn-a" class="btn"><div id="btn-a-label" class="btn-label">Play</div></div>
+    <div id="btn-b" class="btn ghost"><div id="btn-b-label" class="ghost-label">Sandbox</div></div>
+    <div id="btn-menu" class="icon-btn"><Menu></Menu></div>
+  </div>
+</div>

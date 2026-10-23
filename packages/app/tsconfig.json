@@ -9,7 +9,9 @@
     "isolatedModules": true,
     "noEmit": true,
     "skipLibCheck": true,
-    "types": ["@iwsdk/vite-plugin-dev/client"]
+    "types": ["@iwsdk/vite-plugin-dev/client"],
+    "baseUrl": ".",
+    "paths": { "@sakasa/core": ["../core/src/index.ts"] }
   },
   "include": ["src/**/*.ts"]
 }

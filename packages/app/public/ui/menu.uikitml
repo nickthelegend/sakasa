@@ -1,0 +1,131 @@
+<!--
+  Sakasa wrist menu: opens on a palm-up gesture (or the HUD menu button,
+  which is the gaze + pinch path on Meta VR Glasses). Opening it pauses
+  the simulation; Resume continues.
+-->
+<style>
+  @font-face { font-family: albert; src: url(../fonts/AlbertSans-Regular.ttf); font-weight: 400; }
+  @font-face { font-family: albert; src: url(../fonts/AlbertSans-SemiBold.ttf); font-weight: 600; }
+  @font-face { font-family: b612; src: url(../fonts/B612Mono-Regular.ttf); font-weight: 400; }
+  @font-face { font-family: b612; src: url(../fonts/B612Mono-Bold.ttf); font-weight: 700; }
+
+  .menu {
+    flex-direction: column;
+    width: 420;
+    padding-top: 18;
+    padding-bottom: 18;
+    padding-left: 18;
+    padding-right: 18;
+    gap: 10;
+    background-color: #e9f6fd;
+    border-radius: 26;
+    font-family: albert;
+  }
+  .eyebrow {
+    font-family: b612;
+    font-weight: 700;
+    font-size: 13;
+    letter-spacing: 2;
+    color: #0b7fb5;
+  }
+  .level {
+    flex-direction: row;
+    align-items: center;
+    gap: 10;
+  }
+  .level-text {
+    flex-direction: column;
+    flex-grow: 1;
+    gap: 2;
+  }
+  .level-name {
+    font-size: 24;
+    font-weight: 600;
+    color: #0b0d10;
+  }
+  .level-meta {
+    font-family: b612;
+    font-size: 13;
+    color: #3d5563;
+  }
+  .row {
+    flex-direction: row;
+    gap: 10;
+  }
+  .btn {
+    flex-grow: 1;
+    flex-basis: 0;
+    height: 58;
+    border-radius: 29;
+    background-color: #0b0d10;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    gap: 8;
+    color: #e9f6fd;
+    cursor: pointer;
+  }
+  .btn:hover {
+    background-color: #1d4f6b;
+  }
+  .btn:active {
+    background-color: #22b8ff;
+  }
+  .label {
+    font-size: 18;
+    font-weight: 600;
+    color: #e9f6fd;
+  }
+  .primary {
+    background-color: #22b8ff;
+  }
+  .primary:hover {
+    background-color: #6fd2ff;
+  }
+  .primary-label {
+    font-size: 19;
+    font-weight: 600;
+    color: #0b0d10;
+  }
+  .round {
+    width: 58;
+    height: 58;
+    border-radius: 29;
+    background-color: #0b0d10;
+    align-items: center;
+    justify-content: center;
+    color: #e9f6fd;
+    cursor: pointer;
+  }
+  .round:hover {
+    background-color: #1d4f6b;
+  }
+</style>
+<div id="menu-root" class="menu">
+  <div class="eyebrow">PAUSED</div>
+  <div class="level">
+    <div id="m-prev" class="round"><ChevronLeft></ChevronLeft></div>
+    <div class="level-text">
+      <div id="m-level" class="level-name">01 First fall</div>
+      <div id="m-meta" class="level-meta">SET 1 FALL / BEST -</div>
+    </div>
+    <div id="m-next" class="round"><ChevronRight></ChevronRight></div>
+  </div>
+  <div id="m-play" class="btn primary"><Play></Play><div id="m-play-label" class="primary-label">Play this puzzle</div></div>
+  <div class="row">
+    <div id="m-daily" class="btn"><CalendarDays></CalendarDays><div class="label">Daily</div></div>
+    <div id="m-sandbox" class="btn"><Box></Box><div class="label">Sandbox</div></div>
+  </div>
+  <div class="row">
+    <div id="m-gentle" class="btn"><Feather></Feather><div id="m-gentle-label" class="label">Gentle off</div></div>
+    <div id="m-glasses" class="btn"><Glasses></Glasses><div id="m-glasses-label" class="label">Glasses auto</div></div>
+  </div>
+  <div class="row">
+    <div id="m-sound" class="btn"><Volume2></Volume2><div id="m-sound-label" class="label">Sound on</div></div>
+    <div id="m-rescan" class="btn"><ScanLine></ScanLine><div class="label">Rescan</div></div>
+  </div>
+  <div class="row">
+    <div id="m-resume" class="btn primary"><div class="primary-label">Resume</div></div>
+    <div id="m-exit" class="btn"><LogOut></LogOut><div class="label">Exit</div></div>
+  </div>
+</div>
