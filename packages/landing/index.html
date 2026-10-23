@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0b0d10" />
+    <title>Sakasa</title>
+    <meta name="description" content="Sakasa is a hands-only mixed reality puzzle toy: point at a real surface in your room, pinch, and it becomes down." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;500;600&family=B612+Mono:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <header class="nav">
+      <a class="wordmark" href="#top" aria-label="Sakasa home"><span class="flipped" aria-hidden="true">Sakasa</span><span class="sr">Sakasa</span><span class="kanji" lang="ja">逆さ</span></a>
+      <nav aria-label="Sections">
+        <a href="#how">How it plays</a>
+        <a href="#rooms">Rooms</a>
+        <a href="#glasses">Glasses</a>
+        <a href="#proof">Proof</a>
+      </nav>
+      <a class="cta" href="#run">Run it on Quest</a>
+    </header>
+
+    <main id="main">
+      <section class="hero" id="top" data-down="down">
+        <div class="hero-copy">
+          <p class="mono eyebrow">MIXED REALITY / HANDS ONLY / MADE WITH IMMERSIVE WEB SDK</p>
+          <h1>Point at your wall. Pinch.<br /><span class="accent">Now that is the floor.</span></h1>
+          <p class="lede">Sakasa turns the real surfaces of your room into gravity switches. Everything virtual falls onto the wall, the ceiling or the table you choose. Guide a glowing marble into its ring in as few flips as you can.</p>
+          <div class="hero-actions">
+            <a class="btn primary" href="#run">Run it on Quest</a>
+            <a class="btn ghost" href="#how">How it plays</a>
+          </div>
+        </div>
+        <figure class="hero-media">
+          <div class="frame">
+            <video id="hero-video" src="media/hero.mp4" poster="media/hero-poster.jpg" muted playsinline loop autoplay preload="metadata" aria-label="Emulator recording: toys on a coffee table fall onto the ceiling, then sideways onto a wall, after a pinch at each surface"></video>
+            <div class="frame-tag mono">IWER EMULATOR / META QUEST 3 PROFILE / REAL CAPTURE</div>
+          </div>
+          <figcaption class="mono">Recorded in the Immersive Web Emulator (IWSDK), not on a headset. Unedited apart from trimming.</figcaption>
+        </figure>
+      </section>
+
+      <section class="axis" id="how" data-down="left">
+        <h2 class="rail"><span class="mono">01</span> How it plays</h2>
+        <div class="body">
+          <p class="big">Three gestures. No controller, no wall of text.</p>
+          <ol class="steps">
+            <li>
+              <span class="step-glyph" aria-hidden="true">
+                <svg viewBox="0 0 48 48"><path d="M24 40V10M12 22 24 10l12 12" /></svg>
+              </span>
+              <h3>Point</h3>
+              <p>Aim your hand at any real surface. It lights up with a grid and chevrons that show which way things would fall. On Meta VR Glasses you simply look at it.</p>
+            </li>
+            <li>
+              <span class="step-glyph" aria-hidden="true">
+                <svg viewBox="0 0 48 48"><circle cx="17" cy="24" r="7" /><circle cx="31" cy="24" r="7" /></svg>
+              </span>
+              <h3>Pinch</h3>
+              <p>Pinch and that surface becomes down. Time slows for a breath, then everything lets go and lands on it: blocks, paper rolls, the marble.</p>
+            </li>
+            <li>
+              <span class="step-glyph" aria-hidden="true">
+                <svg viewBox="0 0 48 48"><path d="M10 14h28M10 24h20M10 34h12" /></svg>
+              </span>
+              <h3>Hold to preview</h3>
+              <p>Keep the pinch held and a dotted path shows where the marble will travel. Let go to commit, or look away to cancel.</p>
+            </li>
+          </ol>
+          <p class="note">The first thing Sakasa asks for is the ceiling. One pinch, and the whole table of toys falls up. That is the whole tutorial.</p>
+        </div>
+      </section>
+
+      <section class="axis" id="rooms" data-down="up">
+        <h2 class="rail"><span class="mono">02</span> Your room is the level</h2>
+        <div class="body">
+          <p class="big">Puzzles are generated from your room's planes, then proved solvable before you see them.</p>
+          <p>Scene understanding gives Sakasa your floor, walls, ceiling and furniture. A solver searches every flip sequence up to four deep, so each puzzle has a known par in <em>your</em> room. Missing a ceiling? A labelled paper one stands in. No planes at all? A paper room appears on a virtual table.</p>
+          <div class="plans" id="plans" aria-label="Room plans of generated puzzles"></div>
+          <p class="mono small">Top-down plans of real IWER emulator rooms with puzzle 10 generated in each. Same seed, different room, different level.</p>
+        </div>
+      </section>
+
+      <section class="axis" id="play" data-down="right">
+        <h2 class="rail"><span class="mono">03</span> Twenty puzzles, a daily, a sandbox</h2>
+        <div class="body">
+          <div class="sets">
+            <article><h3>Fall</h3><p class="mono">6 PUZZLES / PAR 1-2</p><p>Learn that any surface can be the floor.</p></article>
+            <article><h3>Sideways</h3><p class="mono">7 PUZZLES / PAR 2-3</p><p>Paper blocks appear around the room. Use them as ledges.</p></article>
+            <article><h3>Upside down</h3><p class="mono">7 PUZZLES / PAR 3-4</p><p>Solutions that need the ceiling.</p></article>
+            <article><h3>Daily</h3><p class="mono">1 PER UTC DAY</p><p>Same seed for everyone, laid out in each player's own room.</p></article>
+          </div>
+          <p>Fewer flips earn more stars. Undo, reset and a palm-up wrist menu are always one gesture away. The sandbox drops the puzzle and lets you throw everything around.</p>
+        </div>
+      </section>
+
+      <section class="axis" id="glasses" data-down="down">
+        <h2 class="rail"><span class="mono">04</span> Hands first, glasses ready</h2>
+        <div class="body two">
+          <div>
+            <h3>Meta Quest 3 and 3S</h3>
+            <p>Hand ray plus pinch for every action. Poke-sized buttons, a palm-up wrist menu that pauses the room, and nothing that needs a controller. The real room never moves; only virtual things fall, so there is no vestibular mismatch.</p>
+          </div>
+          <div>
+            <h3>Meta VR Glasses</h3>
+            <p>Eye gaze picks the surface and a pinch from either hand flips it. A surface arms after a 400 ms gaze dwell so a passing glance never flips the room. The HUD moves into the centre of the narrower field of view.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="axis" id="proof" data-down="left">
+        <h2 class="rail"><span class="mono">05</span> Proof, not promises</h2>
+        <div class="body">
+          <dl class="metrics" id="metrics"></dl>
+          <p class="mono small">Numbers come from the repository's test reports (TESTING.md). Emulator frame times are a desktop proxy: they are not Quest 3 measurements.</p>
+        </div>
+      </section>
+
+      <section class="axis" id="run" data-down="up">
+        <h2 class="rail"><span class="mono">06</span> Run it on Quest</h2>
+        <div class="body">
+          <ol class="run mono">
+            <li><span>1</span><code>cd packages/app &amp;&amp; npm install &amp;&amp; npm run dev</code></li>
+            <li><span>2</span><code>adb reverse tcp:8081 tcp:8081</code></li>
+            <li><span>3</span>Open <code>https://localhost:8081</code> in the Quest browser, accept the local certificate, press Enter your room.</li>
+          </ol>
+          <p>Allow hand tracking and spatial data when asked. Sit down, look around for a second, then point up and pinch.</p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="foot">
+      <p class="mono">SAKASA / MIT LICENSE / COPYRIGHT (C) 2026 NIVESH GAJENGI</p>
+      <p class="mono">An independent entry for the Meta VR Start Developer Competition 2026. Fonts: Albert Sans and B612 Mono (SIL OFL). All sound is synthesised; all objects are procedural.</p>
+    </footer>
+
+    <div class="compass" aria-hidden="true"><div class="needle"></div><span class="mono">DOWN</span></div>
+
+    <script src="data.js"></script>
+    <script src="main.js"></script>
+  </body>
+</html>

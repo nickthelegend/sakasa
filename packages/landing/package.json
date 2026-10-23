@@ -1,0 +1,11 @@
+{
+  "name": "@sakasa/landing",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Static landing page for Sakasa (no build step).",
+  "scripts": {
+    "data": "node scripts/build-data.mjs",
+    "serve": "python3 -m http.server 4321"
+  },
+  "license": "MIT"
+}
