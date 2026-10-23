@@ -1,0 +1,17 @@
+{
+  "name": "@sakasa/core",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Pure, deterministic Sakasa logic: room model from planes, gravity sweeps, BFS solver, seeded puzzle generator.",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.0",
+    "vitest": "^3.2.4"
+  },
+  "license": "MIT"
+}
