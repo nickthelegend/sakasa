@@ -1,0 +1,4383 @@
+{
+  "won": 168,
+  "total": 168,
+  "rooms": [
+    {
+      "env": "sunlit_living_room",
+      "room": {
+        "kind": "room",
+        "planes": 15,
+        "size": [
+          5,
+          2.7,
+          5.8
+        ],
+        "yawDeg": 0,
+        "notes": [],
+        "surfaces": [
+          {
+            "id": "floor",
+            "kind": "floor",
+            "real": true,
+            "dir": 3,
+            "center": [
+              0,
+              0,
+              -0.5
+            ]
+          },
+          {
+            "id": "ceiling",
+            "kind": "ceiling",
+            "real": true,
+            "dir": 2,
+            "center": [
+              0,
+              2.7,
+              -0.5
+            ]
+          },
+          {
+            "id": "wall+x",
+            "kind": "wall",
+            "real": true,
+            "dir": 0,
+            "center": [
+              2.5,
+              1.35,
+              -0.5
+            ]
+          },
+          {
+            "id": "wall-x",
+            "kind": "wall",
+            "real": true,
+            "dir": 1,
+            "center": [
+              -2.5,
+              1.35,
+              -0.5
+            ]
+          },
+          {
+            "id": "wall+z",
+            "kind": "wall",
+            "real": true,
+            "dir": 4,
+            "center": [
+              0,
+              1.35,
+              2.4
+            ]
+          },
+          {
+            "id": "wall-z",
+            "kind": "wall",
+            "real": true,
+            "dir": 5,
+            "center": [
+              0,
+              1.35,
+              -3.4
+            ]
+          },
+          {
+            "id": "furniture:plane-0",
+            "kind": "furniture",
+            "real": true,
+            "dir": 3,
+            "center": [
+              0,
+              0.45,
+              -2.78
+            ]
+          },
+          {
+            "id": "table:plane-2",
+            "kind": "table",
+            "real": true,
+            "dir": 3,
+            "center": [
+              0,
+              0.42,
+              -1.95
+            ]
+          },
+          {
+            "id": "furniture:plane-3",
+            "kind": "furniture",
+            "real": true,
+            "dir": 3,
+            "center": [
+              -1.6995,
+              0.54,
+              -1.2176
+            ]
+          },
+          {
+            "id": "table:plane-6",
+            "kind": "table",
+            "real": true,
+            "dir": 3,
+            "center": [
+              -0.95,
+              0.74,
+              1.35
+            ]
+          },
+          {
+            "id": "furniture:mesh:mesh-5",
+            "kind": "furniture",
+            "real": true,
+            "dir": 3,
+            "center": [
+              2.28,
+              0.52,
+              -1.4
+            ]
+          },
+          {
+            "id": "table:mesh:mesh-8",
+            "kind": "table",
+            "real": true,
+            "dir": 3,
+            "center": [
+              -0.7,
+              0.82,
+              2.23
+            ]
+          }
+        ],
+        "solids": [
+          {
+            "id": "furniture:plane-0",
+            "kind": "furniture",
+            "label": "couch"
+          },
+          {
+            "id": "table:plane-2",
+            "kind": "table",
+            "label": "table"
+          },
+          {
+            "id": "furniture:plane-3",
+            "kind": "furniture",
+            "label": "couch"
+          },
+          {
+            "id": "table:plane-6",
+            "kind": "table",
+            "label": "table"
+          },
+          {
+            "id": "furniture:mesh:mesh-5",
+            "kind": "furniture",
+            "label": "shelf"
+          },
+          {
+            "id": "table:mesh:mesh-8",
+            "kind": "table",
+            "label": "table"
+          }
+        ]
+      },
+      "won": 21,
+      "total": 21,
+      "results": [
+        {
+          "final": [
+            -2.4153,
+            0.06,
+            -3.323
+          ],
+          "goal": [
+            -2.44,
+            0.06,
+            -3.34
+          ],
+          "id": "daily-2026-10-23",
+          "par": 3,
+          "solution": "-X -Z down",
+          "blocks": 7,
+          "startErr": 0,
+          "goalErr": 0.03,
+          "won": true
+        },
+        {
+          "final": [
+            -2.44,
+            0.5077,
+            -1.7609
+          ],
+          "goal": [
+            -2.44,
+            0.48,
+            -1.7609
+          ],
+          "id": "p01",
+          "par": 1,
+          "solution": "-X",
+          "blocks": 2,
+          "startErr": 0,
+          "goalErr": 0.028,
+          "won": true
+        },
+        {
+          "final": [
+            0.125,
+            2.64,
+            -2.013
+          ],
+          "goal": [
+            0.125,
+            2.64,
+            -2.013
+          ],
+          "id": "p02",
+          "par": 1,
+          "solution": "up",
+          "blocks": 0,
+          "startErr": 0,
+          "goalErr": 0,
+          "won": true
+        },
+        {
+          "final": [
+            -2.4132,
+            2.64,
+            -2.013
+          ],
+          "goal": [
+            -2.44,
+            2.64,
+            -2.013
+          ],
+          "id": "p03",
+          "par": 2,
+          "solution": "-X up",
+          "blocks": 1,
+          "startErr": 0,
+          "goalErr": 0.027,
+          "won": true
+        },
+        {
+          "final": [
+            2.44,
+            2.6123,
+            -1.7609
+          ],
+          "goal": [
+            2.44,
+            2.64,
+            -1.7609
+          ],
+          "id": "p04",
+          "par": 2,
+          "solution": "up +X",
+          "blocks": 1,
+          "startErr": 0,
+          "goalErr": 0.028,
+          "won": true
+        },
+        {
+          "final": [
+            -2.4132,
+            2.64,
+            -2.013
+          ],
+          "goal": [
+            -2.44,
+            2.64,
+            -2.013
+          ],
+          "id": "p05",
+          "par": 2,
+          "solution": "-X up",
+          "blocks": 2,
+          "startErr": 0,
+          "goalErr": 0.027,
+          "won": true
+        },
+        {
+          "final": [
+            -2.4162,
+            0.5077,
+            -3.34
+          ],
+          "goal": [
+            -2.44,
+            0.48,
+            -3.34
+          ],
+          "id": "p06",
+          "par": 2,
+          "solution": "-X -Z",
+          "blocks": 1,
+          "startErr": 0,
+          "goalErr": 0.037,
+          "won": true
+        },
+        {
+          "final": [
+            -2.423,
+            0.06,
+            -2.013
+          ],
+          "goal": [
+            -2.44,
+            0.06,
+            -2.013
+          ],
+          "id": "p07",
+          "par": 2,
+          "solution": "-X down",
+          "blocks": 2,
+          "startErr": 0,
+          "goalErr": 0.017,
+          "won": true
+        },
+        {
+          "final": [
+            2.44,
+            2.6133,
+            -1.7609
+          ],
+          "goal": [
+            2.44,
+            2.64,
+            -1.7609
+          ],
+          "id": "p08",
+          "par": 2,
+          "solution": "up +X",
+          "blocks": 4,
+          "startErr": 0,
+          "goalErr": 0.027,
+          "won": true
+        },
+        {
+          "final": [
+            -2.4132,
+            2.6162,
+            -3.34
+          ],
+          "goal": [
+            -2.44,
+            2.64,
+            -3.34
+          ],
+          "id": "p09",
+          "par": 3,
+          "solution": "-X up -Z",
+          "blocks": 4,
+          "startErr": 0,
+          "goalErr": 0.036,
+          "won": true
+        },
+        {
+          "final": [
+            2.4162,
+            2.6124,
+            -3.34
+          ],
+          "goal": [
+            2.44,
+            2.64,
+            -3.34
+          ],
+          "id": "p10",
+          "par": 3,
+          "solution": "up +X -Z",
+          "blocks": 4,
+          "startErr": 0,
+          "goalErr": 0.036,
+          "won": true
+        },
+        {
+          "final": [
+            -2.4132,
+            2.6153,
+            -3.34
+          ],
+          "goal": [
+            -2.44,
+            2.64,
+            -3.34
+          ],
+          "id": "p11",
+          "par": 3,
+          "solution": "-X up -Z",
+          "blocks": 2,
+          "startErr": 0,
+          "goalErr": 0.036,
+          "won": true
+        },
+        {
+          "final": [
+            -2.4127,
+            0.06,
+            -1.2565
+          ],
+          "goal": [
+            -2.44,
+            0.06,
+            -1.2565
+          ],
+          "id": "p12",
+          "par": 3,
+          "solution": "up -X down",
+          "blocks": 2,
+          "startErr": 0,
+          "goalErr": 0.027,
+          "won": true
+        },
+        {
+          "final": [
+            -2.423,
+            0.0848,
+            -3.34
+          ],
+          "goal": [
+            -2.44,
+            0.06,
+            -3.34
+          ],
+          "id": "p13",
+          "par": 3,
+          "solution": "-X down -Z",
+          "blocks": 4,
+          "startErr": 0,
+          "goalErr": 0.03,
+          "won": true
+        },
+        {
+          "final": [
+            -2.4132,
+            2.6197,
+            -2.8357
+          ],
+          "goal": [
+            -2.44,
+            2.64,
+            -2.8357
+          ],
+          "id": "p14",
+          "par": 3,
+          "solution": "-X up -Z",
+          "blocks": 7,
+          "startErr": 0,
+          "goalErr": 0.034,
+          "won": true
+        },
+        {
+          "final": [
+            -2.423,
+            0.0838,
+            -3.34
+          ],
+          "goal": [
+            -2.44,
+            0.06,
+            -3.34
+          ],
+          "id": "p15",
+          "par": 3,
+          "solution": "-X down -Z",
+          "blocks": 4,
+          "startErr": 0,
+          "goalErr": 0.029,
+          "won": true
+        },
+        {
+          "final": [
+            2.44,
+            0.5087,
+            -3.31
+          ],
+          "goal": [
+            2.44,
+            0.48,
+            -3.34
+          ],
+          "id": "p16",
+          "par": 3,
+          "solution": "-X -Z +X",
+          "blocks": 6,
+          "startErr": 0,
+          "goalErr": 0.042,
+          "won": true
+        },
+        {
+          "final": [
+            2.4172,
+            1.6582,
+            -3.31
+          ],
+          "goal": [
+            2.44,
+            1.6582,
+            -3.34
+          ],
+          "id": "p17",
+          "par": 4,
+          "solution": "-X -Z +X up",
+          "blocks": 8,
+          "startErr": 0,
+          "goalErr": 0.038,
+          "won": true
+        },
+        {
+          "final": [
+            -2.4132,
+            0.06,
+            -3.0606
+          ],
+          "goal": [
+            -2.44,
+            0.06,
+            -3.0878
+          ],
+          "id": "p18",
+          "par": 4,
+          "solution": "-X up -Z down",
+          "blocks": 5,
+          "startErr": 0,
+          "goalErr": 0.038,
+          "won": true
+        },
+        {
+          "final": [
+            2.4132,
+            0.06,
+            -3.3128
+          ],
+          "goal": [
+            2.44,
+            0.06,
+            -3.34
+          ],
+          "id": "p19",
+          "par": 4,
+          "solution": "up +X -Z down",
+          "blocks": 6,
+          "startErr": 0,
+          "goalErr": 0.038,
+          "won": true
+        },
+        {
+          "final": [
+            -0.0632,
+            2.6091,
+            -3.34
+          ],
+          "goal": [
+            -0.09,
+            2.64,
+            -3.34
+          ],
+          "id": "p20",
+          "par": 4,
+          "solution": "+Z -X up -Z",
+          "blocks": 8,
+          "startErr": 0,
+          "goalErr": 0.041,
+          "won": true
+        }
+      ]
+    },
+    {
+      "env": "home_office",
+      "room": {
+        "kind": "room",
+        "planes": 13,
+        "size": [
+          3.5,
+          2.7,
+          4
+        ],
+        "yawDeg": 0,
+        "notes": [],
+        "surfaces": [
+          {
+            "id": "floor",
+            "kind": "floor",
+            "real": true,
+            "dir": 3,
+            "center": [
+              0,
+              0,
+              -0.4
+            ]
+          },
+          {
+            "id": "ceiling",
+            "kind": "ceiling",
+            "real": true,
+            "dir": 2,
+            "center": [
+              0,
+              2.7,
+              -0.4
+            ]
+          },
+          {
+            "id": "wall+x",
+            "kind": "wall",
+            "real": true,
+            "dir": 0,
+            "center": [
+              1.75,
+              1.35,
+              -0.4
+            ]
+          },
+          {
+            "id": "wall-x",
+            "kind": "wall",
+            "real": true,
+            "dir": 1,
+            "center": [
+              -1.75,
+              1.35,
+              -0.4
+            ]
+          },
+          {
+            "id": "wall+z",
+            "kind": "wall",
+            "real": true,
+            "dir": 4,
+            "center": [
+              0,
+              1.35,
+              1.6
+            ]
+          },
+          {
+            "id": "wall-z",
+            "kind": "wall",
+            "real": true,
+            "dir": 5,
+            "center": [
+              0,
+              1.35,
+              -2.4
+            ]
+          },
+          {
+            "id": "table:plane-0",
+            "kind": "table",
+            "real": true,
+            "dir": 3,
+            "center": [
+              0,
+              0.725,
+              -2.03
+            ]
+          },
+          {
+            "id": "furniture:plane-1",
+            "kind": "furniture",
+            "real": true,
+            "dir": 3,
+            "center": [
+              1.16,
+              0.45,
+              0.25
+            ]
+          },
+          {
+            "id": "table:plane-3",
+            "kind": "table",
+            "real": true,
+            "dir": 3,
+            "center": [
+              1.42,
+              0.505,
+              1.28
+            ]
+          },
+          {
+            "id": "furniture:mesh:mesh-4",
+            "kind": "furniture",
+            "real": true,
+            "dir": 3,
+            "center": [
+              1.465,
+              0.7,
+              -1.2
+            ]
+          }
+        ],
+        "solids": [
+          {
+            "id": "table:plane-0",
+            "kind": "table",
+            "label": "desk"
+          },
+          {
+            "id": "furniture:plane-1",
+            "kind": "furniture",
+            "label": "couch"
+          },
+          {
+            "id": "table:plane-3",
+            "kind": "table",
+            "label": "table"
+          },
+          {
+            "id": "furniture:mesh:mesh-4",
+            "kind": "furniture",
+            "label": "shelf"
+          }
+        ]
+      },
+      "won": 21,
+      "total": 21,
+      "results": [
+        {
+          "final": [
+            1.6641,
+            2.6248,
+            -2.34
+          ],
+          "goal": [
+            1.69,
+            2.64,
+            -2.34
+          ],
+          "id": "daily-2026-10-23",
+          "par": 3,
+          "solution": "+X up -Z",
+          "blocks": 6,
+          "startErr": 0,
+          "goalErr": 0.03,
+          "won": true
+        },
+        {
+          "final": [
+            1.69,
+            0.8092,
+            -2.275
+          ],
+          "goal": [
+            1.69,
+            0.785,
+            -2.275
+          ],
+          "id": "p01",
+          "par": 1,
+          "solution": "+X",
+          "blocks": 2,
+          "startErr": 0,
+          "goalErr": 0.024,
+          "won": true
+        },
+        {
+          "final": [
+            0.125,
+            2.64,
+            -1.775
+          ],
+          "goal": [
+            0.125,
+            2.64,
+            -1.775
+          ],
+          "id": "p02",
+          "par": 1,
+          "solution": "up",
+          "blocks": 0,
+          "startErr": 0,
+          "goalErr": 0,
+          "won": true
+        },
+        {
+          "final": [
+            1.6641,
+            2.64,
+            -2.025
+          ],
+          "goal": [
+            1.69,
+            2.64,
+            -2.025
+          ],
+          "id": "p03",
+          "par": 2,
+          "solution": "+X up",
+          "blocks": 1,
+          "startErr": 0,
+          "goalErr": 0.026,
+          "won": true
+        },
+        {
+          "final": [
+            -1.6702,
+            0.06,
+            -2.025
+          ],
+          "goal": [
+            -1.69,
+            0.06,
+            -2.025
+          ],
+          "id": "p04",
+          "par": 2,
+          "solution": "-X down",
+          "blocks": 1,
+          "startErr": 0,
+          "goalErr": 0.02,
+          "won": true
+        },
+        {
+          "final": [
+            1.6641,
+            2.64,
+            -2.275
+          ],
+          "goal": [
+            1.69,
+            2.64,
+            -2.275
+          ],
+          "id": "p05",
+          "par": 2,
+          "solution": "+X up",
+          "blocks": 2,
+          "startErr": 0,
+          "goalErr": 0.026,
+          "won": true
+        },
+        {
+          "final": [
+            -1.6702,
+            0.06,
+            -2.025
+          ],
+          "goal": [
+            -1.69,
+            0.06,
+            -2.025
+          ],
+          "id": "p06",
+          "par": 2,
+          "solution": "-X down",
+          "blocks": 1,
+          "startErr": 0,
+          "goalErr": 0.02,
+          "won": true
+        },
+        {
+          "final": [
+            1.6748,
+            0.8097,
+            -2.34
+          ],
+          "goal": [
+            1.69,
+            0.785,
+            -2.34
+          ],
+          "id": "p07",
+          "par": 2,
+          "solution": "+X -Z",
+          "blocks": 2,
+          "startErr": 0,
+          "goalErr": 0.029,
+          "won": true
+        },
+        {
+          "final": [
+            -1.6697,
+            0.0893,
+            -2.34
+          ],
+          "goal": [
+            -1.69,
+            0.06,
+            -2.34
+          ],
+          "id": "p08",
+          "par": 2,
+          "solution": "-X -Z",
+          "blocks": 4,
+          "startErr": 0,
+          "goalErr": 0.036,
+          "won": true
+        },
+        {
+          "final": [
+            -1.6702,
+            0.0752,
+            -2.34
+          ],
+          "goal": [
+            -1.69,
+            0.06,
+            -2.34
+          ],
+          "id": "p09",
+          "par": 3,
+          "solution": "-X down -Z",
+          "blocks": 4,
+          "startErr": 0,
+          "goalErr": 0.025,
+          "won": true
+        },
+        {
+          "final": [
+            -1.6702,
+            0.0782,
+            -2.34
+          ],
+          "goal": [
+            -1.69,
+            0.06,
+            -2.34
+          ],
+          "id": "p10",
+          "par": 3,
+          "solution": "-X down -Z",
+          "blocks": 4,
+          "startErr": 0,
+          "goalErr": 0.027,
+          "won": true
+        },
+        {
+          "final": [
+            1.6641,
+            2.6218,
+            -2.34
+          ],
+          "goal": [
+            1.69,
+            2.64,
+            -2.34
+          ],
+          "id": "p11",
+          "par": 3,
+          "solution": "+X up -Z",
+          "blocks": 2,
+          "startErr": 0,
+          "goalErr": 0.032,
+          "won": true
+        },
+        {
+          "final": [
+            -1.6702,
+            0.0782,
+            -2.34
+          ],
+          "goal": [
+            -1.69,
+            0.06,
+            -2.34
+          ],
+          "id": "p12",
+          "par": 3,
+          "solution": "-X down -Z",
+          "blocks": 2,
+          "startErr": 0,
+          "goalErr": 0.027,
+          "won": true
+        },
+        {
+          "final": [
+            1.6702,
+            0.0752,
+            -2.34
+          ],
+          "goal": [
+            1.69,
+            0.06,
+            -2.34
+          ],
+          "id": "p13",
+          "par": 3,
+          "solution": "+X down -Z",
+          "blocks": 4,
+          "startErr": 0,
+          "goalErr": 0.025,
+          "won": true
+        },
+        {
+          "final": [
+            -1.6628,
+            2.6196,
+            -1.84
+          ],
+          "goal": [
+            -1.69,
+            2.64,
+            -1.84
+          ],
+          "id": "p14",
+          "par": 3,
+          "solution": "-X up -Z",
+          "blocks": 7,
+          "startErr": 0,
+          "goalErr": 0.034,
+          "won": true
+        },
+        {
+          "final": [
+            1.6627,
+            2.6157,
+            -2.34
+          ],
+          "goal": [
+            1.69,
+            2.64,
+            -2.34
+          ],
+          "id": "p15",
+          "par": 3,
+          "solution": "+X up -Z",
+          "blocks": 5,
+          "startErr": 0,
+          "goalErr": 0.037,
+          "won": true
+        },
+        {
+          "final": [
+            1.6748,
+            2.6159,
+            -2.34
+          ],
+          "goal": [
+            1.69,
+            2.64,
+            -2.34
+          ],
+          "id": "p16",
+          "par": 3,
+          "solution": "up +X -Z",
+          "blocks": 6,
+          "startErr": 0,
+          "goalErr": 0.028,
+          "won": true
+        },
+        {
+          "final": [
+            -1.69,
+            2.0525,
+            -2.275
+          ],
+          "goal": [
+            -1.69,
+            2.0236,
+            -2.275
+          ],
+          "id": "p17",
+          "par": 4,
+          "solution": "up +X down -X",
+          "blocks": 8,
+          "startErr": 0,
+          "goalErr": 0.029,
+          "won": true
+        },
+        {
+          "final": [
+            1.69,
+            2.3657,
+            -2.3153
+          ],
+          "goal": [
+            1.69,
+            2.3945,
+            -2.34
+          ],
+          "id": "p18",
+          "par": 4,
+          "solution": "-X -Z up +X",
+          "blocks": 5,
+          "startErr": 0,
+          "goalErr": 0.038,
+          "won": true
+        },
+        {
+          "final": [
+            1.6627,
+            0.06,
+            -2.3128
+          ],
+          "goal": [
+            1.69,
+            0.06,
+            -2.34
+          ],
+          "id": "p19",
+          "par": 4,
+          "solution": "+X up -Z down",
+          "blocks": 6,
+          "startErr": 0,
+          "goalErr": 0.039,
+          "won": true
+        },
+        {
+          "final": [
+            -1.6718,
+            2.0388,
+            -2.34
+          ],
+          "goal": [
+            -1.69,
+            2.0236,
+            -2.34
+          ],
+          "id": "p20",
+          "par": 4,
+          "solution": "up -X down -Z",
+          "blocks": 8,
+          "startErr": 0,
+          "goalErr": 0.024,
+          "won": true
+        }
+      ]
+    },
+    {
+      "env": "conference_room",
+      "room": {
+        "kind": "room",
+        "planes": 12,
+        "size": [
+          4.5,
+          2.75,
+          3.5685
+        ],
+        "yawDeg": 0,
+        "notes": [
+          "The -Z wall is 5.4 m away: a paper wall stands in at 3 m."
+        ],
+        "surfaces": [
+          {
+            "id": "floor",
+            "kind": "floor",
+            "real": true,
+            "dir": 3,
+            "center": [
+              0,
+              0,
+              -1.1842
+            ]
+          },
+          {
+            "id": "ceiling",
+            "kind": "ceiling",
+            "real": true,
+            "dir": 2,
+            "center": [
+              0,
+              2.75,
+              -1.1842
+            ]
+          },
+          {
+            "id": "wall+x",
+            "kind": "wall",
+            "real": true,
+            "dir": 0,
+            "center": [
+              2.25,
+              1.375,
+              -1.1842
+            ]
+          },
+          {
+            "id": "wall-x",
+            "kind": "wall",
+            "real": true,
+            "dir": 1,
+            "center": [
+              -2.25,
+              1.375,
+              -1.1842
+            ]
+          },
+          {
+            "id": "wall+z",
+            "kind": "wall",
+            "real": true,
+            "dir": 4,
+            "center": [
+              0,
+              1.375,
+              0.6
+            ]
+          },
+          {
+            "id": "wall-z",
+            "kind": "wall",
+            "real": false,
+            "dir": 5,
+            "center": [
+              0,
+              1.375,
+              -2.9685
+            ]
+          },
+          {
+            "id": "table:plane-0",
+            "kind": "table",
+            "real": true,
+            "dir": 3,
+            "center": [
+              0,
+              0.72,
+              -1.9842
+            ]
+          }
+        ],
+        "solids": [
+          {
+            "id": "table:plane-0",
+            "kind": "table",
+            "label": "table"
+          }
+        ]
+      },
+      "won": 21,
+      "total": 21,
+      "results": [
+        {
+          "final": [
+            -2.1673,
+            2.6607,
+            -2.9085
+          ],
+          "goal": [
+            -2.19,
+            2.69,
+            -2.9085
+          ],
+          "id": "daily-2026-10-23",
+          "par": 3,
+          "solution": "up -X -Z",
+          "blocks": 7,
+          "startErr": 0,
+          "goalErr": 0.037,
+          "won": true
+        },
+        {
+          "final": [
+            2.19,
+            0.8068,
+            -1.5666
+          ],
+          "goal": [
+            2.19,
+            0.78,
+            -1.5666
+          ],
+          "id": "p01",
+          "par": 1,
+          "solution": "+X",
+          "blocks": 2,
+          "startErr": 0,
+          "goalErr": 0.027,
+          "won": true
+        },
+        {
+          "final": [
+            0.125,
+            2.69,
+            -1.8215
+          ],
+          "goal": [
+            0.125,
+            2.69,
+            -1.8215
+          ],
+          "id": "p02",
+          "par": 1,
+          "solution": "up",
+          "blocks": 0,
+          "startErr": 0,
+          "goalErr": 0,
+          "won": true
+        },
+        {
+          "final": [
+            2.1642,
+            2.69,
+            -2.3313
+          ],
+          "goal": [
+            2.19,
+            2.69,
+            -2.3313
+          ],
+          "id": "p03",
+          "par": 2,
+          "solution": "+X up",
+          "blocks": 1,
+          "startErr": 0,
+          "goalErr": 0.026,
+          "won": true
+        },
+        {
+          "final": [
+            -2.1632,
+            0.8068,
+            0.54
+          ],
+          "goal": [
+            -2.19,
+            0.78,
+            0.54
+          ],
+          "id": "p04",
+          "par": 2,
+          "solution": "-X +Z",
+          "blocks": 1,
+          "startErr": 0,
+          "goalErr": 0.038,
+          "won": true
+        },
+        {
+          "final": [
+            2.1628,
+            0.8076,
+            0.54
+          ],
+          "goal": [
+            2.19,
+            0.78,
+            0.54
+          ],
+          "id": "p05",
+          "par": 2,
+          "solution": "+X +Z",
+          "blocks": 2,
+          "startErr": 0,
+          "goalErr": 0.039,
+          "won": true
+        },
+        {
+          "final": [
+            -2.1642,
+            2.69,
+            -2.3313
+          ],
+          "goal": [
+            -2.19,
+            2.69,
+            -2.3313
+          ],
+          "id": "p06",
+          "par": 2,
+          "solution": "-X up",
+          "blocks": 1,
+          "startErr": 0,
+          "goalErr": 0.026,
+          "won": true
+        },
+        {
+          "final": [
+            0.375,
+            2.6649,
+            -2.9085
+          ],
+          "goal": [
+            0.375,
+            2.69,
+            -2.9085
+          ],
+          "id": "p07",
+          "par": 2,
+          "solution": "up -Z",
+          "blocks": 2,
+          "startErr": 0,
+          "goalErr": 0.025,
+          "won": true
+        },
+        {
+          "final": [
+            -2.1702,
+            0.06,
+            -1.5666
+          ],
+          "goal": [
+            -2.19,
+            0.06,
+            -1.5666
+          ],
+          "id": "p08",
+          "par": 2,
+          "solution": "-X down",
+          "blocks": 4,
+          "startErr": 0,
+          "goalErr": 0.02,
+          "won": true
+        },
+        {
+          "final": [
+            2.1642,
+            2.6627,
+            0.54
+          ],
+          "goal": [
+            2.19,
+            2.69,
+            0.54
+          ],
+          "id": "p09",
+          "par": 3,
+          "solution": "+X up +Z",
+          "blocks": 4,
+          "startErr": 0,
+          "goalErr": 0.038,
+          "won": true
+        },
+        {
+          "final": [
+            2.1673,
+            2.6633,
+            -2.9085
+          ],
+          "goal": [
+            2.19,
+            2.69,
+            -2.9085
+          ],
+          "id": "p10",
+          "par": 3,
+          "solution": "up +X -Z",
+          "blocks": 4,
+          "startErr": 0,
+          "goalErr": 0.035,
+          "won": true
+        },
+        {
+          "final": [
+            2.1702,
+            0.0838,
+            -2.9085
+          ],
+          "goal": [
+            2.19,
+            0.06,
+            -2.9085
+          ],
+          "id": "p11",
+          "par": 3,
+          "solution": "+X down -Z",
+          "blocks": 2,
+          "startErr": 0,
+          "goalErr": 0.031,
+          "won": true
+        },
+        {
+          "final": [
+            2.1627,
+            2.6641,
+            -2.9085
+          ],
+          "goal": [
+            2.19,
+            2.69,
+            -2.9085
+          ],
+          "id": "p12",
+          "par": 3,
+          "solution": "+X up -Z",
+          "blocks": 2,
+          "startErr": 0,
+          "goalErr": 0.038,
+          "won": true
+        },
+        {
+          "final": [
+            2.1702,
+            0.0838,
+            -2.9085
+          ],
+          "goal": [
+            2.19,
+            0.06,
+            -2.9085
+          ],
+          "id": "p13",
+          "par": 3,
+          "solution": "+X down -Z",
+          "blocks": 4,
+          "startErr": 0,
+          "goalErr": 0.031,
+          "won": true
+        },
+        {
+          "final": [
+            -2.1642,
+            2.6748,
+            -2.6536
+          ],
+          "goal": [
+            -2.19,
+            2.69,
+            -2.6536
+          ],
+          "id": "p14",
+          "par": 3,
+          "solution": "-X up -Z",
+          "blocks": 7,
+          "startErr": 0,
+          "goalErr": 0.03,
+          "won": true
+        },
+        {
+          "final": [
+            -2.1702,
+            0.0847,
+            -2.9085
+          ],
+          "goal": [
+            -2.19,
+            0.06,
+            -2.9085
+          ],
+          "id": "p15",
+          "par": 3,
+          "solution": "-X down -Z",
+          "blocks": 4,
+          "startErr": 0,
+          "goalErr": 0.032,
+          "won": true
+        },
+        {
+          "final": [
+            2.1642,
+            2.6632,
+            0.54
+          ],
+          "goal": [
+            2.19,
+            2.69,
+            0.54
+          ],
+          "id": "p16",
+          "par": 3,
+          "solution": "+X up +Z",
+          "blocks": 6,
+          "startErr": 0,
+          "goalErr": 0.037,
+          "won": true
+        },
+        {
+          "final": [
+            -2.1627,
+            0.06,
+            -2.6277
+          ],
+          "goal": [
+            -2.19,
+            0.06,
+            -2.6536
+          ],
+          "id": "p17",
+          "par": 4,
+          "solution": "up -Z -X down",
+          "blocks": 8,
+          "startErr": 0,
+          "goalErr": 0.038,
+          "won": true
+        },
+        {
+          "final": [
+            2.19,
+            2.6673,
+            -2.6237
+          ],
+          "goal": [
+            2.19,
+            2.69,
+            -2.6536
+          ],
+          "id": "p18",
+          "par": 4,
+          "solution": "-X up -Z +X",
+          "blocks": 5,
+          "startErr": 0,
+          "goalErr": 0.038,
+          "won": true
+        },
+        {
+          "final": [
+            -2.1642,
+            0.06,
+            -1.7813
+          ],
+          "goal": [
+            -2.19,
+            0.06,
+            -1.754
+          ],
+          "id": "p19",
+          "par": 4,
+          "solution": "-X up +Z down",
+          "blocks": 6,
+          "startErr": 0,
+          "goalErr": 0.038,
+          "won": true
+        },
+        {
+          "final": [
+            -2.1612,
+            2.4101,
+            0.54
+          ],
+          "goal": [
+            -2.19,
+            2.44,
+            0.54
+          ],
+          "id": "p20",
+          "par": 4,
+          "solution": "+X up -X +Z",
+          "blocks": 6,
+          "startErr": 0,
+          "goalErr": 0.042,
+          "won": true
+        }
+      ]
+    },
+    {
+      "env": "open_office",
+      "room": {
+        "kind": "room",
+        "planes": 17,
+        "size": [
+          8,
+          3,
+          7
+        ],
+        "yawDeg": 0,
+        "notes": [],
+        "surfaces": [
+          {
+            "id": "floor",
+            "kind": "floor",
+            "real": true,
+            "dir": 3,
+            "center": [
+              0,
+              0,
+              -1
+            ]
+          },
+          {
+            "id": "ceiling",
+            "kind": "ceiling",
+            "real": true,
+            "dir": 2,
+            "center": [
+              0,
+              3,
+              -1
+            ]
+          },
+          {
+            "id": "wall+x",
+            "kind": "wall",
+            "real": true,
+            "dir": 0,
+            "center": [
+              4,
+              1.5,
+              -1
+            ]
+          },
+          {
+            "id": "wall-x",
+            "kind": "wall",
+            "real": true,
+            "dir": 1,
+            "center": [
+              -4,
+              1.5,
+              -1
+            ]
+          },
+          {
+            "id": "wall+z",
+            "kind": "wall",
+            "real": true,
+            "dir": 4,
+            "center": [
+              0,
+              1.5,
+              2.5
+            ]
+          },
+          {
+            "id": "wall-z",
+            "kind": "wall",
+            "real": true,
+            "dir": 5,
+            "center": [
+              0,
+              1.5,
+              -4.5
+            ]
+          },
+          {
+            "id": "table:plane-0",
+            "kind": "table",
+            "real": true,
+            "dir": 3,
+            "center": [
+              -1.6,
+              0.725,
+              -2.4
+            ]
+          },
+          {
+            "id": "furniture:plane-3",
+            "kind": "furniture",
+            "real": true,
+            "dir": 3,
+            "center": [
+              2.45,
+              0.45,
+              -3.91
+            ]
+          },
+          {
+            "id": "furniture:plane-4",
+            "kind": "furniture",
+            "real": true,
+            "dir": 3,
+            "center": [
+              3.4017,
+              0.455,
+              -2.4614
+            ]
+          },
+          {
+            "id": "furniture:plane-5",
+            "kind": "furniture",
+            "real": true,
+            "dir": 3,
+            "center": [
+              1.4772,
+              0.455,
+              -2.3648
+            ]
+          },
+          {
+            "id": "table:plane-6",
+            "kind": "table",
+            "real": true,
+            "dir": 3,
+            "center": [
+              2.45,
+              0.405,
+              -2.7
+            ]
+          },
+          {
+            "id": "furniture:mesh:mesh-8",
+            "kind": "furniture",
+            "real": true,
+            "dir": 3,
+            "center": [
+              0.615,
+              0.72,
+              -2.4
+            ]
+          }
+        ],
+        "solids": [
+          {
+            "id": "table:plane-0",
+            "kind": "table",
+            "label": "desk"
+          },
+          {
+            "id": "furniture:plane-3",
+            "kind": "furniture",
+            "label": "couch"
+          },
+          {
+            "id": "furniture:plane-4",
+            "kind": "furniture",
+            "label": "couch"
+          },
+          {
+            "id": "furniture:plane-5",
+            "kind": "furniture",
+            "label": "couch"
+          },
+          {
+            "id": "table:plane-6",
+            "kind": "table",
+            "label": "table"
+          },
+          {
+            "id": "furniture:mesh:mesh-8",
+            "kind": "furniture",
+            "label": "shelf"
+          }
+        ]
+      },
+      "won": 21,
+      "total": 21,
+      "results": [
+        {
+          "final": [
+            -3.9132,
+            2.9128,
+            -4.44
+          ],
+          "goal": [
+            -3.94,
+            2.94,
+            -4.44
+          ],
+          "id": "daily-2026-10-23",
+          "par": 3,
+          "solution": "-X up -Z",
+          "blocks": 7,
+          "startErr": 0,
+          "goalErr": 0.038,
+          "won": true
+        },
+        {
+          "final": [
+            3.94,
+            0.8158,
+            -1.875
+          ],
+          "goal": [
+            3.94,
+            0.785,
+            -1.875
+          ],
+          "id": "p01",
+          "par": 1,
+          "solution": "+X",
+          "blocks": 2,
+          "startErr": 0,
+          "goalErr": 0.031,
+          "won": true
+        },
+        {
+          "final": [
+            -0.625,
+            0.8126,
+            -4.44
+          ],
+          "goal": [
+            -0.625,
+            0.785,
+            -4.44
+          ],
+          "id": "p02",
+          "par": 1,
+          "solution": "-Z",
+          "blocks": 0,
+          "startErr": 0,
+          "goalErr": 0.028,
+          "won": true
+        },
+        {
+          "final": [
+            3.9132,
+            2.94,
+            -2.125
+          ],
+          "goal": [
+            3.94,
+            2.94,
+            -2.125
+          ],
+          "id": "p03",
+          "par": 2,
+          "solution": "+X up",
+          "blocks": 1,
+          "startErr": 0,
+          "goalErr": 0.027,
+          "won": true
+        },
+        {
+          "final": [
+            -0.875,
+            2.9123,
+            -4.44
+          ],
+          "goal": [
+            -0.875,
+            2.94,
+            -4.44
+          ],
+          "id": "p04",
+          "par": 2,
+          "solution": "up -Z",
+          "blocks": 1,
+          "startErr": 0,
+          "goalErr": 0.028,
+          "won": true
+        },
+        {
+          "final": [
+            3.9127,
+            0.8155,
+            -4.44
+          ],
+          "goal": [
+            3.94,
+            0.785,
+            -4.44
+          ],
+          "id": "p05",
+          "par": 2,
+          "solution": "+X -Z",
+          "blocks": 2,
+          "startErr": 0,
+          "goalErr": 0.041,
+          "won": true
+        },
+        {
+          "final": [
+            -3.9128,
+            0.8143,
+            -4.44
+          ],
+          "goal": [
+            -3.94,
+            0.785,
+            -4.44
+          ],
+          "id": "p06",
+          "par": 2,
+          "solution": "-X -Z",
+          "blocks": 1,
+          "startErr": 0,
+          "goalErr": 0.04,
+          "won": true
+        },
+        {
+          "final": [
+            -3.9132,
+            2.94,
+            -2.125
+          ],
+          "goal": [
+            -3.94,
+            2.94,
+            -2.125
+          ],
+          "id": "p07",
+          "par": 2,
+          "solution": "-X up",
+          "blocks": 2,
+          "startErr": 0,
+          "goalErr": 0.027,
+          "won": true
+        },
+        {
+          "final": [
+            -1.125,
+            0.06,
+            -4.4202
+          ],
+          "goal": [
+            -1.125,
+            0.06,
+            -4.44
+          ],
+          "id": "p08",
+          "par": 2,
+          "solution": "-Z down",
+          "blocks": 4,
+          "startErr": 0,
+          "goalErr": 0.02,
+          "won": true
+        },
+        {
+          "final": [
+            3.9132,
+            2.9128,
+            -4.44
+          ],
+          "goal": [
+            3.94,
+            2.94,
+            -4.44
+          ],
+          "id": "p09",
+          "par": 3,
+          "solution": "+X up -Z",
+          "blocks": 4,
+          "startErr": 0,
+          "goalErr": 0.038,
+          "won": true
+        },
+        {
+          "final": [
+            3.9128,
+            2.9092,
+            -4.44
+          ],
+          "goal": [
+            3.94,
+            2.94,
+            -4.44
+          ],
+          "id": "p10",
+          "par": 3,
+          "solution": "up +X -Z",
+          "blocks": 4,
+          "startErr": 0,
+          "goalErr": 0.041,
+          "won": true
+        },
+        {
+          "final": [
+            3.9132,
+            2.9128,
+            -4.44
+          ],
+          "goal": [
+            3.94,
+            2.94,
+            -4.44
+          ],
+          "id": "p11",
+          "par": 3,
+          "solution": "+X up -Z",
+          "blocks": 2,
+          "startErr": 0,
+          "goalErr": 0.038,
+          "won": true
+        },
+        {
+          "final": [
+            -3.94,
+            0.0887,
+            -4.4081
+          ],
+          "goal": [
+            -3.94,
+            0.06,
+            -4.44
+          ],
+          "id": "p12",
+          "par": 3,
+          "solution": "+X -Z -X",
+          "blocks": 2,
+          "startErr": 0,
+          "goalErr": 0.043,
+          "won": true
+        },
+        {
+          "final": [
+            3.9202,
+            0.0873,
+            -4.44
+          ],
+          "goal": [
+            3.94,
+            0.06,
+            -4.44
+          ],
+          "id": "p13",
+          "par": 3,
+          "solution": "+X down -Z",
+          "blocks": 4,
+          "startErr": 0,
+          "goalErr": 0.034,
+          "won": true
+        },
+        {
+          "final": [
+            -3.9132,
+            2.9127,
+            -4.44
+          ],
+          "goal": [
+            -3.94,
+            2.94,
+            -4.44
+          ],
+          "id": "p14",
+          "par": 3,
+          "solution": "-X up -Z",
+          "blocks": 7,
+          "startErr": 0,
+          "goalErr": 0.038,
+          "won": true
+        },
+        {
+          "final": [
+            3.9132,
+            2.9127,
+            -4.44
+          ],
+          "goal": [
+            3.94,
+            2.94,
+            -4.44
+          ],
+          "id": "p15",
+          "par": 3,
+          "solution": "+X up -Z",
+          "blocks": 4,
+          "startErr": 0,
+          "goalErr": 0.038,
+          "won": true
+        },
+        {
+          "final": [
+            3.9132,
+            2.9127,
+            -4.44
+          ],
+          "goal": [
+            3.94,
+            2.94,
+            -4.44
+          ],
+          "id": "p16",
+          "par": 3,
+          "solution": "+X up -Z",
+          "blocks": 6,
+          "startErr": 0,
+          "goalErr": 0.038,
+          "won": true
+        },
+        {
+          "final": [
+            1.4102,
+            0.06,
+            -4.4118
+          ],
+          "goal": [
+            1.44,
+            0.06,
+            -4.44
+          ],
+          "id": "p17",
+          "par": 4,
+          "solution": "up +X -Z down",
+          "blocks": 8,
+          "startErr": 0,
+          "goalErr": 0.041,
+          "won": true
+        },
+        {
+          "final": [
+            3.9118,
+            0.06,
+            -4.4118
+          ],
+          "goal": [
+            3.94,
+            0.06,
+            -4.44
+          ],
+          "id": "p18",
+          "par": 4,
+          "solution": "+X up -Z down",
+          "blocks": 5,
+          "startErr": 0,
+          "goalErr": 0.04,
+          "won": true
+        },
+        {
+          "final": [
+            3.94,
+            2.9133,
+            0.34
+          ],
+          "goal": [
+            3.94,
+            2.94,
+            0.31
+          ],
+          "id": "p19",
+          "par": 4,
+          "solution": "+Z up -Z +X",
+          "blocks": 4,
+          "startErr": 0,
+          "goalErr": 0.04,
+          "won": true
+        },
+        {
+          "final": [
+            0.9128,
+            0.06,
+            -4.4118
+          ],
+          "goal": [
+            0.94,
+            0.06,
+            -4.44
+          ],
+          "id": "p20",
+          "par": 4,
+          "solution": "up +X -Z down",
+          "blocks": 5,
+          "startErr": 0,
+          "goalErr": 0.039,
+          "won": true
+        }
+      ]
+    },
+    {
+      "env": "kitchen",
+      "room": {
+        "kind": "room",
+        "planes": 14,
+        "size": [
+          5,
+          2.7,
+          5
+        ],
+        "yawDeg": 0,
+        "notes": [],
+        "surfaces": [
+          {
+            "id": "floor",
+            "kind": "floor",
+            "real": true,
+            "dir": 3,
+            "center": [
+              0,
+              0,
+              -0.7
+            ]
+          },
+          {
+            "id": "ceiling",
+            "kind": "ceiling",
+            "real": true,
+            "dir": 2,
+            "center": [
+              0,
+              2.7,
+              -0.7
+            ]
+          },
+          {
+            "id": "wall+x",
+            "kind": "wall",
+            "real": true,
+            "dir": 0,
+            "center": [
+              2.5,
+              1.35,
+              -0.7
+            ]
+          },
+          {
+            "id": "wall-x",
+            "kind": "wall",
+            "real": true,
+            "dir": 1,
+            "center": [
+              -2.5,
+              1.35,
+              -0.7
+            ]
+          },
+          {
+            "id": "wall+z",
+            "kind": "wall",
+            "real": true,
+            "dir": 4,
+            "center": [
+              0,
+              1.35,
+              1.8
+            ]
+          },
+          {
+            "id": "wall-z",
+            "kind": "wall",
+            "real": true,
+            "dir": 5,
+            "center": [
+              0,
+              1.35,
+              -3.2
+            ]
+          },
+          {
+            "id": "table:plane-0",
+            "kind": "table",
+            "real": true,
+            "dir": 3,
+            "center": [
+              -0.74,
+              0.9,
+              -2.87
+            ]
+          },
+          {
+            "id": "table:plane-1",
+            "kind": "table",
+            "real": true,
+            "dir": 3,
+            "center": [
+              -2.17,
+              0.9,
+              -1.58
+            ]
+          },
+          {
+            "id": "table:plane-2",
+            "kind": "table",
+            "real": true,
+            "dir": 3,
+            "center": [
+              -0.3,
+              0.9,
+              -1.2
+            ]
+          },
+          {
+            "id": "table:plane-3",
+            "kind": "table",
+            "real": true,
+            "dir": 3,
+            "center": [
+              1.75,
+              0.725,
+              -0.6
+            ]
+          }
+        ],
+        "solids": [
+          {
+            "id": "table:plane-0",
+            "kind": "table",
+            "label": "table"
+          },
+          {
+            "id": "table:plane-1",
+            "kind": "table",
+            "label": "table"
+          },
+          {
+            "id": "table:plane-2",
+            "kind": "table",
+            "label": "table"
+          },
+          {
+            "id": "table:plane-3",
+            "kind": "table",
+            "label": "table"
+          }
+        ]
+      },
+      "won": 21,
+      "total": 21,
+      "results": [
+        {
+          "final": [
+            2.4184,
+            0.06,
+            -3.1111
+          ],
+          "goal": [
+            2.44,
+            0.06,
+            -3.14
+          ],
+          "id": "daily-2026-10-23",
+          "par": 3,
+          "solution": "-Z +X down",
+          "blocks": 7,
+          "startErr": 0,
+          "goalErr": 0.036,
+          "won": true
+        },
+        {
+          "final": [
+            2.44,
+            0.9877,
+            -0.825
+          ],
+          "goal": [
+            2.44,
+            0.96,
+            -0.825
+          ],
+          "id": "p01",
+          "par": 1,
+          "solution": "+X",
+          "blocks": 2,
+          "startErr": 0,
+          "goalErr": 0.028,
+          "won": true
+        },
+        {
+          "final": [
+            -0.125,
+            0.9863,
+            -3.14
+          ],
+          "goal": [
+            -0.125,
+            0.96,
+            -3.14
+          ],
+          "id": "p02",
+          "par": 1,
+          "solution": "-Z",
+          "blocks": 0,
+          "startErr": 0,
+          "goalErr": 0.026,
+          "won": true
+        },
+        {
+          "final": [
+            2.4153,
+            2.64,
+            -1.325
+          ],
+          "goal": [
+            2.44,
+            2.64,
+            -1.325
+          ],
+          "id": "p03",
+          "par": 2,
+          "solution": "+X up",
+          "blocks": 1,
+          "startErr": 0,
+          "goalErr": 0.025,
+          "won": true
+        },
+        {
+          "final": [
+            -2.4128,
+            0.9863,
+            -3.14
+          ],
+          "goal": [
+            -2.44,
+            0.96,
+            -3.14
+          ],
+          "id": "p04",
+          "par": 2,
+          "solution": "-X -Z",
+          "blocks": 1,
+          "startErr": 0,
+          "goalErr": 0.038,
+          "won": true
+        },
+        {
+          "final": [
+            2.4153,
+            2.64,
+            -1.075
+          ],
+          "goal": [
+            2.44,
+            2.64,
+            -1.075
+          ],
+          "id": "p05",
+          "par": 2,
+          "solution": "+X up",
+          "blocks": 2,
+          "startErr": 0,
+          "goalErr": 0.025,
+          "won": true
+        },
+        {
+          "final": [
+            -2.4128,
+            0.9868,
+            -3.14
+          ],
+          "goal": [
+            -2.44,
+            0.96,
+            -3.14
+          ],
+          "id": "p06",
+          "par": 2,
+          "solution": "-X -Z",
+          "blocks": 1,
+          "startErr": 0,
+          "goalErr": 0.038,
+          "won": true
+        },
+        {
+          "final": [
+            2.4184,
+            0.06,
+            -1.575
+          ],
+          "goal": [
+            2.44,
+            0.06,
+            -1.575
+          ],
+          "id": "p07",
+          "par": 2,
+          "solution": "+X down",
+          "blocks": 2,
+          "startErr": 0,
+          "goalErr": 0.022,
+          "won": true
+        },
+        {
+          "final": [
+            -0.875,
+            2.6137,
+            -3.14
+          ],
+          "goal": [
+            -0.875,
+            2.64,
+            -3.14
+          ],
+          "id": "p08",
+          "par": 2,
+          "solution": "up -Z",
+          "blocks": 4,
+          "startErr": 0,
+          "goalErr": 0.026,
+          "won": true
+        },
+        {
+          "final": [
+            2.4153,
+            2.6128,
+            -3.14
+          ],
+          "goal": [
+            2.44,
+            2.64,
+            -3.14
+          ],
+          "id": "p09",
+          "par": 3,
+          "solution": "+X up -Z",
+          "blocks": 4,
+          "startErr": 0,
+          "goalErr": 0.037,
+          "won": true
+        },
+        {
+          "final": [
+            -2.4153,
+            2.6141,
+            -3.14
+          ],
+          "goal": [
+            -2.44,
+            2.64,
+            -3.14
+          ],
+          "id": "p10",
+          "par": 3,
+          "solution": "-X up -Z",
+          "blocks": 4,
+          "startErr": 0,
+          "goalErr": 0.036,
+          "won": true
+        },
+        {
+          "final": [
+            2.4184,
+            0.0843,
+            -3.14
+          ],
+          "goal": [
+            2.44,
+            0.06,
+            -3.14
+          ],
+          "id": "p11",
+          "par": 3,
+          "solution": "+X down -Z",
+          "blocks": 2,
+          "startErr": 0,
+          "goalErr": 0.033,
+          "won": true
+        },
+        {
+          "final": [
+            2.4127,
+            2.6157,
+            -3.14
+          ],
+          "goal": [
+            2.44,
+            2.64,
+            -3.14
+          ],
+          "id": "p12",
+          "par": 3,
+          "solution": "+X up -Z",
+          "blocks": 2,
+          "startErr": 0,
+          "goalErr": 0.037,
+          "won": true
+        },
+        {
+          "final": [
+            2.4184,
+            0.0859,
+            -3.14
+          ],
+          "goal": [
+            2.44,
+            0.06,
+            -3.14
+          ],
+          "id": "p13",
+          "par": 3,
+          "solution": "+X down -Z",
+          "blocks": 4,
+          "startErr": 0,
+          "goalErr": 0.034,
+          "won": true
+        },
+        {
+          "final": [
+            2.4153,
+            2.6157,
+            -3.14
+          ],
+          "goal": [
+            2.44,
+            2.64,
+            -3.14
+          ],
+          "id": "p14",
+          "par": 3,
+          "solution": "+X up -Z",
+          "blocks": 7,
+          "startErr": 0,
+          "goalErr": 0.035,
+          "won": true
+        },
+        {
+          "final": [
+            2.4153,
+            2.6157,
+            -3.14
+          ],
+          "goal": [
+            2.44,
+            2.64,
+            -3.14
+          ],
+          "id": "p15",
+          "par": 3,
+          "solution": "+X up -Z",
+          "blocks": 4,
+          "startErr": 0,
+          "goalErr": 0.035,
+          "won": true
+        },
+        {
+          "final": [
+            2.4153,
+            2.6132,
+            -3.14
+          ],
+          "goal": [
+            2.44,
+            2.64,
+            -3.14
+          ],
+          "id": "p16",
+          "par": 3,
+          "solution": "+X up -Z",
+          "blocks": 6,
+          "startErr": 0,
+          "goalErr": 0.036,
+          "won": true
+        },
+        {
+          "final": [
+            2.4153,
+            2.0236,
+            -3.1218
+          ],
+          "goal": [
+            2.44,
+            2.0236,
+            -3.14
+          ],
+          "id": "p17",
+          "par": 4,
+          "solution": "+X up -Z down",
+          "blocks": 8,
+          "startErr": 0,
+          "goalErr": 0.031,
+          "won": true
+        },
+        {
+          "final": [
+            0.5847,
+            2.64,
+            -3.1141
+          ],
+          "goal": [
+            0.56,
+            2.64,
+            -3.14
+          ],
+          "id": "p18",
+          "par": 4,
+          "solution": "+X -Z -X up",
+          "blocks": 5,
+          "startErr": 0,
+          "goalErr": 0.036,
+          "won": true
+        },
+        {
+          "final": [
+            2.4141,
+            2.3645,
+            -3.14
+          ],
+          "goal": [
+            2.44,
+            2.3945,
+            -3.14
+          ],
+          "id": "p19",
+          "par": 4,
+          "solution": "-X up +X -Z",
+          "blocks": 6,
+          "startErr": 0,
+          "goalErr": 0.04,
+          "won": true
+        },
+        {
+          "final": [
+            -1.3344,
+            2.64,
+            -3.1169
+          ],
+          "goal": [
+            -1.31,
+            2.64,
+            -3.14
+          ],
+          "id": "p20",
+          "par": 4,
+          "solution": "-X -Z +X up",
+          "blocks": 8,
+          "startErr": 0,
+          "goalErr": 0.034,
+          "won": true
+        }
+      ]
+    },
+    {
+      "env": "bedroom",
+      "room": {
+        "kind": "room",
+        "planes": 14,
+        "size": [
+          4.5,
+          2.7,
+          4.5
+        ],
+        "yawDeg": 0,
+        "notes": [],
+        "surfaces": [
+          {
+            "id": "floor",
+            "kind": "floor",
+            "real": true,
+            "dir": 3,
+            "center": [
+              0,
+              0,
+              -0.75
+            ]
+          },
+          {
+            "id": "ceiling",
+            "kind": "ceiling",
+            "real": true,
+            "dir": 2,
+            "center": [
+              0,
+              2.7,
+              -0.75
+            ]
+          },
+          {
+            "id": "wall+x",
+            "kind": "wall",
+            "real": true,
+            "dir": 0,
+            "center": [
+              2.25,
+              1.35,
+              -0.75
+            ]
+          },
+          {
+            "id": "wall-x",
+            "kind": "wall",
+            "real": true,
+            "dir": 1,
+            "center": [
+              -2.25,
+              1.35,
+              -0.75
+            ]
+          },
+          {
+            "id": "wall+z",
+            "kind": "wall",
+            "real": true,
+            "dir": 4,
+            "center": [
+              0,
+              1.35,
+              1.5
+            ]
+          },
+          {
+            "id": "wall-z",
+            "kind": "wall",
+            "real": true,
+            "dir": 5,
+            "center": [
+              0,
+              1.35,
+              -3
+            ]
+          },
+          {
+            "id": "furniture:plane-0",
+            "kind": "furniture",
+            "real": true,
+            "dir": 3,
+            "center": [
+              0.8,
+              0.59,
+              -1.85
+            ]
+          },
+          {
+            "id": "table:plane-2",
+            "kind": "table",
+            "real": true,
+            "dir": 3,
+            "center": [
+              -0.32,
+              0.55,
+              -2.78
+            ]
+          },
+          {
+            "id": "table:plane-3",
+            "kind": "table",
+            "real": true,
+            "dir": 3,
+            "center": [
+              1.92,
+              0.55,
+              -2.78
+            ]
+          },
+          {
+            "id": "furniture:plane-4",
+            "kind": "furniture",
+            "real": true,
+            "dir": 3,
+            "center": [
+              -1.5163,
+              0.455,
+              -0.1784
+            ]
+          },
+          {
+            "id": "furniture:mesh:mesh-9",
+            "kind": "furniture",
+            "real": true,
+            "dir": 3,
+            "center": [
+              1.99,
+              0.82,
+              0.3
+            ]
+          }
+        ],
+        "solids": [
+          {
+            "id": "furniture:plane-0",
+            "kind": "furniture",
+            "label": "bed"
+          },
+          {
+            "id": "table:plane-2",
+            "kind": "table",
+            "label": "table"
+          },
+          {
+            "id": "table:plane-3",
+            "kind": "table",
+            "label": "table"
+          },
+          {
+            "id": "furniture:plane-4",
+            "kind": "furniture",
+            "label": "couch"
+          },
+          {
+            "id": "furniture:mesh:mesh-9",
+            "kind": "furniture",
+            "label": "shelf"
+          }
+        ]
+      },
+      "won": 21,
+      "total": 21,
+      "results": [
+        {
+          "final": [
+            -2.1633,
+            2.6173,
+            -2.94
+          ],
+          "goal": [
+            -2.19,
+            2.64,
+            -2.94
+          ],
+          "id": "daily-2026-10-23",
+          "par": 3,
+          "solution": "-X up -Z",
+          "blocks": 7,
+          "startErr": 0,
+          "goalErr": 0.035,
+          "won": true
+        },
+        {
+          "final": [
+            -0.125,
+            2.64,
+            -1.875
+          ],
+          "goal": [
+            -0.125,
+            2.64,
+            -1.875
+          ],
+          "id": "p01",
+          "par": 1,
+          "solution": "up",
+          "blocks": 2,
+          "startErr": 0,
+          "goalErr": 0,
+          "won": true
+        },
+        {
+          "final": [
+            -0.125,
+            2.64,
+            -1.375
+          ],
+          "goal": [
+            -0.125,
+            2.64,
+            -1.375
+          ],
+          "id": "p02",
+          "par": 1,
+          "solution": "up",
+          "blocks": 0,
+          "startErr": 0,
+          "goalErr": 0,
+          "won": true
+        },
+        {
+          "final": [
+            -0.875,
+            2.617,
+            -2.94
+          ],
+          "goal": [
+            -0.875,
+            2.64,
+            -2.94
+          ],
+          "id": "p03",
+          "par": 2,
+          "solution": "up -Z",
+          "blocks": 1,
+          "startErr": 0,
+          "goalErr": 0.023,
+          "won": true
+        },
+        {
+          "final": [
+            -2.1641,
+            0.0863,
+            -2.94
+          ],
+          "goal": [
+            -2.19,
+            0.06,
+            -2.94
+          ],
+          "id": "p04",
+          "par": 2,
+          "solution": "-X -Z",
+          "blocks": 1,
+          "startErr": 0,
+          "goalErr": 0.037,
+          "won": true
+        },
+        {
+          "final": [
+            -2.1673,
+            0.0842,
+            -2.94
+          ],
+          "goal": [
+            -2.19,
+            0.06,
+            -2.94
+          ],
+          "id": "p05",
+          "par": 2,
+          "solution": "-X -Z",
+          "blocks": 2,
+          "startErr": 0,
+          "goalErr": 0.033,
+          "won": true
+        },
+        {
+          "final": [
+            2.19,
+            2.6107,
+            -1.875
+          ],
+          "goal": [
+            2.19,
+            2.64,
+            -1.875
+          ],
+          "id": "p06",
+          "par": 2,
+          "solution": "up +X",
+          "blocks": 1,
+          "startErr": 0,
+          "goalErr": 0.029,
+          "won": true
+        },
+        {
+          "final": [
+            2.19,
+            2.6114,
+            -2.125
+          ],
+          "goal": [
+            2.19,
+            2.64,
+            -2.125
+          ],
+          "id": "p07",
+          "par": 2,
+          "solution": "up +X",
+          "blocks": 2,
+          "startErr": 0,
+          "goalErr": 0.029,
+          "won": true
+        },
+        {
+          "final": [
+            0.125,
+            0.06,
+            -2.94
+          ],
+          "goal": [
+            0.125,
+            0.06,
+            -2.94
+          ],
+          "id": "p08",
+          "par": 2,
+          "solution": "-Z down",
+          "blocks": 4,
+          "startErr": 0,
+          "goalErr": 0,
+          "won": true
+        },
+        {
+          "final": [
+            -2.1715,
+            0.0804,
+            -2.94
+          ],
+          "goal": [
+            -2.19,
+            0.06,
+            -2.94
+          ],
+          "id": "p09",
+          "par": 3,
+          "solution": "-X down -Z",
+          "blocks": 4,
+          "startErr": 0,
+          "goalErr": 0.028,
+          "won": true
+        },
+        {
+          "final": [
+            2.1641,
+            2.611,
+            -2.94
+          ],
+          "goal": [
+            2.19,
+            2.64,
+            -2.94
+          ],
+          "id": "p10",
+          "par": 3,
+          "solution": "up +X -Z",
+          "blocks": 4,
+          "startErr": 0,
+          "goalErr": 0.039,
+          "won": true
+        },
+        {
+          "final": [
+            -2.1633,
+            2.6173,
+            -2.94
+          ],
+          "goal": [
+            -2.19,
+            2.64,
+            -2.94
+          ],
+          "id": "p11",
+          "par": 3,
+          "solution": "-X up -Z",
+          "blocks": 2,
+          "startErr": 0,
+          "goalErr": 0.035,
+          "won": true
+        },
+        {
+          "final": [
+            -2.1715,
+            0.0843,
+            -2.94
+          ],
+          "goal": [
+            -2.19,
+            0.06,
+            -2.94
+          ],
+          "id": "p12",
+          "par": 3,
+          "solution": "-X down -Z",
+          "blocks": 2,
+          "startErr": 0,
+          "goalErr": 0.031,
+          "won": true
+        },
+        {
+          "final": [
+            2.1673,
+            2.611,
+            -2.94
+          ],
+          "goal": [
+            2.19,
+            2.64,
+            -2.94
+          ],
+          "id": "p13",
+          "par": 3,
+          "solution": "up +X -Z",
+          "blocks": 4,
+          "startErr": 0,
+          "goalErr": 0.037,
+          "won": true
+        },
+        {
+          "final": [
+            2.1633,
+            2.6162,
+            -2.94
+          ],
+          "goal": [
+            2.19,
+            2.64,
+            -2.94
+          ],
+          "id": "p14",
+          "par": 3,
+          "solution": "+X up -Z",
+          "blocks": 7,
+          "startErr": 0,
+          "goalErr": 0.036,
+          "won": true
+        },
+        {
+          "final": [
+            -2.1627,
+            2.6173,
+            -2.94
+          ],
+          "goal": [
+            -2.19,
+            2.64,
+            -2.94
+          ],
+          "id": "p15",
+          "par": 3,
+          "solution": "-X up -Z",
+          "blocks": 4,
+          "startErr": 0,
+          "goalErr": 0.036,
+          "won": true
+        },
+        {
+          "final": [
+            -2.1633,
+            2.6162,
+            -2.94
+          ],
+          "goal": [
+            -2.19,
+            2.64,
+            -2.94
+          ],
+          "id": "p16",
+          "par": 3,
+          "solution": "-X up -Z",
+          "blocks": 6,
+          "startErr": 0,
+          "goalErr": 0.036,
+          "won": true
+        },
+        {
+          "final": [
+            2.1673,
+            2.0236,
+            -2.9218
+          ],
+          "goal": [
+            2.19,
+            2.0236,
+            -2.94
+          ],
+          "id": "p17",
+          "par": 4,
+          "solution": "up +X -Z down",
+          "blocks": 8,
+          "startErr": 0,
+          "goalErr": 0.029,
+          "won": true
+        },
+        {
+          "final": [
+            2.19,
+            2.6173,
+            -2.6601
+          ],
+          "goal": [
+            2.19,
+            2.64,
+            -2.69
+          ],
+          "id": "p18",
+          "par": 4,
+          "solution": "-X up -Z +X",
+          "blocks": 5,
+          "startErr": 0,
+          "goalErr": 0.038,
+          "won": true
+        },
+        {
+          "final": [
+            -2.1618,
+            2.6128,
+            -0.94
+          ],
+          "goal": [
+            -2.19,
+            2.64,
+            -0.94
+          ],
+          "id": "p19",
+          "par": 4,
+          "solution": "-X +Z up -Z",
+          "blocks": 6,
+          "startErr": 0,
+          "goalErr": 0.039,
+          "won": true
+        },
+        {
+          "final": [
+            1.3247,
+            0.06,
+            -2.94
+          ],
+          "goal": [
+            1.31,
+            0.06,
+            -2.94
+          ],
+          "id": "p20",
+          "par": 4,
+          "solution": "+X -Z -X down",
+          "blocks": 8,
+          "startErr": 0,
+          "goalErr": 0.015,
+          "won": true
+        }
+      ]
+    },
+    {
+      "env": "music_studio",
+      "room": {
+        "kind": "room",
+        "planes": 11,
+        "size": [
+          5,
+          2.7,
+          4.5
+        ],
+        "yawDeg": 0,
+        "notes": [],
+        "surfaces": [
+          {
+            "id": "floor",
+            "kind": "floor",
+            "real": true,
+            "dir": 3,
+            "center": [
+              0,
+              0,
+              -0.65
+            ]
+          },
+          {
+            "id": "ceiling",
+            "kind": "ceiling",
+            "real": true,
+            "dir": 2,
+            "center": [
+              0,
+              2.7,
+              -0.65
+            ]
+          },
+          {
+            "id": "wall+x",
+            "kind": "wall",
+            "real": true,
+            "dir": 0,
+            "center": [
+              2.5,
+              1.35,
+              -0.65
+            ]
+          },
+          {
+            "id": "wall-x",
+            "kind": "wall",
+            "real": true,
+            "dir": 1,
+            "center": [
+              -2.5,
+              1.35,
+              -0.65
+            ]
+          },
+          {
+            "id": "wall+z",
+            "kind": "wall",
+            "real": true,
+            "dir": 4,
+            "center": [
+              0,
+              1.35,
+              1.6
+            ]
+          },
+          {
+            "id": "wall-z",
+            "kind": "wall",
+            "real": true,
+            "dir": 5,
+            "center": [
+              0,
+              1.35,
+              -2.9
+            ]
+          },
+          {
+            "id": "table:plane-0",
+            "kind": "table",
+            "real": true,
+            "dir": 3,
+            "center": [
+              1.15,
+              0.725,
+              -2.555
+            ]
+          },
+          {
+            "id": "furniture:plane-1",
+            "kind": "furniture",
+            "real": true,
+            "dir": 3,
+            "center": [
+              1.3502,
+              0.455,
+              0.9533
+            ]
+          },
+          {
+            "id": "table:plane-2",
+            "kind": "table",
+            "real": true,
+            "dir": 3,
+            "center": [
+              2.24,
+              0.485,
+              0.72
+            ]
+          },
+          {
+            "id": "furniture:mesh:mesh-9",
+            "kind": "furniture",
+            "real": true,
+            "dir": 3,
+            "center": [
+              2.265,
+              0.75,
+              -0.7
+            ]
+          }
+        ],
+        "solids": [
+          {
+            "id": "table:plane-0",
+            "kind": "table",
+            "label": "desk"
+          },
+          {
+            "id": "furniture:plane-1",
+            "kind": "furniture",
+            "label": "couch"
+          },
+          {
+            "id": "table:plane-2",
+            "kind": "table",
+            "label": "table"
+          },
+          {
+            "id": "furniture:mesh:mesh-9",
+            "kind": "furniture",
+            "label": "shelf"
+          }
+        ]
+      },
+      "won": 21,
+      "total": 21,
+      "results": [
+        {
+          "final": [
+            2.4162,
+            2.6133,
+            -2.84
+          ],
+          "goal": [
+            2.44,
+            2.64,
+            -2.84
+          ],
+          "id": "daily-2026-10-23",
+          "par": 3,
+          "solution": "up +X -Z",
+          "blocks": 7,
+          "startErr": 0,
+          "goalErr": 0.036,
+          "won": true
+        },
+        {
+          "final": [
+            -0.125,
+            0.0847,
+            -2.84
+          ],
+          "goal": [
+            -0.125,
+            0.06,
+            -2.84
+          ],
+          "id": "p01",
+          "par": 1,
+          "solution": "-Z",
+          "blocks": 2,
+          "startErr": 0,
+          "goalErr": 0.025,
+          "won": true
+        },
+        {
+          "final": [
+            -0.125,
+            0.0868,
+            -2.84
+          ],
+          "goal": [
+            -0.125,
+            0.06,
+            -2.84
+          ],
+          "id": "p02",
+          "par": 1,
+          "solution": "-Z",
+          "blocks": 0,
+          "startErr": 0,
+          "goalErr": 0.027,
+          "won": true
+        },
+        {
+          "final": [
+            -0.875,
+            2.6153,
+            -2.84
+          ],
+          "goal": [
+            -0.875,
+            2.64,
+            -2.84
+          ],
+          "id": "p03",
+          "par": 2,
+          "solution": "up -Z",
+          "blocks": 1,
+          "startErr": 0,
+          "goalErr": 0.025,
+          "won": true
+        },
+        {
+          "final": [
+            -2.44,
+            2.6124,
+            -2.025
+          ],
+          "goal": [
+            -2.44,
+            2.64,
+            -2.025
+          ],
+          "id": "p04",
+          "par": 2,
+          "solution": "up -X",
+          "blocks": 1,
+          "startErr": 0,
+          "goalErr": 0.028,
+          "won": true
+        },
+        {
+          "final": [
+            -0.875,
+            2.6153,
+            -2.84
+          ],
+          "goal": [
+            -0.875,
+            2.64,
+            -2.84
+          ],
+          "id": "p05",
+          "par": 2,
+          "solution": "up -Z",
+          "blocks": 2,
+          "startErr": 0,
+          "goalErr": 0.025,
+          "won": true
+        },
+        {
+          "final": [
+            2.44,
+            2.6098,
+            -1.275
+          ],
+          "goal": [
+            2.44,
+            2.64,
+            -1.275
+          ],
+          "id": "p06",
+          "par": 2,
+          "solution": "up +X",
+          "blocks": 1,
+          "startErr": 0,
+          "goalErr": 0.03,
+          "won": true
+        },
+        {
+          "final": [
+            2.44,
+            2.611,
+            -1.525
+          ],
+          "goal": [
+            2.44,
+            2.64,
+            -1.525
+          ],
+          "id": "p07",
+          "par": 2,
+          "solution": "up +X",
+          "blocks": 2,
+          "startErr": 0,
+          "goalErr": 0.029,
+          "won": true
+        },
+        {
+          "final": [
+            0.125,
+            2.6153,
+            -2.84
+          ],
+          "goal": [
+            0.125,
+            2.64,
+            -2.84
+          ],
+          "id": "p08",
+          "par": 2,
+          "solution": "up -Z",
+          "blocks": 4,
+          "startErr": 0,
+          "goalErr": 0.025,
+          "won": true
+        },
+        {
+          "final": [
+            -2.4127,
+            2.6173,
+            -2.84
+          ],
+          "goal": [
+            -2.44,
+            2.64,
+            -2.84
+          ],
+          "id": "p09",
+          "par": 3,
+          "solution": "-X up -Z",
+          "blocks": 4,
+          "startErr": 0,
+          "goalErr": 0.036,
+          "won": true
+        },
+        {
+          "final": [
+            -2.4127,
+            2.6196,
+            -2.84
+          ],
+          "goal": [
+            -2.44,
+            2.64,
+            -2.84
+          ],
+          "id": "p10",
+          "par": 3,
+          "solution": "-X up -Z",
+          "blocks": 4,
+          "startErr": 0,
+          "goalErr": 0.034,
+          "won": true
+        },
+        {
+          "final": [
+            -2.4127,
+            2.6162,
+            -2.84
+          ],
+          "goal": [
+            -2.44,
+            2.64,
+            -2.84
+          ],
+          "id": "p11",
+          "par": 3,
+          "solution": "-X up -Z",
+          "blocks": 2,
+          "startErr": 0,
+          "goalErr": 0.036,
+          "won": true
+        },
+        {
+          "final": [
+            2.4162,
+            2.6158,
+            -2.84
+          ],
+          "goal": [
+            2.44,
+            2.64,
+            -2.84
+          ],
+          "id": "p12",
+          "par": 3,
+          "solution": "up +X -Z",
+          "blocks": 2,
+          "startErr": 0,
+          "goalErr": 0.034,
+          "won": true
+        },
+        {
+          "final": [
+            2.4157,
+            2.6107,
+            -2.84
+          ],
+          "goal": [
+            2.44,
+            2.64,
+            -2.84
+          ],
+          "id": "p13",
+          "par": 3,
+          "solution": "up +X -Z",
+          "blocks": 4,
+          "startErr": 0,
+          "goalErr": 0.038,
+          "won": true
+        },
+        {
+          "final": [
+            0.875,
+            0.785,
+            -2.5641
+          ],
+          "goal": [
+            0.875,
+            0.785,
+            -2.59
+          ],
+          "id": "p14",
+          "par": 3,
+          "solution": "up -Z down",
+          "blocks": 7,
+          "startErr": 0,
+          "goalErr": 0.026,
+          "won": true
+        },
+        {
+          "final": [
+            -2.4128,
+            2.6157,
+            -2.84
+          ],
+          "goal": [
+            -2.44,
+            2.64,
+            -2.84
+          ],
+          "id": "p15",
+          "par": 3,
+          "solution": "-X up -Z",
+          "blocks": 4,
+          "startErr": 0,
+          "goalErr": 0.036,
+          "won": true
+        },
+        {
+          "final": [
+            2.4157,
+            2.6133,
+            -2.84
+          ],
+          "goal": [
+            2.44,
+            2.64,
+            -2.84
+          ],
+          "id": "p16",
+          "par": 3,
+          "solution": "up +X -Z",
+          "blocks": 6,
+          "startErr": 0,
+          "goalErr": 0.036,
+          "won": true
+        },
+        {
+          "final": [
+            2.4157,
+            2.0236,
+            -2.8218
+          ],
+          "goal": [
+            2.44,
+            2.0236,
+            -2.84
+          ],
+          "id": "p17",
+          "par": 4,
+          "solution": "up +X -Z down",
+          "blocks": 8,
+          "startErr": 0,
+          "goalErr": 0.03,
+          "won": true
+        },
+        {
+          "final": [
+            2.44,
+            2.3645,
+            -2.8128
+          ],
+          "goal": [
+            2.44,
+            2.3945,
+            -2.84
+          ],
+          "id": "p18",
+          "par": 4,
+          "solution": "-X -Z up +X",
+          "blocks": 5,
+          "startErr": 0,
+          "goalErr": 0.04,
+          "won": true
+        },
+        {
+          "final": [
+            2.4157,
+            0.06,
+            -2.8127
+          ],
+          "goal": [
+            2.44,
+            0.06,
+            -2.84
+          ],
+          "id": "p19",
+          "par": 4,
+          "solution": "up +X -Z down",
+          "blocks": 6,
+          "startErr": 0,
+          "goalErr": 0.037,
+          "won": true
+        },
+        {
+          "final": [
+            2.4157,
+            0.06,
+            -2.8127
+          ],
+          "goal": [
+            2.44,
+            0.06,
+            -2.84
+          ],
+          "id": "p20",
+          "par": 4,
+          "solution": "up +X -Z down",
+          "blocks": 8,
+          "startErr": 0,
+          "goalErr": 0.037,
+          "won": true
+        }
+      ]
+    },
+    {
+      "env": "open_studio",
+      "room": {
+        "kind": "room",
+        "planes": 9,
+        "size": [
+          6,
+          2.7,
+          6
+        ],
+        "yawDeg": 0,
+        "notes": [],
+        "surfaces": [
+          {
+            "id": "floor",
+            "kind": "floor",
+            "real": true,
+            "dir": 3,
+            "center": [
+              0,
+              0,
+              -0.3
+            ]
+          },
+          {
+            "id": "ceiling",
+            "kind": "ceiling",
+            "real": true,
+            "dir": 2,
+            "center": [
+              0,
+              2.7,
+              -0.3
+            ]
+          },
+          {
+            "id": "wall+x",
+            "kind": "wall",
+            "real": true,
+            "dir": 0,
+            "center": [
+              3,
+              1.35,
+              -0.3
+            ]
+          },
+          {
+            "id": "wall-x",
+            "kind": "wall",
+            "real": true,
+            "dir": 1,
+            "center": [
+              -3,
+              1.35,
+              -0.3
+            ]
+          },
+          {
+            "id": "wall+z",
+            "kind": "wall",
+            "real": true,
+            "dir": 4,
+            "center": [
+              0,
+              1.35,
+              2.7
+            ]
+          },
+          {
+            "id": "wall-z",
+            "kind": "wall",
+            "real": true,
+            "dir": 5,
+            "center": [
+              0,
+              1.35,
+              -3.3
+            ]
+          }
+        ],
+        "solids": []
+      },
+      "won": 21,
+      "total": 21,
+      "results": [
+        {
+          "final": [
+            2.9128,
+            2.6132,
+            -3.24
+          ],
+          "goal": [
+            2.94,
+            2.64,
+            -3.24
+          ],
+          "id": "daily-2026-10-23",
+          "par": 3,
+          "solution": "+X up -Z",
+          "blocks": 7,
+          "startErr": 0,
+          "goalErr": 0.038,
+          "won": true
+        },
+        {
+          "final": [
+            -0.125,
+            0.0868,
+            -3.24
+          ],
+          "goal": [
+            -0.125,
+            0.06,
+            -3.24
+          ],
+          "id": "p01",
+          "par": 1,
+          "solution": "-Z",
+          "blocks": 2,
+          "startErr": 0,
+          "goalErr": 0.027,
+          "won": true
+        },
+        {
+          "final": [
+            0.125,
+            2.64,
+            -2.175
+          ],
+          "goal": [
+            0.125,
+            2.64,
+            -2.175
+          ],
+          "id": "p02",
+          "par": 1,
+          "solution": "up",
+          "blocks": 0,
+          "startErr": 0,
+          "goalErr": 0,
+          "won": true
+        },
+        {
+          "final": [
+            -2.9162,
+            0.0868,
+            -3.24
+          ],
+          "goal": [
+            -2.94,
+            0.06,
+            -3.24
+          ],
+          "id": "p03",
+          "par": 2,
+          "solution": "-X -Z",
+          "blocks": 1,
+          "startErr": 0,
+          "goalErr": 0.036,
+          "won": true
+        },
+        {
+          "final": [
+            -2.9127,
+            2.64,
+            -1.925
+          ],
+          "goal": [
+            -2.94,
+            2.64,
+            -1.925
+          ],
+          "id": "p04",
+          "par": 2,
+          "solution": "-X up",
+          "blocks": 1,
+          "startErr": 0,
+          "goalErr": 0.027,
+          "won": true
+        },
+        {
+          "final": [
+            2.9162,
+            0.0904,
+            -3.24
+          ],
+          "goal": [
+            2.94,
+            0.06,
+            -3.24
+          ],
+          "id": "p05",
+          "par": 2,
+          "solution": "+X -Z",
+          "blocks": 2,
+          "startErr": 0,
+          "goalErr": 0.039,
+          "won": true
+        },
+        {
+          "final": [
+            -2.9127,
+            2.64,
+            -1.675
+          ],
+          "goal": [
+            -2.94,
+            2.64,
+            -1.675
+          ],
+          "id": "p06",
+          "par": 2,
+          "solution": "-X up",
+          "blocks": 1,
+          "startErr": 0,
+          "goalErr": 0.027,
+          "won": true
+        },
+        {
+          "final": [
+            -2.9127,
+            2.64,
+            -1.925
+          ],
+          "goal": [
+            -2.94,
+            2.64,
+            -1.925
+          ],
+          "id": "p07",
+          "par": 2,
+          "solution": "-X up",
+          "blocks": 2,
+          "startErr": 0,
+          "goalErr": 0.027,
+          "won": true
+        },
+        {
+          "final": [
+            0.125,
+            2.6124,
+            -3.24
+          ],
+          "goal": [
+            0.125,
+            2.64,
+            -3.24
+          ],
+          "id": "p08",
+          "par": 2,
+          "solution": "up -Z",
+          "blocks": 4,
+          "startErr": 0,
+          "goalErr": 0.028,
+          "won": true
+        },
+        {
+          "final": [
+            -2.9127,
+            2.6161,
+            -3.24
+          ],
+          "goal": [
+            -2.94,
+            2.64,
+            -3.24
+          ],
+          "id": "p09",
+          "par": 3,
+          "solution": "-X up -Z",
+          "blocks": 4,
+          "startErr": 0,
+          "goalErr": 0.036,
+          "won": true
+        },
+        {
+          "final": [
+            -2.9127,
+            2.6128,
+            -3.24
+          ],
+          "goal": [
+            -2.94,
+            2.64,
+            -3.24
+          ],
+          "id": "p10",
+          "par": 3,
+          "solution": "-X up -Z",
+          "blocks": 4,
+          "startErr": 0,
+          "goalErr": 0.039,
+          "won": true
+        },
+        {
+          "final": [
+            -2.9128,
+            2.6132,
+            -3.24
+          ],
+          "goal": [
+            -2.94,
+            2.64,
+            -3.24
+          ],
+          "id": "p11",
+          "par": 3,
+          "solution": "-X up -Z",
+          "blocks": 2,
+          "startErr": 0,
+          "goalErr": 0.038,
+          "won": true
+        },
+        {
+          "final": [
+            -2.9127,
+            2.6173,
+            -3.24
+          ],
+          "goal": [
+            -2.94,
+            2.64,
+            -3.24
+          ],
+          "id": "p12",
+          "par": 3,
+          "solution": "-X up -Z",
+          "blocks": 2,
+          "startErr": 0,
+          "goalErr": 0.036,
+          "won": true
+        },
+        {
+          "final": [
+            -2.9127,
+            2.6162,
+            -3.24
+          ],
+          "goal": [
+            -2.94,
+            2.64,
+            -3.24
+          ],
+          "id": "p13",
+          "par": 3,
+          "solution": "-X up -Z",
+          "blocks": 4,
+          "startErr": 0,
+          "goalErr": 0.036,
+          "won": true
+        },
+        {
+          "final": [
+            2.9128,
+            2.6141,
+            -3.24
+          ],
+          "goal": [
+            2.94,
+            2.64,
+            -3.24
+          ],
+          "id": "p14",
+          "par": 3,
+          "solution": "+X up -Z",
+          "blocks": 7,
+          "startErr": 0,
+          "goalErr": 0.038,
+          "won": true
+        },
+        {
+          "final": [
+            2.9128,
+            2.6132,
+            -3.24
+          ],
+          "goal": [
+            2.94,
+            2.64,
+            -3.24
+          ],
+          "id": "p15",
+          "par": 3,
+          "solution": "+X up -Z",
+          "blocks": 4,
+          "startErr": 0,
+          "goalErr": 0.038,
+          "won": true
+        },
+        {
+          "final": [
+            -2.9128,
+            2.6129,
+            -3.24
+          ],
+          "goal": [
+            -2.94,
+            2.64,
+            -3.24
+          ],
+          "id": "p16",
+          "par": 3,
+          "solution": "-X up -Z",
+          "blocks": 6,
+          "startErr": 0,
+          "goalErr": 0.038,
+          "won": true
+        },
+        {
+          "final": [
+            -2.94,
+            2.6123,
+            -2.9593
+          ],
+          "goal": [
+            -2.94,
+            2.64,
+            -2.99
+          ],
+          "id": "p17",
+          "par": 4,
+          "solution": "up +X -Z -X",
+          "blocks": 5,
+          "startErr": 0,
+          "goalErr": 0.041,
+          "won": true
+        },
+        {
+          "final": [
+            2.94,
+            2.6132,
+            -2.9593
+          ],
+          "goal": [
+            2.94,
+            2.64,
+            -2.99
+          ],
+          "id": "p18",
+          "par": 4,
+          "solution": "-X up -Z +X",
+          "blocks": 5,
+          "startErr": 0,
+          "goalErr": 0.041,
+          "won": true
+        },
+        {
+          "final": [
+            -2.9101,
+            2.6111,
+            -0.74
+          ],
+          "goal": [
+            -2.94,
+            2.64,
+            -0.74
+          ],
+          "id": "p19",
+          "par": 4,
+          "solution": "-X +Z up -Z",
+          "blocks": 6,
+          "startErr": 0,
+          "goalErr": 0.042,
+          "won": true
+        },
+        {
+          "final": [
+            -2.94,
+            2.6248,
+            -2.2093
+          ],
+          "goal": [
+            -2.94,
+            2.64,
+            -2.24
+          ],
+          "id": "p20",
+          "par": 4,
+          "solution": "+X up -Z -X",
+          "blocks": 6,
+          "startErr": 0,
+          "goalErr": 0.034,
+          "won": true
+        }
+      ]
+    }
+  ]
+}

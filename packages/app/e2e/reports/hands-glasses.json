@@ -1,0 +1,122 @@
+{
+  "profile": "Meta VR Glasses",
+  "input": "gaze + hand pinch (dwell 400 ms)",
+  "passed": 14,
+  "total": 14,
+  "totalHandActions": 9,
+  "results": [
+    {
+      "name": "glasses profile with gaze granted",
+      "ok": true,
+      "detail": "Meta VR Glasses; local-floor,bounded-floor,hand-tracking,anchors,plane-detection,mesh-detection,gaze-tracking,eye-tracking,viewer,local"
+    },
+    {
+      "name": "Glasses mode turns on automatically from the gaze source",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "HUD corners inside the glasses FoV (3 deg margin)",
+      "ok": true,
+      "detail": "(-16.3, -18.3) (-16.3, 2.2) (16.3, -18.3) (16.3, 2.2)"
+    },
+    {
+      "name": "gaze at ceiling + pinch flips up",
+      "ok": true,
+      "detail": "hovered ceiling"
+    },
+    {
+      "name": "gaze at a wall + pinch flips sideways",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "gaze at floor + pinch brings it home",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "gaze + pinch on Play starts puzzle 1",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "puzzle 1 solved with gaze + pinch",
+      "ok": true,
+      "detail": "flips 1 par 1"
+    },
+    {
+      "name": "gaze + pinch on the HUD menu button opens the menu",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "menu corners inside the glasses FoV",
+      "ok": true,
+      "detail": "(-16.3, -21.9) (-16.3, 13.2) (16.3, -21.9) (16.3, 13.2)"
+    },
+    {
+      "name": "menu Sandbox by gaze",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "with gaze disconnected the hand ray still flips",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Exit ends the session",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "zero console errors",
+      "ok": true,
+      "detail": ""
+    }
+  ],
+  "actions": [
+    {
+      "pinch": "ceiling",
+      "hovered": "ceiling",
+      "aim": "gaze"
+    },
+    {
+      "pinch": "wall-x",
+      "hovered": "wall-x",
+      "aim": "gaze"
+    },
+    {
+      "pinch": "floor",
+      "hovered": "table:plane-2",
+      "aim": "gaze"
+    },
+    {
+      "click": "btn-a",
+      "aim": "gaze"
+    },
+    {
+      "pinch": "wall-x",
+      "hovered": "wall-x",
+      "aim": "gaze"
+    },
+    {
+      "click": "btn-menu",
+      "aim": "gaze"
+    },
+    {
+      "click": "m-sandbox",
+      "aim": "gaze"
+    },
+    {
+      "pinch": "wall+x",
+      "hovered": "wall-z",
+      "aim": "hand-right"
+    },
+    {
+      "click": "btn-menu",
+      "aim": "gaze"
+    }
+  ]
+}

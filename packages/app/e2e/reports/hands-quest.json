@@ -1,0 +1,187 @@
+{
+  "profile": "Meta Quest 3",
+  "input": "hands (IWER hand mode; ray + pinch)",
+  "passed": 20,
+  "total": 20,
+  "secondsToWhoa": 3,
+  "handActionsToWhoa": 1,
+  "onboardingActions": 3,
+  "totalHandActions": 17,
+  "durationSeconds": 135,
+  "results": [
+    {
+      "name": "cold load builds the room from planes",
+      "ok": true,
+      "detail": "Meta Quest 3: 15 planes, 5 x 2.7 x 5.8 m"
+    },
+    {
+      "name": "onboarding starts",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "pinch ceiling flips gravity up",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "pinch a wall flips gravity sideways",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "pinch floor brings it home",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Play button starts puzzle 1",
+      "ok": true,
+      "detail": "First fall, par 1, solution -X"
+    },
+    {
+      "name": "puzzle 1 solved with 1 pinches (par 1)",
+      "ok": true,
+      "detail": "flips 1, stars 3"
+    },
+    {
+      "name": "puzzle 1 earns 3 stars at par",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Next button loads puzzle 2",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "a flip counts",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Undo restores the marble and the flip count",
+      "ok": true,
+      "detail": "marble -2.44,0.48,-2.013"
+    },
+    {
+      "name": "Reset puts the marble back on its start",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "puzzle 2 solved with 1 pinches (par 1)",
+      "ok": true,
+      "detail": "flips 1, stars 3"
+    },
+    {
+      "name": "palm-up opens the wrist menu and pauses",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "menu Sandbox button opens the sandbox",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "pinch-hold on a toy grabs it (DistanceGrabbable)",
+      "ok": true,
+      "detail": "toy-1-cube"
+    },
+    {
+      "name": "HUD menu button opens the menu",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Resume closes the menu and unpauses",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Exit ends the XR session",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "zero console errors",
+      "ok": true,
+      "detail": ""
+    }
+  ],
+  "actions": [
+    {
+      "pinch": "ceiling",
+      "hovered": "wall-z",
+      "aim": "hand-right"
+    },
+    {
+      "pinch": "wall-x",
+      "hovered": "wall-z",
+      "aim": "hand-right"
+    },
+    {
+      "pinch": "floor",
+      "hovered": "wall-z",
+      "aim": "hand-right"
+    },
+    {
+      "click": "btn-a",
+      "aim": "hand-right"
+    },
+    {
+      "pinch": "wall-x",
+      "hovered": "wall-z",
+      "aim": "hand-right"
+    },
+    {
+      "click": "btn-a",
+      "aim": "hand-right"
+    },
+    {
+      "pinch": "wall+x",
+      "hovered": "wall-z",
+      "aim": "hand-right"
+    },
+    {
+      "click": "btn-a",
+      "aim": "hand-right"
+    },
+    {
+      "click": "btn-b",
+      "aim": "hand-right"
+    },
+    {
+      "pinch": "ceiling",
+      "hovered": "wall-z",
+      "aim": "hand-right"
+    },
+    {
+      "click": "m-sandbox",
+      "aim": "hand-right"
+    },
+    {
+      "pinch": "wall+x",
+      "hovered": "floor",
+      "aim": "hand-right"
+    },
+    {
+      "pinch": "floor",
+      "hovered": "floor",
+      "aim": "hand-right"
+    },
+    {
+      "click": "btn-menu",
+      "aim": "hand-right"
+    },
+    {
+      "click": "m-resume",
+      "aim": "hand-right"
+    },
+    {
+      "click": "btn-menu",
+      "aim": "hand-right"
+    }
+  ]
+}

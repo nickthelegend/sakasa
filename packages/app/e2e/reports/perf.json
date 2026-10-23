@@ -1,0 +1,37 @@
+{
+  "frames": 1017,
+  "cpuMs": {
+    "p50": 1.5,
+    "p95": 2.2,
+    "max": 3.4
+  },
+  "ecsMs": {
+    "p50": 0.9,
+    "p95": 1.5
+  },
+  "renderMs": {
+    "p50": 0.5,
+    "p95": 0.8
+  },
+  "drawCalls": {
+    "p95": 86,
+    "max": 86
+  },
+  "triangles": {
+    "p95": 26928,
+    "max": 26928
+  },
+  "budget": {
+    "p95Ms": 4,
+    "drawCalls": 100,
+    "triangles": 250000
+  },
+  "pass": true,
+  "device": "Meta Quest 3",
+  "room": [
+    5,
+    2.7,
+    5.8
+  ],
+  "note": "headless Chromium (hardware GPU via Metal), stereo off in IWER; relative proxy, unverified on Quest hardware"
+}
