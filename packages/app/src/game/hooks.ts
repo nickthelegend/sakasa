@@ -109,6 +109,7 @@ export function installHooks(world: World): void {
     },
     bodies,
     perf,
+    roomInputs: () => store.roomInputs,
     /**
      * A point on a surface that a ray from `from` (world) reaches without
      * passing through furniture, puzzle blocks, the HUD or any body. Test

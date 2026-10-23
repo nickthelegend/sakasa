@@ -23,6 +23,8 @@ export interface LogEntry {
 export const store = {
   mode: 'idle' as Mode,
   room: null as RoomModel | null,
+  /** The exact inputs the room was built from (planes, meshes, head, forward), for replays and fixtures. */
+  roomInputs: null as unknown,
   roomSource: 'none' as 'none' | 'planes' | 'tabletop',
   planeCount: 0,
   gravity: Dir.NegY as Dir,

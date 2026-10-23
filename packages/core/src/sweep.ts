@@ -9,12 +9,16 @@ import { type Box, type Dir, type V3, dirAxis, dirSign, quantizeV } from './math
  * result of a flip is a sweep of a sphere along an axis against boxes inflated
  * by the radius.
  *
- * Inflated boxes have rounded edges in reality. A sweep whose centre passes
- * near an inflated edge (within `edgeMargin`) could glance off sideways in a
- * rigid-body engine, so the sweep reports it as ambiguous instead of guessing.
- * A centre lying on an inflated face (within `slideBand`) is a marble sliding
- * along a face it already rests on, which a rigid-body engine resolves
- * cleanly, so it is not a hit.
+ * A sphere stops cleanly only when its centre travels over the face itself
+ * (at least `hitMargin` inside the face's edges; Havok also rounds box edges
+ * with a convex radius, so the default is a full radius). Between the face edge and
+ * the radius-inflated edge it would strike a rounded edge and glance off (or
+ * roll off an edge it rests on) in a rigid-body engine, so the sweep reports
+ * that as ambiguous instead of guessing. A centre exactly one radius from a
+ * side face (within `slideBand`) is a marble sliding along a face it already
+ * touches, which an engine resolves cleanly, so it is not a hit. Slight
+ * penetration (up to `contactSlop`, e.g. from quantised positions) still
+ * counts as contact.
  */
 export interface SweepWorld {
   min: V3;
@@ -34,8 +38,12 @@ export type SweepResult =
   | { ok: false; reason: 'ambiguous'; solid: number; at: number };
 
 export interface SweepOptions {
+  /** How far the centre must be inside a face's edges for a clean stop (default r: engines round box edges). */
+  hitMargin?: number;
+  /** How far outside the inflated cross-section counts as a clean miss (default r/2). */
   edgeMargin?: number;
   slideBand?: number;
+  contactSlop?: number;
 }
 
 export function sweep(
@@ -46,7 +54,9 @@ export function sweep(
 ): SweepResult {
   const r = world.radius;
   const edgeMargin = opts.edgeMargin ?? 0.5 * r;
+  const hitMargin = opts.hitMargin ?? r;
   const slideBand = opts.slideBand ?? 0.1 * r;
+  const contactSlop = opts.contactSlop ?? 2e-3;
   const a = dirAxis(d);
   const s = dirSign(d);
   const b = (a + 1) % 3;
@@ -61,16 +71,18 @@ export function sweep(
   for (let i = 0; i < world.solids.length; i++) {
     const box = world.solids[i];
     const entry = s > 0 ? box.min[a] - r - p[a] : p[a] - (box.max[a] + r);
-    if (entry < -1e-6) continue; // behind us (or we are inside it)
+    if (entry < -contactSlop) continue; // behind us (or we are inside it)
     const db = Math.min(p[b] - (box.min[b] - r), box.max[b] + r - p[b]);
     const dc = Math.min(p[c] - (box.min[c] - r), box.max[c] + r - p[c]);
+    // inside > 0: within the inflated cross-section; inside - r > 0: over the face itself.
     const inside = Math.min(db, dc);
-    if (inside > edgeMargin) {
+    if (inside - r > hitMargin) {
       if (entry < best) {
         best = Math.max(0, entry);
         hit = i;
       }
     } else if (inside > -edgeMargin && Math.abs(inside) > slideBand) {
+      // rounded edge or corner: the engine could deflect here
       if (entry < ambiguousAt) {
         ambiguousAt = entry;
         ambiguousSolid = i;
@@ -121,7 +133,7 @@ export function castAxis(world: SweepWorld, p: V3, d: Dir): { distance: number; 
     const box = world.solids[i];
     if (p[b] < box.min[b] || p[b] > box.max[b] || p[c] < box.min[c] || p[c] > box.max[c]) continue;
     const t = s > 0 ? box.min[a] - p[a] : p[a] - box.max[a];
-    if (t >= -1e-6 && t < best) {
+    if (t >= -2e-3 && t < best) {
       best = Math.max(0, t);
       hit = i;
     }

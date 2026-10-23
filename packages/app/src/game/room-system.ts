@@ -175,6 +175,12 @@ export class RoomSystem extends createSystem({
       meshes,
     });
     store.room = room;
+    store.roomInputs = {
+      planes,
+      meshes,
+      head: [this.head.x, this.head.y, this.head.z],
+      forward: [this.fwd.x, 0, this.fwd.z],
+    };
     store.roomSource = room.kind === 'tabletop' ? 'tabletop' : 'planes';
     store.planeCount = planes.length;
     this.instantiate(room);

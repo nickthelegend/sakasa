@@ -146,8 +146,14 @@ export async function freshSession({ inputMode = 'hand', clearStorage = true } =
     label: 'browser ready',
   });
   await sleep(1500);
-  cli(['xr', 'enter'], {}, { allowFail: true });
-  await sleep(800);
+  await waitFor(
+    () => {
+      cli(['xr', 'enter'], {}, { allowFail: true });
+      return cli(['xr', 'status'], undefined, { allowFail: true }).sessionActive === true;
+    },
+    { timeout: 45000, interval: 2500, label: 'XR session active' },
+  );
+  await sleep(500);
   cli(['xr', 'set-input-mode'], { mode: inputMode });
   return waitFor(
     () => {
@@ -158,7 +164,7 @@ export async function freshSession({ inputMode = 'hand', clearStorage = true } =
         return null;
       }
     },
-    { timeout: 30000, interval: 700, label: 'room built' },
+    { timeout: 45000, interval: 700, label: 'room built' },
   );
 }
 
