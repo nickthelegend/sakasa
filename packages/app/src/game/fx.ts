@@ -585,17 +585,17 @@ export function makeDownArrow(): Group {
 export function makeCompass(): Group {
   const g = new Group();
   const ring = new Mesh(
-    new TorusGeometry(0.02, 0.002, 6, 32),
+    new TorusGeometry(0.014, 0.0014, 6, 32),
     new MeshBasicMaterial({ color: PAPER }),
   );
   g.add(ring);
   const arrow = new Group();
   arrow.name = 'compass-arrow';
-  const shaft = new Mesh(new CylinderGeometry(0.003, 0.003, 0.03, 6), new MeshBasicMaterial({ color: FLIP }));
-  shaft.position.y = -0.006;
-  const tip = new Mesh(new ConeGeometry(0.009, 0.016, 10), new MeshBasicMaterial({ color: FLIP }));
+  const shaft = new Mesh(new CylinderGeometry(0.002, 0.002, 0.02, 6), new MeshBasicMaterial({ color: FLIP }));
+  shaft.position.y = -0.004;
+  const tip = new Mesh(new ConeGeometry(0.006, 0.011, 10), new MeshBasicMaterial({ color: FLIP }));
   tip.rotation.x = Math.PI;
-  tip.position.y = -0.026;
+  tip.position.y = -0.017;
   arrow.add(shaft, tip);
   g.add(arrow);
   g.traverse((o) => {
