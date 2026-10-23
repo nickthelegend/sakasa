@@ -104,3 +104,27 @@ export function overlaps(world: SweepWorld, p: V3, eps = 2e-4): boolean {
   }
   return false;
 }
+
+/**
+ * Cast a ray from `p` along a room axis and return the distance to the first
+ * box face or room boundary (radius ignored). Used for gravity-aligned blob
+ * shadows and landing markers.
+ */
+export function castAxis(world: SweepWorld, p: V3, d: Dir): { distance: number; hit: number } {
+  const a = dirAxis(d);
+  const s = dirSign(d);
+  const b = (a + 1) % 3;
+  const c = (a + 2) % 3;
+  let best = Math.max(0, ((s > 0 ? world.max[a] : world.min[a]) - p[a]) * s);
+  let hit = -1;
+  for (let i = 0; i < world.solids.length; i++) {
+    const box = world.solids[i];
+    if (p[b] < box.min[b] || p[b] > box.max[b] || p[c] < box.min[c] || p[c] > box.max[c]) continue;
+    const t = s > 0 ? box.min[a] - p[a] : p[a] - box.max[a];
+    if (t >= -1e-6 && t < best) {
+      best = Math.max(0, t);
+      hit = i;
+    }
+  }
+  return { distance: best, hit };
+}

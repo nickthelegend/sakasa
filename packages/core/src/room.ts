@@ -80,7 +80,20 @@ export interface RoomModel {
   notes: string[];
 }
 
+/**
+ * A detected mesh (XRMesh) reduced to its world-space bounding box. Quest
+ * labels meshes ('table', 'couch', ...) even where planes carry no label.
+ */
+export interface MeshInput {
+  id: string;
+  label: string;
+  min: V3;
+  max: V3;
+}
+
 export interface BuildRoomOptions {
+  /** Labelled scene meshes; labelled furniture becomes solids too. */
+  meshes?: readonly MeshInput[];
   /** Viewer head position in world space. Default: seated eye height at the origin. */
   head?: V3;
   /** Viewer forward in world space. Default: -Z. */
@@ -163,7 +176,16 @@ export function buildRoom(
   const horizontalDown = oriented.filter((p) => p.normal[1] < -0.85);
   const vertical = oriented.filter((p) => Math.abs(p.normal[1]) < 0.3);
 
-  const floors = horizontalUp.filter((p) => p.label === 'floor');
+  // Labels are optional: IWSDK documents none, so classify by orientation,
+  // height and size when a plane is unlabelled.
+  let floors = horizontalUp.filter((p) => p.label === 'floor');
+  if (floors.length === 0) {
+    const big = horizontalUp.filter((p) => p.label === '' && area(p) > 1);
+    if (big.length > 0) {
+      const lowest = Math.min(...big.map((p) => p.center[1]));
+      floors = big.filter((p) => p.center[1] < lowest + 0.1 && p.center[1] < headWorld[1] - 0.9);
+    }
+  }
   let walls = vertical.filter((p) => p.label === 'wall');
   if (walls.length === 0) {
     walls = vertical.filter(
@@ -269,7 +291,7 @@ export function buildRoom(
   const solids: Solid[] = [];
   const furnitureSurfaces: Surface[] = [];
   for (const p of horizontalUp) {
-    if (p.label === 'floor' || !FURNITURE_LABELS.has(p.label)) continue;
+    if (p.label === 'floor' || floors.includes(p) || !FURNITURE_LABELS.has(p.label)) continue;
     const h = p.center[1] - floorY;
     if (h < 0.15 || h > 1.4 || area(p) < 0.06) continue;
     const axisV = normalize(cross(p.normal, p.axisU));
@@ -312,6 +334,38 @@ export function buildRoom(
     });
   }
 
+  // Furniture from labelled meshes, unless a plane already described it.
+  for (const m of options.meshes ?? []) {
+    const lab = m.label.toLowerCase();
+    if (!MESH_FURNITURE.has(lab)) continue;
+    const cs: V3[] = [];
+    for (const x of [m.min[0], m.max[0]]) for (const z of [m.min[2], m.max[2]]) cs.push(toRoom(frame, [x, 0, z]));
+    let x0 = Math.max(Math.min(...cs.map((c) => c[0])), min[0]);
+    let x1 = Math.min(Math.max(...cs.map((c) => c[0])), max[0]);
+    let z0 = Math.max(Math.min(...cs.map((c) => c[2])), min[2]);
+    let z1 = Math.min(Math.max(...cs.map((c) => c[2])), max[2]);
+    const h = m.max[1] - floorY;
+    if (x1 - x0 < 0.2 || z1 - z0 < 0.2 || h < 0.15 || h > 1.4) continue;
+    if (head[0] > x0 - 0.3 && head[0] < x1 + 0.3 && head[2] > z0 - 0.3 && head[2] < z1 + 0.3) continue;
+    const cand = { min: [x0, 0, z0] as V3, max: [x1, h, z1] as V3 };
+    if (solids.some((s) => overlapXZ(s, cand) > 0.5 * (x1 - x0) * (z1 - z0))) continue;
+    const kind = lab === 'table' || lab === 'desk' ? 'table' : 'furniture';
+    const id = `${kind}:mesh:${m.id}`;
+    solids.push({ id, kind, label: lab, ...cand });
+    furnitureSurfaces.push({
+      id,
+      kind,
+      dir: D.NegY,
+      real: true,
+      label: lab,
+      center: [(x0 + x1) / 2, h, (z0 + z1) / 2],
+      normal: [0, 1, 0],
+      uAxis: [1, 0, 0],
+      vAxis: [0, 0, -1],
+      size: [x1 - x0, z1 - z0],
+    });
+  }
+
   const surfaces = boundarySurfaces(min, max, {
     floor: { real: floors.length > 0, planeId: floors[0]?.id },
     ceiling: { real: ceilingReal, planeId: ceilingPlane?.id },
@@ -334,6 +388,14 @@ export function buildRoom(
     forward,
     notes,
   };
+}
+
+const MESH_FURNITURE = new Set(['table', 'desk', 'couch', 'bed', 'storage', 'shelf']);
+
+function overlapXZ(a: Box, b: Box): number {
+  const x = Math.min(a.max[0], b.max[0]) - Math.max(a.min[0], b.min[0]);
+  const z = Math.min(a.max[2], b.max[2]) - Math.max(a.min[2], b.min[2]);
+  return x > 0 && z > 0 ? x * z : 0;
 }
 
 function sideName(key: string): string {

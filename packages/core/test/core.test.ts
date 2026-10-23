@@ -5,6 +5,7 @@ import {
   Rng,
   SYNTHETIC_ROOMS,
   buildRoom,
+  castAxis,
   dailySeed,
   dailySpec,
   dirToWorld,
@@ -102,6 +103,12 @@ describe('sweep', () => {
     expect(r.ok && r.distance).toBe(0);
   });
 
+  it('casts axis rays for shadows', () => {
+    expect(castAxis(world, [0, 2, -1], Dir.NegY)).toEqual({ distance: 1.5, hit: 0 });
+    expect(castAxis(world, [1, 2, 1], Dir.NegY)).toEqual({ distance: 2, hit: -1 });
+    expect(castAxis(world, [1, 1, 1], Dir.PosX).distance).toBeCloseTo(1, 9);
+  });
+
   it('detects overlap', () => {
     expect(overlaps(world, [0, 0.3, -1])).toBe(true);
     expect(overlaps(world, [1, 1, 1])).toBe(false);
@@ -193,6 +200,33 @@ describe('room model', () => {
     const east = room.surfaces.find((s) => s.id === 'wall+x')!;
     expect(east.real).toBe(false);
     expect(room.max[0]).toBeCloseTo(1.8, 6);
+  });
+
+  it('classifies unlabelled planes by orientation, height and size', () => {
+    const r = SYNTHETIC_ROOMS.find((x) => x.name === 'small-study')!;
+    const labelled = buildRoom(r.planes, { head: r.head });
+    const stripped = r.planes
+      .filter((p) => p.label !== 'door' && p.label !== 'window')
+      .map((p) => ({ ...p, label: '' }));
+    const room = buildRoom(stripped, { head: r.head });
+    expect(room.min).toEqual(labelled.min);
+    expect(room.max).toEqual(labelled.max);
+    expect(room.surfaces.filter((s) => s.real && s.kind !== 'furniture' && s.kind !== 'table').length).toBe(6);
+    expect(room.solids).toHaveLength(1);
+  });
+
+  it('adds furniture from labelled meshes when no plane describes it', () => {
+    const r = SYNTHETIC_ROOMS.find((x) => x.name === 'no-ceiling')!;
+    const base = buildRoom(r.planes, { head: r.head });
+    const room = buildRoom(r.planes, {
+      head: r.head,
+      meshes: [
+        { id: 'm1', label: 'couch', min: [-1.6, 0, -2.3], max: [-0.4, 0.45, -1.6] },
+        { id: 'm2', label: 'plant', min: [1, 0, 1], max: [1.3, 1.2, 1.3] },
+      ],
+    });
+    expect(room.solids.length).toBe(base.solids.length + 1);
+    expect(room.solids.some((s) => s.id === 'furniture:mesh:m1')).toBe(true);
   });
 
   it('never puts furniture under the viewer', () => {
