@@ -69,6 +69,19 @@
     line-height: 1.35;
     color: #a9c7d6;
   }
+  .down {
+    font-family: b612;
+    font-weight: 700;
+    font-size: 14;
+    letter-spacing: 1.5;
+    color: #0b0d10;
+    background-color: #22b8ff;
+    padding-top: 6;
+    padding-bottom: 6;
+    padding-left: 10;
+    padding-right: 10;
+    border-radius: 8;
+  }
   .stars {
     flex-direction: row;
     gap: 8;
@@ -140,6 +153,7 @@
   </div>
   <div id="hud-title" class="title">Scanning your room</div>
   <div id="hud-body" class="body">Look around for a moment.</div>
+  <div id="hud-down" class="down" style="display: none"></div>
   <div id="hud-stars" class="stars">
     <div id="star-1"><Star></Star></div>
     <div id="star-2"><Star></Star></div>

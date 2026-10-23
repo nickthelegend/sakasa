@@ -85,7 +85,12 @@ export const actions = { count: 0, log: [] };
 
 export async function pinchSurface(surfaceId, { device = 'hand-right', aimDevice } = {}) {
   const from = aimDevice === 'gaze' ? headPos() : handPos(device);
-  const p = evaluate(`window.__sakasa.aim(${JSON.stringify(surfaceId)}, ${JSON.stringify(from)})`);
+  let p = evaluate(`window.__sakasa.aim(${JSON.stringify(surfaceId)}, ${JSON.stringify(from)})`);
+  if (aimDevice === 'gaze' && surfaceId === 'ceiling' && p) {
+    // Look clearly up (45 degrees). In IWER, emulated gaze at 22-35 degrees of
+    // elevation did not resolve a target in our runs (see TESTING.md).
+    p = [from[0], p[1], from[2] - (p[1] - from[1])];
+  }
   if (!p) throw new Error(`no clear aim point on ${surfaceId}`);
   cli(['xr', 'look-at'], { device: aimDevice ?? device, target: { x: p[0], y: p[1], z: p[2] } });
   await sleep(aimDevice === 'gaze' ? 600 : 250);
@@ -125,8 +130,11 @@ export function screenshot(name) {
   return file;
 }
 
+export const session = { since: 0 };
+
+/** Console errors since the current fresh session started (earlier page loads excluded). */
 export function consoleErrors() {
-  const r = cli(['browser', 'logs'], { count: 200 });
+  const r = cli(['browser', 'logs'], { count: 200, level: ['error'], since: session.since });
   const logs = Array.isArray(r) ? r : r.logs ?? [];
   return logs.filter((l) => l.level === 'error').map((l) => String(l.message ?? l.text).slice(0, 300));
 }
@@ -140,6 +148,7 @@ export async function freshSession({ inputMode = 'hand', clearStorage = true } =
     }
   }
   cli(['browser', 'reload'], {}, { allowFail: true });
+  session.since = Date.now();
   await waitFor(() => /"browserCommandReady": true/.test(execFileSync(BIN, ['dev', 'status'], { cwd: APP, encoding: 'utf8' })), {
     timeout: 60000,
     interval: 1500,

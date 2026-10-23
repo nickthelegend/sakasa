@@ -68,6 +68,8 @@ export class UiSystem extends createSystem({}) {
   private palmLatch = false;
   private dirty = true;
   private lastStats = '';
+  private lastDown = '';
+  private boundsTimer = 0;
 
   init(): void {
     this.hud = this.world.requireSceneObject<UIKitMLAsset>('hud-panel');
@@ -79,7 +81,7 @@ export class UiSystem extends createSystem({}) {
     const ids = [
       'hud-eyebrow', 'hud-stats', 'hud-title', 'hud-body', 'hud-guide', 'hud-stars', 'hud-buttons',
       'g-up', 'g-side', 'g-down', 'g-point', 'g-pinch', 'star-1', 'star-2', 'star-3',
-      'btn-a', 'btn-b', 'btn-menu', 'btn-a-label', 'btn-b-label',
+      'btn-a', 'btn-b', 'btn-menu', 'btn-a-label', 'btn-b-label', 'hud-down',
     ];
     for (const id of ids) {
       const e = this.hud.requireElementById<UIKit.Text>(id);
@@ -325,8 +327,64 @@ export class UiSystem extends createSystem({}) {
     this.camera.getWorldPosition(this.head);
     this.camera.getWorldDirection(this.fwd);
     this.placeHud(delta);
+    this.boundsTimer -= delta;
+    if (this.boundsTimer <= 0) {
+      this.boundsTimer = 0.25;
+      this.sanitizeGazeBounds(this.hud);
+      this.sanitizeGazeBounds(this.menu);
+    }
+    this.updateDownHint();
     this.updateHands(delta);
     if (store.menuOpen && !this.menuFromPalm) this.faceHead(this.menu);
+  }
+
+  /**
+   * UIKit leaves some interaction meshes (wrappers without a background, hidden
+   * elements) at an identity world matrix, i.e. at the floor origin under the
+   * player. IWSDK's gaze cone-caster unions every descendant's box into the
+   * panel's candidate box, so those strays made the HUD "own" gaze rays that
+   * start near the head and blocked gazing at the ceiling. Meshes far from
+   * their panel are flagged runtime-only, which the cone-caster skips.
+   */
+  private sanitizeGazeBounds(panel: Group): void {
+    panel.getWorldPosition(this.tmp2);
+    panel.traverse((o) => {
+      if (o === panel || !(o as unknown as { geometry?: unknown }).geometry) return;
+      o.getWorldPosition(this.tmp);
+      const stray = this.tmp.distanceTo(this.tmp2) > 0.6;
+      if (stray !== (o.userData.iwsdkRuntimeOnly === true)) o.userData.iwsdkRuntimeOnly = stray;
+    });
+  }
+
+  /**
+   * FoV-aware hint: when the surface that is currently "down" is outside the
+   * view (the glasses' 74 x 68 degree view, or 50 degrees off-axis on Quest),
+   * the HUD says where it is.
+   */
+  private updateDownHint(): void {
+    let text = '';
+    const room = store.room;
+    if (room && store.mode !== 'idle' && store.mode !== 'scanning') {
+      const s = boundaryFor(room, store.gravity);
+      const c = toWorld(room.frame, s.center);
+      this.tmp.set(c[0] - this.head.x, c[1] - this.head.y, c[2] - this.head.z);
+      // head-relative angles
+      this.q.copy(this.camera.quaternion).invert();
+      this.tmp.applyQuaternion(this.q);
+      const h = (Math.atan2(this.tmp.x, -this.tmp.z) * 180) / Math.PI;
+      const v = (Math.atan2(this.tmp.y, -this.tmp.z) * 180) / Math.PI;
+      const g = store.glassesActive;
+      const outside = this.tmp.z > 0 || Math.abs(h) > (g ? 37 : 50) || v > (g ? 25 : 45) || v < (g ? -43 : -50);
+      if (outside) {
+        const where = this.tmp.z > 0 && Math.abs(h) > 135 ? 'BEHIND YOU' : Math.abs(h) > 45 ? (h > 0 ? 'TO YOUR RIGHT' : 'TO YOUR LEFT') : v > 0 ? 'ABOVE YOU' : 'BELOW YOU';
+        text = `DOWN IS ${where}`;
+      }
+    }
+    if (text !== this.lastDown) {
+      this.lastDown = text;
+      this.set('hud-down', { text });
+      this.show('hud-down', text.length > 0);
+    }
   }
 
   private detectGlasses(): void {
@@ -348,7 +406,7 @@ export class UiSystem extends createSystem({}) {
     const glasses = store.glassesActive;
     const dist = glasses ? 0.85 : 1.0;
     const drop = glasses ? 0.12 : 0.3;
-    const width = glasses ? 0.34 : 0.42;
+    const width = glasses ? 0.48 : 0.42;
     const yaw = Math.atan2(this.fwd.x, this.fwd.z);
     let diff = yaw - this.hudYaw;
     while (diff > Math.PI) diff -= 2 * Math.PI;
@@ -361,7 +419,7 @@ export class UiSystem extends createSystem({}) {
       this.hudYaw += diff * Math.min(1, delta * 3);
     }
     this.size(this.hud.document, width);
-    this.size(this.menu.document, glasses ? 0.36 : this.menuFromPalm ? 0.3 : 0.38);
+    this.size(this.menu.document, glasses ? 0.42 : this.menuFromPalm ? 0.3 : 0.38);
     const o = this.hudEntity.object3D!;
     // Quest: down-left of centre so the table in front stays clear. Glasses: centred (narrow FoV).
     const side = glasses ? 0 : 0.32;

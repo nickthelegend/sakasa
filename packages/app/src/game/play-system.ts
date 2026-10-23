@@ -406,7 +406,8 @@ export class PlaySystem extends createSystem({
   private clearPuzzle(): void {
     for (const e of [...this.queries.goals.entities]) e.dispose();
     for (const e of [...this.queries.blocks.entities]) e.dispose();
-    for (const e of [...this.queries.marbles.entities]) e.dispose();
+    // the puzzle marble only; the sandbox marble is also a Toy and stays
+    for (const e of [...this.queries.marbles.entities]) if (!e.hasComponent(Toy)) e.dispose();
     store.puzzle = null;
     store.puzzleState = 'idle';
     store.timeOverride = null;

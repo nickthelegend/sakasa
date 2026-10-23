@@ -110,6 +110,19 @@ export function installHooks(world: World): void {
     bodies,
     perf,
     roomInputs: () => store.roomInputs,
+    /** Visible renderables grouped by their first named ancestor (draw-call budgeting). */
+    renderables() {
+      const counts: Record<string, number> = {};
+      world.scene.traverseVisible((o) => {
+        const r = o as unknown as { isMesh?: boolean; isLine?: boolean; isPoints?: boolean; material?: { visible?: boolean } };
+        if (!(r.isMesh || r.isLine || r.isPoints) || r.material?.visible === false) return;
+        let a: typeof o | null = o;
+        while (a && !a.name) a = a.parent;
+        const key = (a?.name || 'unnamed').replace(/-\d+.*$/u, '');
+        counts[key] = (counts[key] ?? 0) + 1;
+      });
+      return counts;
+    },
     /**
      * A point on a surface that a ray from `from` (world) reaches without
      * passing through furniture, puzzle blocks, the HUD or any body. Test
@@ -151,6 +164,22 @@ export function installHooks(world: World): void {
         }
       }
       return best;
+    },
+    /** Bounds of every geometry under a named object (diagnostics for gaze candidate boxes). */
+    geometryBounds(name: string) {
+      const root = world.scene.getObjectByName(name);
+      if (!root) return null;
+      const out: { type: string; name: string; visible: boolean; box: number[] | null; world: number[] }[] = [];
+      root.traverse((o) => {
+        const g = (o as unknown as { geometry?: { boundingBox: { min: { x: number; y: number; z: number }; max: { x: number; y: number; z: number } } | null; computeBoundingBox?: () => void } }).geometry;
+        if (!g) return;
+        if (!g.boundingBox) g.computeBoundingBox?.();
+        const b = g.boundingBox;
+        if (!b) return;
+        const wb = (b as unknown as { clone: () => { applyMatrix4: (m: unknown) => { min: { x: number; y: number; z: number }; max: { x: number; y: number; z: number } } } }).clone().applyMatrix4(o.matrixWorld);
+        out.push({ type: o.type, name: o.name, visible: o.visible, box: [wb.min.x, wb.min.y, wb.min.z, wb.max.x, wb.max.y, wb.max.z].map(r4), world: [] });
+      });
+      return out;
     },
     debug: {
       startPuzzle: (i: number) => play().startPuzzle(i),

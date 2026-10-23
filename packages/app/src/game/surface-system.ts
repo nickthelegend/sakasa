@@ -196,7 +196,7 @@ export class SurfaceSystem extends createSystem({
 
   private onFlip(d: { dir: Dir; surfaceId?: string }): void {
     for (const st of this.states.values()) {
-      st.mat.uniforms.uActive.value = st.dir === d.dir ? 1 : 0;
+      st.mat.uniforms.uActive.value = st.dir === d.dir && !st.id.includes(':') ? 1 : 0;
     }
   }
 
@@ -231,6 +231,11 @@ export class SurfaceSystem extends createSystem({
         (m.uHit.value as number[])[0] = 0;
         (m.uHit.value as number[])[1] = 0;
       }
+      // Draw only what shows something (keeps draw calls in budget); raycasting ignores material.visible.
+      const pulseAge = this.time - (m.uPulseT.value as number);
+      st.mat.visible =
+        st.hover > 0.01 || st.press > 0.01 || st.guide > 0.01 || (m.uActive.value as number) > 0 ||
+        (m.uPaper.value as number) > 0 || (pulseAge >= 0 && pulseAge < 1.4);
       if (hovered && (best == null || st.hover > best.hover)) best = st;
     }
     this.activeHover = best;
@@ -255,10 +260,9 @@ export class SurfaceSystem extends createSystem({
     this.arrow.lookAt(this.target);
     this.arrow.scale.setScalar(0.6 + 0.4 * st.hover + 0.3 * st.press);
     this.arrow.visible = true;
-    for (let i = 0; i < 3; i++) {
-      const c = this.arrow.children[i];
-      c.position.z = 0.09 - i * 0.07 - ((this.time * 0.25) % 0.07);
-    }
+    // chevrons crawl toward the surface
+    const c = this.arrow.children[0];
+    c.position.z = -((this.time * 0.25) % 0.07);
   }
 
   /** Pinch-and-hold: dots trace where the marble would fall. */

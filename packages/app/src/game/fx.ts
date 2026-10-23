@@ -167,6 +167,8 @@ export function makeSurfaceVisual(width: number, height: number, paper: boolean)
     transparent: true,
     depthWrite: false,
     side: DoubleSide,
+    // one pass, not three's default back-then-front pair for transparent double-sided materials
+    forceSinglePass: true,
     uniforms: {
       uSize: { value: [width, height] },
       uHit: { value: [0, 0] },
@@ -192,12 +194,7 @@ export type ToyKind = 'cube' | 'blue-cube' | 'ball' | 'roll' | 'marble';
 
 export function makeToyMesh(kind: ToyKind, size: number, seed: number): Object3D {
   if (kind === 'cube' || kind === 'blue-cube') {
-    const geo = new BoxGeometry(size, size, size);
-    const mesh = new Mesh(geo, kind === 'cube' ? paperMaterial : bluePaperMaterial);
-    const edges = new LineSegments(new EdgesGeometry(geo), inkLineMaterial);
-    edges.raycast = () => undefined;
-    mesh.add(edges);
-    return mesh;
+    return new Mesh(new BoxGeometry(size, size, size), kind === 'cube' ? paperMaterial : bluePaperMaterial);
   }
   if (kind === 'ball') {
     // crumpled paper: a jittered icosahedron, flat shaded (deterministic per seed)
@@ -218,12 +215,7 @@ export function makeToyMesh(kind: ToyKind, size: number, seed: number): Object3D
     return new Mesh(geo, paperMaterial);
   }
   if (kind === 'roll') {
-    const geo = new CylinderGeometry(size * 0.45, size * 0.45, size * 1.6, 10, 1);
-    const mesh = new Mesh(geo, paperMaterial);
-    const edges = new LineSegments(new EdgesGeometry(geo, 30), inkLineMaterial);
-    edges.raycast = () => undefined;
-    mesh.add(edges);
-    return mesh;
+    return new Mesh(new CylinderGeometry(size * 0.45, size * 0.45, size * 1.6, 10, 1), paperMaterial);
   }
   return makeMarbleMesh(size);
 }
@@ -285,6 +277,7 @@ export class Trail {
     geo.setIndex(idx);
     const mat = glowBlend(new ShaderMaterial({
       side: DoubleSide,
+      forceSinglePass: true,
       uniforms: { uColor: { value: FLIP.clone() } },
       vertexShader: /* glsl */ `
         attribute float alpha; varying float vA;
@@ -535,6 +528,7 @@ export function makeGoal(radius: number): Group {
     new CylinderGeometry(radius * 0.55, radius * 0.9, 0.5, 16, 1, true),
     glowBlend(new ShaderMaterial({
       side: DoubleSide,
+      forceSinglePass: true,
       uniforms: { uColor: { value: FLIP.clone() } },
       vertexShader: /* glsl */ `varying float vY; void main(){ vY = position.y / 0.5 + 0.5; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }`,
       fragmentShader: /* glsl */ `uniform vec3 uColor; varying float vY; void main(){ float a = (1.0 - vY) * 0.35; gl_FragColor = vec4(uColor, a); }`,
@@ -550,7 +544,7 @@ export function makeGoal(radius: number): Group {
   return g;
 }
 
-/** Three chevrons pointing along local -Z, shown where you point before you pinch. */
+/** Three chevrons pointing along local -Z (one merged mesh, one draw call). */
 export function makeDownArrow(): Group {
   const g = new Group();
   const mat = new MeshBasicMaterial({
@@ -559,17 +553,30 @@ export function makeDownArrow(): Group {
     opacity: 0.9,
     depthWrite: false,
     side: DoubleSide,
+    forceSinglePass: true,
   });
-  const cone = new ConeGeometry(0.05, 0.07, 4, 1, true);
+  const parts: BufferGeometry[] = [];
   for (let i = 0; i < 3; i++) {
-    const c = new Mesh(cone, mat);
-    c.rotation.x = -Math.PI / 2;
-    c.position.z = 0.09 - i * 0.07;
-    c.name = `chevron-${i}`;
-    g.add(c);
+    const c = new ConeGeometry(0.05, 0.07, 4, 1, true);
+    c.rotateX(-Math.PI / 2);
+    c.translate(0, 0, 0.09 - i * 0.07);
+    parts.push(c.toNonIndexed());
   }
-  g.traverse((o) => {
-    o.raycast = () => undefined;
+  const merged = new BufferGeometry();
+  const count = parts.reduce((n, p) => n + p.getAttribute('position').count, 0);
+  const pos = new Float32Array(count * 3);
+  let o = 0;
+  for (const p of parts) {
+    const a = p.getAttribute('position').array as Float32Array;
+    pos.set(a, o);
+    o += a.length;
+  }
+  merged.setAttribute('position', new BufferAttribute(pos, 3));
+  const mesh = new Mesh(merged, mat);
+  mesh.name = 'chevrons';
+  g.add(mesh);
+  g.traverse((x) => {
+    x.raycast = () => undefined;
   });
   return g;
 }
