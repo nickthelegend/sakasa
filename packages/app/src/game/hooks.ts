@@ -1,5 +1,45 @@
 import type { World } from '@iwsdk/core';
-import { type Dir, DIR_NAMES, toWorld } from '@sakasa/core';
+import { type Box, type Dir, DIR_NAMES, type V3, toRoom, toWorld } from '@sakasa/core';
+
+function pointSegDist(p: number[], a: V3, b: V3): number {
+  const ab = [b[0] - a[0], b[1] - a[1], b[2] - a[2]];
+  const ap = [p[0] - a[0], p[1] - a[1], p[2] - a[2]];
+  const l2 = ab[0] * ab[0] + ab[1] * ab[1] + ab[2] * ab[2];
+  const t = Math.max(0, Math.min(1, (ap[0] * ab[0] + ap[1] * ab[1] + ap[2] * ab[2]) / Math.max(l2, 1e-9)));
+  return Math.hypot(ap[0] - ab[0] * t, ap[1] - ab[1] * t, ap[2] - ab[2] * t);
+}
+
+/** Does the segment a->b pass through any box inflated by `m` (slab test)? */
+function segmentBlocked(a: V3, b: V3, boxes: Box[], m: number): boolean {
+  for (const box of boxes) {
+    let t0 = 0;
+    let t1 = 0.97;
+    let hit = true;
+    for (let k = 0; k < 3; k++) {
+      const d = b[k] - a[k];
+      const lo = box.min[k] - m;
+      const hi = box.max[k] + m;
+      if (Math.abs(d) < 1e-9) {
+        if (a[k] < lo || a[k] > hi) {
+          hit = false;
+          break;
+        }
+      } else {
+        let ta = (lo - a[k]) / d;
+        let tb = (hi - a[k]) / d;
+        if (ta > tb) [ta, tb] = [tb, ta];
+        t0 = Math.max(t0, ta);
+        t1 = Math.min(t1, tb);
+        if (t0 > t1) {
+          hit = false;
+          break;
+        }
+      }
+    }
+    if (hit) return true;
+  }
+  return false;
+}
 import { GravitySystem } from './gravity-system.js';
 import { perf } from './perf.js';
 import { PlaySystem } from './play-system.js';
@@ -69,6 +109,48 @@ export function installHooks(world: World): void {
     },
     bodies,
     perf,
+    /**
+     * A point on a surface that a ray from `from` (world) reaches without
+     * passing through furniture, puzzle blocks, the HUD or any body. Test
+     * support only: the e2e scripts aim the emulated hand with it.
+     */
+    aim(surfaceId: string, from: [number, number, number]) {
+      const room = store.room;
+      if (!room) return null;
+      const s = room.surfaces.find((x) => x.id === surfaceId);
+      if (!s) return null;
+      const solids = [...room.solids, ...(store.puzzle?.blocks ?? [])];
+      const fromR = toRoom(room.frame, from);
+      const bodies = play().bodyStates().map((b) => toRoom(room.frame, b.p as [number, number, number]));
+      const hud = world.getSceneObject('hud-panel');
+      const hudR = hud ? toRoom(room.frame, [hud.position.x, hud.position.y, hud.position.z]) : null;
+      let best: number[] | null = null;
+      let bestScore = Infinity;
+      for (let i = -4; i <= 4; i++) {
+        for (let j = -4; j <= 4; j++) {
+          const u = (i / 10) * s.size[0];
+          const v = (j / 10) * s.size[1];
+          const p: [number, number, number] = [
+            s.center[0] + s.uAxis[0] * u + s.vAxis[0] * v,
+            s.center[1] + s.uAxis[1] * u + s.vAxis[1] * v,
+            s.center[2] + s.uAxis[2] * u + s.vAxis[2] * v,
+          ];
+          if (segmentBlocked(fromR, p, solids, 0.08)) continue;
+          if (bodies.some((b) => pointSegDist(b, fromR, p) < 0.18)) continue;
+          if (hudR && pointSegDist(hudR, fromR, p) < 0.35) continue;
+          const d = [p[0] - fromR[0], p[1] - fromR[1], p[2] - fromR[2]];
+          const len = Math.hypot(d[0], d[1], d[2]);
+          const fwd = room.forward;
+          const cos = (d[0] * fwd[0] + d[2] * fwd[2]) / Math.max(1e-6, len);
+          const score = (1 - cos) * 2 + Math.hypot(u, v) * 0.15;
+          if (score < bestScore) {
+            bestScore = score;
+            best = toWorld(room.frame, p).map(r4);
+          }
+        }
+      }
+      return best;
+    },
     debug: {
       startPuzzle: (i: number) => play().startPuzzle(i),
       sandbox: () => play().startSandbox(),

@@ -64,6 +64,8 @@ export class UiSystem extends createSystem({}) {
   private menuFromPalm = false;
   private menuHand: XRHandedness = 'left';
   private menuHovered = 0;
+  /** After the menu closes, the palm must turn down before palm-up opens it again. */
+  private palmLatch = false;
   private dirty = true;
   private lastStats = '';
 
@@ -190,6 +192,7 @@ export class UiSystem extends createSystem({}) {
     store.paused = false;
     this.menu.visible = false;
     this.menuHovered = 0;
+    this.palmLatch = true;
     logEvent('menu', 'close');
     emit('menu');
   }
@@ -452,7 +455,7 @@ export class UiSystem extends createSystem({}) {
     if (palmUp && store.mode !== 'idle' && store.mode !== 'scanning') {
       this.palmUpTime += delta;
       this.palmDownTime = 0;
-      if (!store.menuOpen && this.palmUpTime > 0.35) {
+      if (!store.menuOpen && !this.palmLatch && this.palmUpTime > 0.35) {
         this.menuHand = palmUp.hand;
         this.openMenu(true);
       }
@@ -463,6 +466,7 @@ export class UiSystem extends createSystem({}) {
       }
     } else {
       this.palmUpTime = 0;
+      this.palmLatch = false;
       if (store.menuOpen && this.menuFromPalm) {
         this.palmDownTime += delta;
         if (this.palmDownTime > 1.0 && this.menuHovered === 0) this.closeMenu();

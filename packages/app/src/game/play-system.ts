@@ -7,6 +7,7 @@ import {
   MovementMode,
   Object3D,
   PhysicsBody,
+  PhysicsManipulation,
   PhysicsShape,
   PhysicsShapeType,
   PhysicsState,
@@ -140,6 +141,18 @@ export class PlaySystem extends createSystem({
       this.queries.grabbedToys.subscribe('qualify', (e) => {
         synth.tick(true);
         logEvent('grab', e.object3D?.name ?? 'toy');
+      }),
+      // Released bodies can be left asleep by the grab; wake them with the
+      // hand's release velocity so a flick becomes a throw.
+      this.queries.grabbedToys.subscribe('disqualify', (e) => {
+        if (!e.hasComponent(PhysicsBody) || e.hasComponent(PhysicsManipulation)) return;
+        const v = e.getVectorView(PhysicsBody, '_linearVelocity');
+        const vx = Number.isFinite(v[0]) ? v[0] : 0;
+        const vy = Number.isFinite(v[1]) ? v[1] : 0;
+        const vz = Number.isFinite(v[2]) ? v[2] : 0;
+        const tiny = Math.hypot(vx, vy, vz) < 0.01;
+        e.addComponent(PhysicsManipulation, { linearVelocity: tiny ? [0, -0.01, 0] : [vx, vy, vz] });
+        logEvent('release', e.object3D?.name ?? 'toy');
       }),
     );
   }
@@ -312,7 +325,7 @@ export class PlaySystem extends createSystem({
     });
     e.addComponent(PhysicsBody, {
       state: PhysicsState.Dynamic,
-      linearDamping: 0.02,
+      linearDamping: kind === 'marble' ? 0.02 : 0.08,
       angularDamping: kind === 'marble' ? 0.6 : 0.25,
     });
     if (kind === 'marble') {
