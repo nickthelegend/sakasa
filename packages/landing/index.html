@@ -6,9 +6,6 @@
     <meta name="theme-color" content="#0b0d10" />
     <title>Sakasa (逆さ)</title>
     <meta name="description" content="Sakasa is a hands-only mixed reality puzzle game: point at any real surface in your room, pinch, and it becomes down." />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;500;600&family=B612+Mono:wght@400;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
@@ -112,17 +109,17 @@
             <div class="status-col live">
               <div class="status-tag mono">LIVE NOW</div>
               <ul class="status-list">
-                <li><strong>20 room puzzles &amp; sandbox:</strong> procedural levels proven solvable by BFS solver.</li>
-                <li><strong>Hands &amp; gaze input:</strong> hand ray + pinch on Quest 3; 400 ms dwell gaze on Glasses.</li>
-                <li><strong>Havok physics:</strong> real-time gravity shifts, slow-motion ramps, and HRTF sound.</li>
+                <li><strong>20 room puzzles:</strong> proven solvable in emulator.</li>
+                <li><strong>Hands &amp; gaze:</strong> Quest 3 pinch and Glasses dwell input.</li>
+                <li><strong>Havok physics:</strong> real-time gravity shifts and HRTF sound.</li>
               </ul>
             </div>
             <div class="status-col setup">
               <div class="status-tag mono">SETUP REQUIRED</div>
               <ul class="status-list">
-                <li><strong>Headset pass:</strong> real-world hand jitter and 72 fps gate unverified on physical hardware.</li>
-                <li><strong>Space setup:</strong> room requires Quest boundary and space scan to detect planes.</li>
-                <li><strong>Local dev:</strong> requires HTTPS via adb reverse or hosted deployment.</li>
+                <li><strong>Physical headset:</strong> unverified on physical Quest 3.</li>
+                <li><strong>Space setup:</strong> Quest boundary and room plane scan.</li>
+                <li><strong>Local HTTPS:</strong> adb reverse or hosted domain.</li>
               </ul>
             </div>
           </div>
@@ -149,7 +146,7 @@
           <p class="mono small">Zero simulated metrics — every number comes from committed test artefacts.</p>
         </div>
 
-        <details class="evidence-drawer" id="drawer-metrics" open>
+        <details class="evidence-drawer" id="drawer-metrics">
           <summary>
             <span class="drawer-title"><span class="mono">01</span> All verified test metrics</span>
             <span class="drawer-icon" aria-hidden="true">↓</span>
