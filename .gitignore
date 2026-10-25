@@ -5,3 +5,5 @@ coverage/
 *.log
 .iwsdk/
 e2e-out/
+# Loom's local state (event log, attachments, machine config)
+.loom/
