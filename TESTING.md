@@ -1,8 +1,8 @@
 # Testing
 
-Everything below was run on Oct 24, 2026 and reverified on Oct 25, 2026 on the development Mac, in the IWER emulator (IWSDK 1.1.0-rc.2 agent mode:
-headless Playwright Chromium with hardware GPU via Metal). Zero skipped tests. JSON reports are committed in
-`packages/app/e2e/reports/`; screenshots go to `e2e-out/` (not committed).
+The emulator results below were measured on **2026-10-25** on the development Mac, in the IWER
+emulator (IWSDK 1.1.0-rc.2 agent mode: headless Playwright Chromium with hardware GPU via Metal).
+Screenshots go to `e2e-out/` (not committed).
 
 **Unverified on hardware:** nothing here ran on a Quest 3/3S or on Meta VR Glasses. Real hand-tracking jitter,
 real plane detection in an unseen room, Quest frame rate (72 Hz target, 13.9 ms budget) and real eye-gaze accuracy
@@ -10,19 +10,18 @@ need a device pass.
 
 ## Summary
 
-| Suite | Result | How to run |
+| Suite | Result (2026-10-25) | How to run |
 |---|---|---|
 | Core unit tests (Vitest) | **45 / 45 pass** (2 files) | `cd packages/core && npm test` |
+| Core TypeScript | **PASS**, exit 0 | `cd packages/core && npm run typecheck` |
+| App TypeScript | **PASS**, exit 0 | `cd packages/app && npm run typecheck` |
 | Hands-only completion, Meta Quest 3 profile | **20 / 20 checks pass** | `cd packages/app && node e2e/hands-quest.mjs` |
 | Gaze + pinch completion, Meta VR Glasses profile | **14 / 14 checks pass** | `node e2e/hands-glasses.mjs` |
 | Solver vs Havok agreement, 8 IWER rooms x 21 puzzles | **168 / 168 solved by the solver's flips** | `node e2e/agreement.mjs` |
 | Deterministic physics replays | **3 / 3 runs bit-identical** (12 bodies, max difference 0 m) | `node e2e/determinism.mjs` |
 | M1 frame-time / draw-call budget | **PASS**: CPU p95 2.1 ms, 86 draw calls, 26,928 triangles | `node e2e/perf.mjs` |
 | Landing page (375 / 768 / 1280 px) | **no horizontal overflow, 0 console errors** | `cd packages/landing && node scripts/check.mjs` |
-| TypeScript / production build | `npm run typecheck` clean; `npm run build` succeeds (dist 5.7 MB) | `cd packages/app` |
-
-The e2e scripts need the dev server in agent mode:
-`cd packages/app && npx iwsdk dev up --ai-mode agent --allow-browser-automation`.
+| Production build | succeeds (dist 5.7 MB) | `cd packages/app && npm run build` |
 
 ## Core unit tests (45)
 
@@ -144,8 +143,8 @@ CPU time per frame = ECS update + render submit (`performance.now()` around both
 
 | Measure | Result | Gate |
 |---|---|---|
-| CPU ms per frame | p50 1.4, **p95 2.1**, max 4.1 | p95 <= 4.0 |
-| ECS update | p50 0.9, p95 1.6 | |
+| CPU ms per frame | p50 1.4, **p95 2.1**, max 3.8 | p95 <= 4.0 |
+| ECS update | p50 0.9, p95 1.5 | |
 | Render submit | p50 0.5, p95 0.7 | |
 | Draw calls per view | **86** max | <= 100 |
 | Triangles per view | **26,928** max | <= 250k |

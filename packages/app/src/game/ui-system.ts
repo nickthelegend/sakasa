@@ -223,17 +223,17 @@ export class UiSystem extends createSystem({}) {
 
   private content(): HudContent {
     const play = this.playSys();
-    const room = store.room;
     const base: HudContent = { eyebrow: 'SAKASA', stats: '', guide: [], title: '', body: '', stars: -1, a: null, b: null };
     switch (store.mode) {
       case 'idle':
-      case 'scanning':
         return { ...base, title: 'Scanning', body: 'Look around your room.' };
+      case 'scanning':
+        return { ...base, stats: `PLANES ${store.planeCount}`, title: 'Scanning', body: 'Look around your room.' };
       case 'onboarding': {
         const step = store.onboardingStep;
-        const note = room && room.notes.length > 0 ? room.notes[0] : '';
         const skip = { label: 'Skip', run: () => this.finishOnboarding() };
-        if (step === 0) return { ...base, guide: ['up', 'point', 'pinch'], title: 'Point up. Pinch.', body: note, b: skip };
+        // Pinch steps: title and glyphs only. Never a room.note.
+        if (step === 0) return { ...base, guide: ['up', 'point', 'pinch'], title: 'Point up. Pinch.', b: skip };
         if (step === 1) return { ...base, guide: ['side', 'point', 'pinch'], title: 'Now a wall.', b: skip };
         if (step === 2) return { ...base, guide: ['down', 'point', 'pinch'], title: 'Back down.', b: skip };
         return {
@@ -320,8 +320,8 @@ export class UiSystem extends createSystem({}) {
     if (this.dirty) {
       this.dirty = false;
       this.render();
-    } else if (store.mode === 'sandbox') {
-      const s = `DOWN ${DOWN_NAMES[store.gravity]}`;
+    } else if (store.mode === 'sandbox' || store.mode === 'scanning') {
+      const s = store.mode === 'sandbox' ? `DOWN ${DOWN_NAMES[store.gravity]}` : `PLANES ${store.planeCount}`;
       if (s !== this.lastStats) this.render();
     }
     this.camera.getWorldPosition(this.head);
