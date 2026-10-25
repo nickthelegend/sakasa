@@ -7,7 +7,7 @@
   "handActionsToWhoa": 1,
   "onboardingActions": 3,
   "totalHandActions": 17,
-  "durationSeconds": 136,
+  "durationSeconds": 134,
   "results": [
     {
       "name": "cold load builds the room from planes",
