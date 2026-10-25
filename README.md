@@ -11,7 +11,7 @@ Conceived and built after Sep 24, 2026 in a fresh repository.
 
 > Status: runs and is tested end to end in the IWER emulator: hands-only Quest 3 flow 20/20, gaze + pinch Glasses
 > flow 14/14, solver and Havok agree on 168/168 puzzles across the 8 IWER rooms, replays are bit-identical, M1 budget
-> passes (CPU p95 2.2 ms, 86 draw calls). **Not yet run on a headset**: frame rate, real hand tracking and real
+> passes (CPU p95 2.1 ms, 86 draw calls). **Not yet run on a headset**: frame rate, real hand tracking and real
 > plane detection are unverified on hardware. See [TESTING.md](TESTING.md).
 >
 > Emulator clips (test recordings): `grokbot/videos/sakasa/sakasa-whoa-ceiling-wall-floor.mp4`,
