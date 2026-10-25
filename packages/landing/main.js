@@ -31,6 +31,32 @@
     video.setAttribute('controls', '');
   }
 
+  // Anchor click handling: automatically expand target <details> drawer
+  function openTargetDrawer(id) {
+    if (!id) return;
+    const target = document.getElementById(id);
+    if (!target) return;
+    if (target.tagName && target.tagName.toLowerCase() === 'details') {
+      target.open = true;
+    } else {
+      const parentDrawer = target.closest('details');
+      if (parentDrawer) parentDrawer.open = true;
+    }
+  }
+
+  document.querySelectorAll('a[href^="#"]').forEach((link) => {
+    link.addEventListener('click', () => {
+      const href = link.getAttribute('href');
+      if (href && href.length > 1) {
+        openTargetDrawer(href.slice(1));
+      }
+    });
+  });
+
+  if (window.location.hash) {
+    openTargetDrawer(window.location.hash.slice(1));
+  }
+
   // Room plans of generated puzzles (data from scripts/build-data.mjs).
   const plans = document.getElementById('plans');
   if (plans) {

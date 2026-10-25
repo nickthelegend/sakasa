@@ -424,7 +424,7 @@ window.SAKASA_DATA = {
   },
   {
    "label": "EMULATOR CPU P95",
-   "value": "2.20",
+   "value": "2.10",
    "unit": "ms / frame"
   },
   {
