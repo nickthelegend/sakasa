@@ -55,7 +55,7 @@
   "dev": {
     "emulator": {
       "device": "metaQuest3",
-      "environment": "open_studio"
+      "environment": "sunlit_living_room"
     }
   }
 }
