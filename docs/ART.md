@@ -20,3 +20,14 @@ Generated with ChatGPT's image model (via the Codex image tool on a ChatGPT plan
 | sakasa-feature-1.webp | square 1024x1024: a hand pinching at a wall to make it the floor |
 | sakasa-feature-2.webp | square 1024x1024: blocks stacking on a table |
 | sakasa-feature-3.webp | square 1024x1024: a marble bouncing off a real couch |
+
+## Wave 2: film, social and onboarding
+
+| File | Prompt |
+|---|---|
+| sakasa-film-title.webp | landscape 1536x1024: a cosy room flipped sideways where a marble rolls toward a ring; a cinematic title-card background for this product's demo film, its core metaphor at dusk, wide calm area in the center for a title added later |
+| sakasa-social-square.webp | square 1024x1024: a cosy room flipped sideways where a marble rolls toward a ring; a bold social post image showing the product's single most exciting moment |
+| sakasa-banner.webp | landscape 1536x512 wide banner: a cosy room flipped sideways where a marble rolls toward a ring; a panoramic strip of the product's world, low detail in the middle third |
+| sakasa-onboard-1.webp | portrait 1024x1536: a cosy room flipped sideways where a marble rolls toward a ring; onboarding slide 1, a newcomer discovering the product's core idea |
+| sakasa-onboard-2.webp | portrait 1024x1536: a cosy room flipped sideways where a marble rolls toward a ring; onboarding slide 2, the newcomer taking the main action for the first time |
+| sakasa-loading.webp | transparent PNG with a real alpha channel, no background, no ground shadow, centered, 1024x1024: a cosy room flipped sideways where a marble rolls toward a ring; a tiny looping-friendly loading mascot or object from the product's world, centered |
