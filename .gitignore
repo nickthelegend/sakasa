@@ -7,3 +7,5 @@ coverage/
 e2e-out/
 # Loom's local state (event log, attachments, machine config)
 .loom/
+art-src/
+art-src-wif/

@@ -108,3 +108,7 @@ See [TESTING.md](TESTING.md) for counts and numbers. Summary of the suites:
 ## Licence
 
 MIT, Copyright (c) 2026 Nivesh Gajengi. Fonts: SIL OFL 1.1 (see ASSETS.md).
+
+## Art
+
+Art generated with ChatGPT (image generation); prompts and art direction in [docs/ART.md](docs/ART.md). The app ships WebP copies in `packages/app/public/art/`.
