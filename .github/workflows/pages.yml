@@ -1,0 +1,60 @@
+# Builds the Sakasa app and landing page and publishes them to GitHub Pages:
+#   https://nickthelegend.github.io/sakasa/        landing page
+#   https://nickthelegend.github.io/sakasa/app/    the WebXR app (open it in the Meta Quest browser)
+# Competition freeze: no pushes that trigger this from Nov 18, 2026 20:00 UTC until winners (~Dec 11).
+name: Pages
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install app dependencies
+        working-directory: packages/app
+        run: npm ci
+      - name: Typecheck
+        working-directory: packages/app
+        run: npm run typecheck
+      - name: Build the app for /sakasa/app/
+        working-directory: packages/app
+        env:
+          NODE_ENV: production
+        run: npx vite build --base=/sakasa/app/
+      - name: Assemble the site (landing at the root, app under app/)
+        run: |
+          mkdir -p site
+          cp packages/landing/index.html packages/landing/styles.css packages/landing/main.js packages/landing/data.js site/
+          cp -R packages/landing/fonts packages/landing/media site/
+          cp -R packages/app/dist site/app
+          touch site/.nojekyll
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
