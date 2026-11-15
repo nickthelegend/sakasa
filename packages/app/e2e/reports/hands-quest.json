@@ -1,13 +1,13 @@
 {
   "profile": "Meta Quest 3",
   "input": "hands (IWER hand mode; ray + pinch)",
-  "passed": 20,
-  "total": 20,
-  "secondsToWhoa": 3,
+  "passed": 21,
+  "total": 21,
+  "secondsToWhoa": 3.1,
   "handActionsToWhoa": 1,
   "onboardingActions": 3,
   "totalHandActions": 17,
-  "durationSeconds": 132,
+  "durationSeconds": 130,
   "results": [
     {
       "name": "cold load builds the room from planes",
@@ -62,7 +62,12 @@
     {
       "name": "Undo restores the marble and the flip count",
       "ok": true,
-      "detail": "marble -2.425,0.495,-2.013"
+      "detail": "marble 0.125,0.495,-2.013"
+    },
+    {
+      "name": "Undo restores this puzzle's gravity (down)",
+      "ok": true,
+      "detail": "gravity down"
     },
     {
       "name": "Reset puts the marble back on its start",

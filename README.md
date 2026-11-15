@@ -9,7 +9,7 @@ Entry for the **Meta VR Start Developer Competition 2026**: New Experience divis
 Immersive Web SDK (IWSDK 1.1.0-rc.2, WebXR, `immersive-ar`), Havok physics through IWSDK, and UIKitML panels.
 Conceived and built after Sep 24, 2026 in a fresh repository.
 
-> Status: runs and is tested end to end in the IWER emulator: hands-only Quest 3 flow 20/20, gaze + pinch Glasses
+> Status: runs and is tested end to end in the IWER emulator: hands-only Quest 3 flow 21/21, gaze + pinch Glasses
 > flow 14/14, solver and Havok agree on 168/168 puzzles across the 8 IWER rooms, replays are bit-identical, M1 budget
 > passes (CPU p95 2.1 ms, 86 draw calls). **Not yet run on a headset**: frame rate, real hand tracking and real
 > plane detection are unverified on hardware. See [TESTING.md](TESTING.md).

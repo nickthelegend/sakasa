@@ -16,7 +16,7 @@ need a device pass.
 | Core unit tests (Vitest) | **54 / 54 pass** (3 files) | `cd packages/core && npm test` |
 | Core TypeScript | **PASS**, exit 0 | `cd packages/core && npm run typecheck` |
 | App TypeScript | **PASS**, exit 0 | `cd packages/app && npm run typecheck` |
-| Hands-only completion, Meta Quest 3 profile | **20 / 20 checks pass** | `cd packages/app && node e2e/hands-quest.mjs` |
+| Hands-only completion, Meta Quest 3 profile | **21 / 21 checks pass** | `cd packages/app && node e2e/hands-quest.mjs` |
 | Gaze + pinch completion, Meta VR Glasses profile | **14 / 14 checks pass** | `node e2e/hands-glasses.mjs` |
 | The flip, made big (beacon, slow motion, tilt cue, rain, sizes) | **14 / 14 checks pass** | `node e2e/flip-fx.mjs` |
 | Solver vs Havok agreement, 8 IWER rooms x 21 puzzles | **168 / 168 solved by the solver's flips** | `node e2e/agreement.mjs` |
@@ -54,7 +54,7 @@ need a device pass.
 - IWER room fixtures (the exact planes and meshes IWSDK reported in the 8 emulator rooms, captured by
   `e2e/agreement.mjs`): every shipped puzzle plus a daily generates and verifies at its par in each room.
 
-## Hands-only, Meta Quest 3 profile (20 checks)
+## Hands-only, Meta Quest 3 profile (21 checks)
 
 `packages/app/e2e/hands-quest.mjs`, report `e2e/reports/hands-quest.json`. IWER hand input mode; every action is
 the emulated right hand's ray plus a pinch (`xr look-at` + `xr select`), or a hand pose for the wrist menu. No
@@ -71,15 +71,17 @@ controller, no debug hooks, storage cleared first.
 9. Next button loads puzzle 2
 10. A flip counts
 11. Undo restores the marble and the flip count
-12. Reset puts the marble back on its start
-13. Puzzle 2 solved with 1 pinch (par 1)
-14. Palm-up opens the wrist menu and pauses (time scale 0)
-15. Menu Sandbox button opens the sandbox
-16. Pinch-hold on a toy grabs it (DistanceGrabbable), release throws it
-17. HUD menu button opens the menu
-18. Resume closes the menu and unpauses
-19. Exit ends the XR session
-20. Zero console errors
+12. Undo restores this puzzle's gravity (down). Added Nov 15: a film take showed Undo on puzzle 2 restoring
+    puzzle 1's last gravity (-X), because puzzle starts and resets did not update the undo gravity. Fixed.
+13. Reset puts the marble back on its start
+14. Puzzle 2 solved with 1 pinch (par 1)
+15. Palm-up opens the wrist menu and pauses (time scale 0)
+16. Menu Sandbox button opens the sandbox
+17. Pinch-hold on a toy grabs it (DistanceGrabbable), release throws it
+18. HUD menu button opens the menu
+19. Resume closes the menu and unpauses
+20. Exit ends the XR session
+21. Zero console errors
 
 First payoff: **1 pinch** after the room is built (about 3 s including the CLI's aiming round trip). The whole
 run used 17 hand actions.
