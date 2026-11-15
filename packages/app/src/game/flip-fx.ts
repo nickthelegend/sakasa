@@ -458,6 +458,8 @@ export class FlipFxSystem extends createSystem({}) {
   private readonly axis = new Vector3();
   private beaconAlpha = 0;
   private time = 0;
+  /** Frames left in which every effect is drawn invisibly so its shader compiles before the first flip. */
+  private warm = 0;
 
   init(): void {
     this.roomHolder = new Group();
@@ -493,6 +495,7 @@ export class FlipFxSystem extends createSystem({}) {
   private ensureRoom(room: RoomModel): void {
     if (this.builtFor === room) return;
     this.builtFor = room;
+    this.warm = 3;
     this.ghost.geometry.dispose();
     this.ghost.geometry = ghostRoomGeometry(room.min, room.max, 0.022);
     const o = toWorld(room.frame, [0, 0, 0]);
@@ -574,6 +577,25 @@ export class FlipFxSystem extends createSystem({}) {
     }
     this.updateView(store.timeScale, slowAmt);
     this.updateBeacon(room, delta);
+    if (this.warm > 0) {
+      // Draw each effect at zero strength for a few frames: their shaders compile now,
+      // not as an 80 ms hitch on the first pinch.
+      this.warm--;
+      if (!this.ghost.visible) {
+        this.ghostMat.opacity = 0;
+        this.ghost.visible = true;
+      }
+      if (!this.rain.mesh.visible) {
+        this.rain.mat.uniforms.uEnergy.value = 0;
+        this.rain.mesh.visible = true;
+      }
+      if (!this.vignette.mesh.visible) {
+        this.vignette.mat.uniforms.uAmt.value = 0;
+        this.vignette.mat.uniforms.uDialA.value = 0;
+        this.vignette.mesh.position.copy(this.eye).addScaledVector(this.fwd, 0.32);
+        this.vignette.mesh.visible = true;
+      }
+    }
   }
 
   private updateView(scale: number, amt: number): void {
