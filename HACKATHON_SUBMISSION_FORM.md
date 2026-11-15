@@ -11,7 +11,7 @@ Nov 17 18:00 UTC. **Nick submits**; nothing here has been submitted or published
 | Division | New Experience (conceived and built after Sep 24, 2026; fresh repo) |
 | Platform | Immersive Web SDK (WebXR), public URL, Meta Quest 3 / 3S, Meta VR Glasses ready |
 | Build link | TODO (Nick): public HTTPS URL after hosting `packages/app/dist` (GitHub Pages or Vercel). No pushes to it from Nov 18 20:00 UTC until winners (~Dec 11). |
-| Video | TODO (Nick): < 3:00, public YouTube or Vimeo, IWER emulator footage (allowed), best moment in the first 10 s |
+| Video | `grokbot/videos/sakasa/sakasa-film.mp4` (IWER emulator, Quest 3 + Glasses profiles, shot list in `sakasa-film.md`). TODO (Nick): upload as public YouTube or Vimeo |
 | Target launch date | TODO (Nick) |
 | Team | Nivesh Gajengi (solo): design, code, testing. Email: TODO (Nick) |
 
@@ -20,7 +20,8 @@ Nov 17 18:00 UTC. **Nick submits**; nothing here has been submitted or published
 **Inspiration.** Every mixed reality demo puts virtual things *on* your table. We wanted the room itself to be the
 toy. Sakasa (Japanese for "upside down") asks one question: what if any real surface could be the floor? Point at
 your ceiling and pinch, and the toys on your coffee table fall up. Pinch the wall and they slam sideways onto it,
-with their shadows swinging round to the wall too. Nothing about that works without your real room, your real
+with their shadows swinging round to the wall too. Every flip is staged: time drops to 0.15x and ramps back,
+a glowing outline of your room kicks toward its new floor, and light streaks rain the new way. Nothing about that works without your real room, your real
 hands and passthrough.
 
 **What it is.** A hands-only physics puzzle toy. A glowing marble must come to rest in a ring placed on one of
@@ -60,9 +61,9 @@ always points "down".
 | Criterion | What Sakasa shows | Evidence |
 |---|---|---|
 | Innovation & Creativity | Gravity bound to *your* surfaces; every room is a new level from the same seed; a daily puzzle for repeat play | Room plans of puzzle 10 in three IWER rooms (landing); 20 puzzles x 8 rooms replayed through Havok (TESTING.md) |
-| Experience Design | First payoff from one pinch (the table of toys falls up); seated, point-and-pinch within arm's reach; text-free onboarding with glyphs; purposeful passthrough (your walls, ceiling and table are the mechanics); FoV-aware glasses layout | hands-only e2e in the Quest 3 profile; glasses e2e with FoV angle checks |
+| Experience Design | First payoff from one pinch (the table of toys falls up); seated, point-and-pinch within arm's reach; text-free onboarding: a pulsing ring and an animated pinch glyph on the exact surface each first step wants, plus a progress bar; panel text at least 18 mm cap height at 1 m; purposeful passthrough (your walls, ceiling and table are the mechanics); FoV-aware glasses layout | hands-only e2e in the Quest 3 profile; glasses e2e with FoV angle checks |
 | Technical Implementation | Scene understanding to colliders; solver-validated room-adaptive puzzles; runtime Havok gravity; deterministic fixed-step replays; gaze + pinch with dwell; perf budget gate | TESTING.md: unit tests, e2e counts, M1 numbers, determinism |
-| Polish & Presentation | Ink / flip-blue / paper art direction, synthesised spatial audio, slow motion, gravity-aligned shadows, honest emulator video | `videos/sakasa/` clips, landing page |
+| Polish & Presentation | Ink / flip-blue / paper art direction, synthesised spatial audio, a visible slow-motion ramp with a time dial, ghost-room tilt cue, gravity rain, trails on every toy, gravity-aligned shadows, honest emulator film (1080p, the app's own recorded audio) | `videos/sakasa/` clips, landing page |
 
 ## Honesty notes for the form
 

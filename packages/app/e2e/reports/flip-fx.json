@@ -1,0 +1,76 @@
+{
+  "passed": 14,
+  "total": 14,
+  "results": [
+    {
+      "name": "beacon marks the ceiling on step 1",
+      "ok": true,
+      "detail": "beacon 0, 2.700000047683716, -1.9500000476837158"
+    },
+    {
+      "name": "12 bodies in the toy pile",
+      "ok": true,
+      "detail": "marble toy-0-cube toy-1-blue-cube toy-10-roll toy-11-cube toy-2-ball toy-3-cube toy-4-roll toy-6-ball toy-7-cube toy-8-blue-cube toy-9-ball"
+    },
+    {
+      "name": "marble is 15 cm across",
+      "ok": true,
+      "detail": "0.15 m"
+    },
+    {
+      "name": "paper cube is 18 cm",
+      "ok": true,
+      "detail": "0.18 m"
+    },
+    {
+      "name": "HUD is at least 0.64 m wide (18 mm body cap height at 1 m)",
+      "ok": true,
+      "detail": "0.749 m"
+    },
+    {
+      "name": "ceiling pinch: slow motion holds below 0.5x for at least 0.6 s",
+      "ok": true,
+      "detail": "min 0.15, 803 ms"
+    },
+    {
+      "name": "ceiling pinch: time returns to 1x",
+      "ok": true,
+      "detail": "end 1"
+    },
+    {
+      "name": "ceiling pinch: ghost-room tilt cue shows, then clears",
+      "ok": true,
+      "detail": "visible 0-1552 ms"
+    },
+    {
+      "name": "ceiling pinch: gravity rain and slow-motion dial + edge glow show",
+      "ok": true,
+      "detail": "rain 0-2213 ms, dial 0-1342 ms"
+    },
+    {
+      "name": "beacon moves to a wall on step 2",
+      "ok": true,
+      "detail": "beacon 2.5, 1.850000023841858, -1.3684999994933604"
+    },
+    {
+      "name": "menu Tilt cue toggles off",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "with Tilt cue off the ghost room never shows, rain still does",
+      "ok": true,
+      "detail": "ghost -, rain 0-2221"
+    },
+    {
+      "name": "menu Tilt cue toggles back on",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "zero console errors",
+      "ok": true,
+      "detail": ""
+    }
+  ]
+}

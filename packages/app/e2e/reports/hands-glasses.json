@@ -18,7 +18,7 @@
     {
       "name": "HUD corners inside the glasses FoV (3 deg margin)",
       "ok": true,
-      "detail": "(-16.3, -18.3) (-16.3, 2.2) (16.3, -18.3) (16.3, 2.2)"
+      "detail": "(-18.9, -21.4) (-18.9, 4.2) (18.9, -21.4) (18.9, 4.2)"
     },
     {
       "name": "gaze at ceiling + pinch flips up",
@@ -53,7 +53,7 @@
     {
       "name": "menu corners inside the glasses FoV",
       "ok": true,
-      "detail": "(-16.3, -21.9) (-16.3, 13.2) (16.3, -21.9) (16.3, 13.2)"
+      "detail": "(-19.2, -27.5) (-19.2, 19.5) (19.2, -27.5) (19.2, 19.5)"
     },
     {
       "name": "menu Sandbox by gaze",

@@ -7,7 +7,7 @@
   "handActionsToWhoa": 1,
   "onboardingActions": 3,
   "totalHandActions": 17,
-  "durationSeconds": 134,
+  "durationSeconds": 132,
   "results": [
     {
       "name": "cold load builds the room from planes",
@@ -62,7 +62,7 @@
     {
       "name": "Undo restores the marble and the flip count",
       "ok": true,
-      "detail": "marble -2.44,0.48,-2.013"
+      "detail": "marble -2.425,0.495,-2.013"
     },
     {
       "name": "Reset puts the marble back on its start",
@@ -87,7 +87,7 @@
     {
       "name": "pinch-hold on a toy grabs it (DistanceGrabbable)",
       "ok": true,
-      "detail": "toy-1-cube"
+      "detail": "toy-0-cube"
     },
     {
       "name": "HUD menu button opens the menu",
@@ -113,17 +113,17 @@
   "actions": [
     {
       "pinch": "ceiling",
-      "hovered": "wall-z",
+      "hovered": "ceiling",
       "aim": "hand-right"
     },
     {
       "pinch": "wall-x",
-      "hovered": "wall-z",
+      "hovered": "wall-x",
       "aim": "hand-right"
     },
     {
       "pinch": "floor",
-      "hovered": "wall-z",
+      "hovered": "floor",
       "aim": "hand-right"
     },
     {
@@ -132,7 +132,7 @@
     },
     {
       "pinch": "wall-x",
-      "hovered": "wall-z",
+      "hovered": "wall-x",
       "aim": "hand-right"
     },
     {

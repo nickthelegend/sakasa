@@ -21,15 +21,18 @@ Conceived and built after Sep 24, 2026 in a fresh repository.
 
 | | |
 |---|---|
-| **Point, pinch, fall** | The hand ray (Quest) or eye gaze (Meta VR Glasses) hovers a surface: a grid and chevrons show which way things would fall. Pinch and release flips gravity (Havok world gravity, set at runtime) toward that surface, with a short slow-motion ramp and a synthesised "whoomp". |
+| **Point, pinch, fall** | The hand ray (Quest) or eye gaze (Meta VR Glasses) hovers a surface: a grid and chevrons show which way things would fall. Pinch and release flips gravity (Havok world gravity, set at runtime) toward that surface, with a synthesised "whoomp". |
+| **The flip, made big** | A shock ring races across the pinched surface and lights its grid; a glowing outline of your room kicks 12 degrees toward the new floor and settles (the real room never moves); 180 light streaks fall the new way through the room; time holds at 0.15x and ramps back to 1x over 1.1 s, shown by a dial and a flip-blue edge glow; every toy leaves a trail. |
 | **Pinch-hold preview** | While the pinch is held, dots trace where the marble would travel. Release commits; pointing away cancels. |
 | **Room as level** | WebXR planes (and labelled meshes) become an axis-aligned room model, static colliders and pinchable surfaces. Labels are optional: floors, walls and ceilings are also found from orientation, height and size. Missing ceiling or walls get labelled paper stand-ins; no planes at all gives a paper room on a virtual table. |
 | **Solver-validated puzzles** | `packages/core` generates each puzzle *for this room* from a seed and proves it solvable at its par with a breadth-first search over flips (up to 4). A flip is modelled as a sphere sweep against radius-inflated boxes; glancing edge hits are flagged ambiguous and never used. Puzzles: 20 in 3 sets (Fall, Sideways, Upside down), a daily seed per UTC day, stars by flips vs par. |
 | **Sandbox** | 12 bodies (paper cubes, crumpled paper balls, paper rolls, the marble). Pinch-hold a toy to grab it with a distance grab; release throws it. |
-| **Juice** | Marble trail and point light, gravity-aligned blob shadows (they swing onto the wall when gravity does), impact sparks, HRTF-panned synthesised bounces pitched by surface, solve chime, slow motion on flips and on the solve. |
+| **Juice** | A 15 cm glowing marble with a wide halo, trail and point light, 18 cm paper toys stacked to fit your table, a goal ring with a 1 m light beam and an outward ripple, gravity-aligned blob shadows (they swing onto the wall when gravity does), impact sparks, HRTF-panned synthesised bounces pitched by surface, solve chime, slow motion on flips and on the solve. |
 | **Menus** | Palm-up wrist menu (pauses the room), or the HUD menu button (the gaze path on Glasses): puzzle picker, daily, sandbox, gentle gravity, glasses mode, sound, rescan, resume, exit. |
 | **Glasses mode** | Auto-on when a gaze input source appears. HUD moves into the centre of the 74 x 68 degree view, a surface must be gazed at for 400 ms before a pinch flips it (our own dwell; IWSDK's `dwellWindowSeconds` is a filter, not dwell-to-click), buttons are at least 5.8 cm tall at 75-85 cm (over 4 degrees). A FoV-aware hint says where "down" is when that surface is out of view. |
-| **Comfort** | The real room never moves; only virtual objects fall. Seated, everything reachable by pointing. "Gentle gravity" option. |
+| **Comfort** | The real room never moves; only virtual objects fall. Seated, everything reachable by pointing. "Gentle gravity" (weaker gravity, a 4-degree tilt cue) and "Tilt cue off" options. |
+| **Readable from the seat** | HUD body text has an 18.9 mm cap height at 1 m (0.66 m panel), 16 mm on the Glasses HUD at 0.85 m, 15.6 mm on the menu at 0.7 m. |
+| **First session** | Each of the three first pinches has a pulsing ring and an animated pinch glyph on the exact surface it wants (ceiling, a wall, the floor), plus a three-step progress bar on the HUD. No text wall. |
 
 ### Spec corrections applied (VR judge, Oct 24)
 
