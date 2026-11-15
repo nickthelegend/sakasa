@@ -77,6 +77,8 @@ await clickTarget('btn-a'); // Undo
 await waitSettled();
 s = state();
 check('Undo restores the marble and the flip count', s.puzzle.flips === 0, `marble ${s.marble}`);
+// Nov 15 film take found Undo restoring puzzle 1's last gravity instead of this puzzle's "down".
+check('Undo restores this puzzle\'s gravity (down)', s.gravity === 'down', `gravity ${s.gravity}`);
 await clickTarget('btn-b'); // Reset
 await waitSettled();
 s = state();

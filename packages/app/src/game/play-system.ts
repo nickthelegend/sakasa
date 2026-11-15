@@ -441,7 +441,11 @@ export class PlaySystem extends createSystem({
   // ------------------------------------------------------------- events
 
   private onFlip(d: { dir: Dir; source: string; changed: boolean }): void {
-    if (d.source !== 'pinch') return;
+    if (d.source !== 'pinch') {
+      // A puzzle start, reset or undo also sets "down": Undo must return to it, not to an older puzzle's gravity.
+      store.undoGravity = d.dir;
+      return;
+    }
     if (store.mode === 'onboarding') {
       const step = store.onboardingStep;
       const ok =
