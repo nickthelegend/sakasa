@@ -5,3 +5,4 @@ export * from './sweep.js';
 export * from './solver.js';
 export * from './puzzle.js';
 export * from './synthetic-rooms.js';
+export * from './feel.js';

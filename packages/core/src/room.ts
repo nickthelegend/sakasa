@@ -107,6 +107,8 @@ const PAPER_CEILING = 2.4;
 const MAX_CEILING = 4;
 const ROOM_CELL = 0.25;
 const TABLETOP_CELL = 0.1;
+/** Marble radius as a fraction of a lattice cell (0.3 x 25 cm = 7.5 cm: a 15 cm glowing marble). */
+export const MARBLE_CELL_RATIO = 0.3;
 
 export function toWorld(frame: RoomFrame, p: V3): V3 {
   return add(rotateY(p, frame.yaw), frame.origin);
@@ -383,7 +385,7 @@ export function buildRoom(
     surfaces: [...surfaces, ...furnitureSurfaces],
     solids,
     cell: ROOM_CELL,
-    radius: ROOM_CELL * 0.24,
+    radius: ROOM_CELL * MARBLE_CELL_RATIO,
     head,
     forward,
     notes,
@@ -472,7 +474,7 @@ export function buildTabletop(headWorld: V3, fwdWorld: V3, note: string): RoomMo
     }),
     solids: [],
     cell: TABLETOP_CELL,
-    radius: TABLETOP_CELL * 0.24,
+    radius: TABLETOP_CELL * MARBLE_CELL_RATIO,
     head: toRoom(frame, headWorld),
     forward: [0, 0, -1],
     notes: [note],
