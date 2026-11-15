@@ -195,6 +195,15 @@ transparent double-sided materials render in one pass, toy edge lines dropped, c
 CPU is several times faster than Quest 3 and GPU time is not measured; this is a relative proxy. In stereo on a
 headset the per-view draw count is the number that matters (multiview) or doubles (two passes).
 
+## Walkthrough film (Nov 15)
+
+`grokbot/videos/sakasa/sakasa-film.mp4`, 2:49, 1920 x 1080, 30 fps, recorded by
+`packages/app/e2e/record-film.mjs` (7 takes, 59-60 capture fps, the app's own audio from its master bus) and cut by
+`e2e/cut-film.py`. Shot list, capture method and checks: `grokbot/videos/sakasa/sakasa-film.md`. Recording at
+1920 x 1080 needs `npx iwsdk dev up ... --screenshot-width 1920 --screenshot-height 1080` (the runtime frame takes
+that size); on this 16 GB Mac under memory pressure the headless page crashed once at that size during an e2e run,
+so the e2e suites run at the default 800 x 800.
+
 ## Emulator clips (test recordings)
 
 Recorded by `packages/app/e2e/record-clips.mjs` into `grokbot/videos/sakasa/`: a real-time DevTools screencast of

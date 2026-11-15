@@ -192,15 +192,35 @@ if (want('splash')) {
   } catch {
     // page may not be up yet
   }
-  cli(['xr', 'set-input-mode'], { mode: 'hand' }, { allowFail: true });
+  try {
+    cli(['xr', 'set-input-mode'], { mode: 'hand' }, { allowFail: true });
+  } catch {
+    // no session yet: hand mode is set again after entering
+  }
   cli(['browser', 'reload'], {}, { allowFail: true });
   await sleep(9000);
   const T = [
+    { at: 1000, js: js(`(window.IWER_DEVICE.primaryInputMode = 'hand', true)`) },
     { at: 4500, js: js(`(document.getElementById('enter').click(), true)`) },
+    { at: 5600, js: js(`(window.IWER_DEVICE.primaryInputMode = 'hand', window.IWER_DEVICE.primaryInputMode)`) },
     { at: 13000, js: js(`window.__sakasa.state().mode`) },
   ];
   const r = runCapture('splash', 15000, T);
-  if (cli(['xr', 'status'], undefined, { allowFail: true }).sessionActive !== true) cli(['xr', 'enter'], {}, { allowFail: true });
+  const active = () => {
+    try {
+      return cli(['xr', 'status'], undefined, { allowFail: true }).sessionActive === true;
+    } catch {
+      return false;
+    }
+  };
+  for (let i = 0; i < 10 && !active(); i++) {
+    try {
+      cli(['xr', 'enter'], {}, { allowFail: true });
+    } catch {
+      // retry
+    }
+    await sleep(2500);
+  }
   cli(['xr', 'set-input-mode'], { mode: 'hand' });
   save('splash', r, { final: state().mode });
 }

@@ -10,12 +10,13 @@ Immersive Web SDK (IWSDK 1.1.0-rc.2, WebXR, `immersive-ar`), Havok physics throu
 Conceived and built after Sep 24, 2026 in a fresh repository.
 
 > Status: runs and is tested end to end in the IWER emulator: hands-only Quest 3 flow 21/21, gaze + pinch Glasses
-> flow 14/14, solver and Havok agree on 168/168 puzzles across the 8 IWER rooms, replays are bit-identical, M1 budget
-> passes (CPU p95 2.1 ms, 86 draw calls). **Not yet run on a headset**: frame rate, real hand tracking and real
+> flow 14/14, solver and Havok agree on 168/168 puzzles across the 8 IWER rooms (15 cm marble), the flip-effects suite passes
+> 14/14, replays are bit-identical, M1 budget passes (CPU p95 2.1 ms, 98 draw calls). **Not yet run on a headset**: frame rate, real hand tracking and real
 > plane detection are unverified on hardware. See [TESTING.md](TESTING.md).
 >
-> Emulator clips (test recordings): `grokbot/videos/sakasa/sakasa-whoa-ceiling-wall-floor.mp4`,
-> `sakasa-puzzle-p14.mp4`, `sakasa-glasses-gaze-pinch.mp4`.
+> Walkthrough film (Nov 15, 2:49, 1080p, IWER emulator, the app's own audio): `grokbot/videos/sakasa/sakasa-film.mp4`,
+> shot list in `sakasa-film.md`. Older test clips: `sakasa-whoa-ceiling-wall-floor.mp4`, `sakasa-puzzle-p14.mp4`,
+> `sakasa-glasses-gaze-pinch.mp4`. Headset-judge pass: [docs/JUDGE-NOV15.md](docs/JUDGE-NOV15.md).
 
 ## What it does
 

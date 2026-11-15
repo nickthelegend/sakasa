@@ -20,18 +20,20 @@ from PIL import Image, ImageDraw, ImageFont
 W, H = 1920, 1080
 
 
-def caption_png(path, text, font_path, label=None, label_font=None):
+def caption_png(path, text, font_path, label=None, label_font=None, pos='br'):
     img = Image.new('RGBA', (W, H), (0, 0, 0, 0))
     d = ImageDraw.Draw(img)
     if text:
-        font = ImageFont.truetype(font_path, 44)
+        font = ImageFont.truetype(font_path, 48)
         lines = text.split('\n')
         widths = [d.textlength(line, font=font) for line in lines]
         pad_x, pad_y, gap = 34, 24, 12
-        line_h = 52
+        line_h = 56
         box_w = int(max(widths)) + pad_x * 2 + 10
         box_h = line_h * len(lines) + gap * (len(lines) - 1) + pad_y * 2
-        x0, y1 = 72, H - 72
+        # bottom-right by default: the Quest HUD sits down-left of centre and must stay visible
+        x0 = 72 if pos == 'bl' else W - 72 - box_w
+        y1 = H - 64
         y0 = y1 - box_h
         d.rounded_rectangle([x0, y0, x0 + box_w, y1], radius=22, fill=(11, 13, 16, 222))
         d.rounded_rectangle([x0, y0, x0 + 10, y1], radius=5, fill=(34, 184, 255, 255))
@@ -60,7 +62,7 @@ def main():
     parts = []
     for i, s in enumerate(spec['shots']):
         png = os.path.join(tmp, f'cap{i}.png')
-        caption_png(png, s.get('caption', ''), fonts['caption'], s.get('label'), fonts['label'])
+        caption_png(png, s.get('caption', ''), fonts['caption'], s.get('label'), fonts['label'], s.get('pos', 'br'))
         part = os.path.join(tmp, f'part{i:02d}.mp4')
         dur = s['out'] - s['in']
         fade = min(0.35, dur / 4)
@@ -72,7 +74,7 @@ def main():
             f"afade=t=in:st=0:d=0.08,afade=t=out:st={max(0, dur - 0.12)}:d=0.12[ao]"
         )
         run([
-            'ffmpeg', '-y', '-loglevel', 'error', '-i', s['src'], '-loop', '1', '-t', str(dur), '-i', png,
+            'ffmpeg', '-nostdin', '-y', '-loglevel', 'error', '-threads', '4', '-i', s['src'], '-loop', '1', '-t', str(dur), '-i', png,
             '-filter_complex', vf, '-map', '[vo]', '-map', '[ao]',
             '-c:v', 'libx264', '-preset', 'medium', '-crf', '18', '-pix_fmt', 'yuv420p', '-r', '30',
             '-c:a', 'aac', '-b:a', '160k', '-ar', '48000', '-ac', '2', part,
