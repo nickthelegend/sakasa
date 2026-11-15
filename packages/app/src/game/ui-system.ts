@@ -29,6 +29,19 @@ interface HudContent {
 }
 
 const PUZZLE_IDS = PUZZLES.map((p) => p.id);
+
+/**
+ * Panel widths in metres. The HUD document is 440 units wide and its body text
+ * is 18 units of Albert Sans (cap height 0.70 em), so at 0.66 m the body cap
+ * height is 0.66 / 440 * 18 * 0.70 = 18.9 mm at 1.0 m: the 18 mm-at-1 m floor.
+ * Glasses: 0.56 m at 0.85 m gives 16.0 mm (floor 15.3 mm at that distance).
+ * Menu (420 units, labels 18): 0.52 m at 0.7 m gives 15.6 mm (floor 12.6 mm).
+ */
+export const HUD_WIDTH_QUEST = 0.66;
+export const HUD_WIDTH_GLASSES = 0.56;
+export const MENU_WIDTH = 0.52;
+export const MENU_WIDTH_PALM = 0.4;
+export const MENU_WIDTH_GLASSES = 0.5;
 const DOWN_NAMES: Record<number, string> = {
   [D.PosX]: 'WALL',
   [D.NegX]: 'WALL',
@@ -81,7 +94,7 @@ export class UiSystem extends createSystem({}) {
     const ids = [
       'hud-eyebrow', 'hud-stats', 'hud-title', 'hud-body', 'hud-guide', 'hud-stars', 'hud-buttons',
       'g-up', 'g-side', 'g-down', 'g-point', 'g-pinch', 'star-1', 'star-2', 'star-3',
-      'btn-a', 'btn-b', 'btn-menu', 'btn-a-label', 'btn-b-label', 'hud-down',
+      'btn-a', 'btn-b', 'btn-menu', 'btn-a-label', 'btn-b-label', 'hud-down', 'hud-steps', 's-fill',
     ];
     for (const id of ids) {
       const e = this.hud.requireElementById<UIKit.Text>(id);
@@ -90,7 +103,7 @@ export class UiSystem extends createSystem({}) {
     }
     const menuIds = [
       'm-prev', 'm-next', 'm-level', 'm-meta', 'm-play', 'm-play-label', 'm-daily', 'm-sandbox',
-      'm-gentle', 'm-gentle-label', 'm-glasses', 'm-glasses-label', 'm-sound', 'm-sound-label',
+      'm-gentle', 'm-gentle-label', 'm-tilt', 'm-tilt-label', 'm-glasses', 'm-glasses-label', 'm-sound', 'm-sound-label',
       'm-rescan', 'm-resume', 'm-exit',
     ];
     for (const id of menuIds) {
@@ -110,6 +123,11 @@ export class UiSystem extends createSystem({}) {
       store.settings.gentle = !store.settings.gentle;
       saveSettings();
       this.world.getSystem(GravitySystem)?.refresh();
+      this.refreshMenu();
+    });
+    this.click('m-tilt', () => {
+      store.settings.tilt = !store.settings.tilt;
+      saveSettings();
       this.refreshMenu();
     });
     this.click('m-glasses', () => {
@@ -215,6 +233,7 @@ export class UiSystem extends createSystem({}) {
     this.set('m-level', { text: `${String(spec.index + 1).padStart(2, '0')} ${spec.title}` });
     this.set('m-meta', { text: `SET ${spec.set} ${SET_NAMES[spec.set].toUpperCase()} / BEST ${best ? '*'.repeat(best) : '-'}` });
     this.set('m-gentle-label', { text: store.settings.gentle ? 'Gentle on' : 'Gentle off' });
+    this.set('m-tilt-label', { text: store.settings.tilt ? 'Tilt cue on' : 'Tilt cue off' });
     this.set('m-glasses-label', { text: `Glasses ${store.settings.glasses}` });
     this.set('m-sound-label', { text: store.settings.sound ? 'Sound on' : 'Sound off' });
   }
@@ -303,6 +322,10 @@ export class UiSystem extends createSystem({}) {
     this.show('hud-guide', c.guide.length > 0);
     for (const g of ['up', 'side', 'down', 'point', 'pinch'] as const) this.show(`g-${g}`, c.guide.includes(g));
     this.show('hud-stars', c.stars > 0);
+    const step = store.mode === 'onboarding' && store.onboardingStep < 3 ? store.onboardingStep : -1;
+    this.show('hud-steps', step >= 0);
+    // one track, one fill: step n of 3 (two draw calls, not three)
+    if (step >= 0) this.set('s-fill', { width: Math.round((160 * (step + 1)) / 3) });
     for (let i = 1; i <= 3; i++) this.set(`star-${i}`, { color: i <= c.stars ? '#22b8ff' : '#2a3b46' });
     this.actions.a = c.a?.run ?? null;
     this.actions.b = c.b?.run ?? null;
@@ -405,13 +428,13 @@ export class UiSystem extends createSystem({}) {
   private placeHud(delta: number): void {
     const glasses = store.glassesActive;
     const dist = glasses ? 0.85 : 1.0;
-    const drop = glasses ? 0.12 : 0.3;
-    const width = glasses ? 0.48 : 0.42;
+    const drop = glasses ? 0.13 : 0.3;
+    const width = glasses ? HUD_WIDTH_GLASSES : HUD_WIDTH_QUEST;
     const yaw = Math.atan2(this.fwd.x, this.fwd.z);
     let diff = yaw - this.hudYaw;
     while (diff > Math.PI) diff -= 2 * Math.PI;
     while (diff < -Math.PI) diff += 2 * Math.PI;
-    const threshold = glasses ? 0.35 : 0.6;
+    const threshold = glasses ? 0.35 : 0.45;
     if (!this.hudAnchored) {
       this.hudYaw = yaw;
       this.hudAnchored = true;
@@ -419,10 +442,10 @@ export class UiSystem extends createSystem({}) {
       this.hudYaw += diff * Math.min(1, delta * 3);
     }
     this.size(this.hud.document, width);
-    this.size(this.menu.document, glasses ? 0.42 : this.menuFromPalm ? 0.3 : 0.38);
+    this.size(this.menu.document, glasses ? MENU_WIDTH_GLASSES : this.menuFromPalm ? MENU_WIDTH_PALM : MENU_WIDTH);
     const o = this.hudEntity.object3D!;
     // Quest: down-left of centre so the table in front stays clear. Glasses: centred (narrow FoV).
-    const side = glasses ? 0 : 0.32;
+    const side = glasses ? 0 : 0.34;
     this.tmp.set(Math.sin(this.hudYaw + side), 0, Math.cos(this.hudYaw + side));
     o.position.set(this.head.x + this.tmp.x * dist, this.head.y - drop, this.head.z + this.tmp.z * dist);
     this.faceHead(o);

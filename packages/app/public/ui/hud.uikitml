@@ -32,13 +32,13 @@
   .eyebrow {
     font-family: b612;
     font-weight: 700;
-    font-size: 13;
+    font-size: 16;
     letter-spacing: 2;
     color: #22b8ff;
   }
   .stats {
     font-family: b612;
-    font-size: 14;
+    font-size: 17;
     color: #e9f6fd;
   }
   .guide {
@@ -72,7 +72,7 @@
   .down {
     font-family: b612;
     font-weight: 700;
-    font-size: 14;
+    font-size: 17;
     letter-spacing: 1.5;
     color: #0b0d10;
     background-color: #22b8ff;
@@ -81,6 +81,19 @@
     padding-left: 10;
     padding-right: 10;
     border-radius: 8;
+  }
+  .steps {
+    flex-direction: row;
+    width: 160;
+    height: 10;
+    border-radius: 5;
+    background-color: #1d4f6b;
+    align-self: center;
+  }
+  .steps-fill {
+    height: 10;
+    border-radius: 5;
+    background-color: #22b8ff;
   }
   .stars {
     flex-direction: row;
@@ -151,6 +164,7 @@
     <div id="g-point" class="glyph"><Pointer></Pointer></div>
     <div id="g-pinch" class="glyph"><Hand></Hand></div>
   </div>
+  <div id="hud-steps" class="steps"><div id="s-fill" class="steps-fill" style="width: 54"></div></div>
   <div id="hud-title" class="title">Scanning your room</div>
   <div id="hud-body" class="body">Look around for a moment.</div>
   <div id="hud-down" class="down" style="display: none"></div>

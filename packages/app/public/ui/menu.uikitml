@@ -24,7 +24,7 @@
   .eyebrow {
     font-family: b612;
     font-weight: 700;
-    font-size: 13;
+    font-size: 15;
     letter-spacing: 2;
     color: #0b7fb5;
   }
@@ -45,7 +45,7 @@
   }
   .level-meta {
     font-family: b612;
-    font-size: 13;
+    font-size: 15;
     color: #3d5563;
   }
   .row {
@@ -118,14 +118,15 @@
   </div>
   <div class="row">
     <div id="m-gentle" class="btn"><Feather></Feather><div id="m-gentle-label" class="label">Gentle off</div></div>
+    <div id="m-tilt" class="btn"><Rotate3d></Rotate3d><div id="m-tilt-label" class="label">Tilt cue on</div></div>
+  </div>
+  <div class="row">
     <div id="m-glasses" class="btn"><Glasses></Glasses><div id="m-glasses-label" class="label">Glasses auto</div></div>
-  </div>
-  <div class="row">
     <div id="m-sound" class="btn"><Volume2></Volume2><div id="m-sound-label" class="label">Sound on</div></div>
-    <div id="m-rescan" class="btn"><ScanLine></ScanLine><div class="label">Rescan</div></div>
   </div>
   <div class="row">
-    <div id="m-resume" class="btn primary"><div class="primary-label">Resume</div></div>
+    <div id="m-rescan" class="btn"><ScanLine></ScanLine><div class="label">Rescan</div></div>
     <div id="m-exit" class="btn"><LogOut></LogOut><div class="label">Exit</div></div>
   </div>
+  <div id="m-resume" class="btn primary"><div class="primary-label">Resume</div></div>
 </div>
