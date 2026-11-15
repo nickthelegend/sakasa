@@ -137,12 +137,17 @@ void main() {
   float border = smoothstep(0.04, 0.0, edge);
   float age = uTime - uPulseT;
   float ring = 0.0;
-  if (age >= 0.0 && age < 1.4) {
-    float r = age * 3.2;
-    ring = smoothstep(0.09, 0.0, abs(dHit * 0.0 + length(p - uPulse) - r)) * (1.0 - age / 1.4);
+  float flash = 0.0;
+  if (age >= 0.0 && age < 1.6) {
+    // a bright shock ring races out from the pinched spot, the grid it passes lights up
+    float r = age * 3.4;
+    float dPulse = length(p - uPulse);
+    ring = smoothstep(0.2, 0.0, abs(dPulse - r)) * (1.0 - age / 1.6);
+    float wake = smoothstep(r, r - 0.9, dPulse) * step(dPulse, r) * (1.0 - age / 1.6);
+    flash = line * wake * 0.9 + wake * 0.12;
   }
   float spot = smoothstep(0.35, 0.0, dHit) * uHover * (0.25 + 0.35 * uPress);
-  float a = line * (0.6 * near * uHover + 0.14 * uActive) + border * (0.75 * uHover + 0.3 * uActive) + ring * 0.95 + spot;
+  float a = line * (0.6 * near * uHover + 0.2 * uActive) + border * (0.75 * uHover + 0.45 * uActive) + ring * 1.0 + flash + spot;
   a = clamp(a, 0.0, 1.0);
   vec3 col = mix(uColor, vec3(1.0), 0.25 * spot);
   float pa = uPaper * 0.78;
@@ -222,18 +227,35 @@ export function makeToyMesh(kind: ToyKind, size: number, seed: number): Object3D
 
 export function makeMarbleMesh(radius: number): Object3D {
   const core = new Mesh(
-    new SphereGeometry(radius, 24, 16),
+    new SphereGeometry(radius, 28, 18),
     new MeshStandardMaterial({
-      color: new Color('#dff6ff'),
+      color: new Color('#e8f8ff'),
       emissive: FLIP,
-      emissiveIntensity: 1.6,
-      roughness: 0.2,
+      emissiveIntensity: 2.4,
+      roughness: 0.15,
       metalness: 0,
     }),
   );
+  // One camera-facing sprite: a hot inner halo plus a wide soft glow, so the
+  // marble reads from across the room (one draw call).
   const halo = new Mesh(
-    new PlaneGeometry(radius * 7, radius * 7),
-    glowBlend(new MeshBasicMaterial({ map: glowTexture(), color: FLIP, opacity: 0.85 })),
+    new PlaneGeometry(radius * 16, radius * 16),
+    glowBlend(new ShaderMaterial({
+      side: DoubleSide,
+      forceSinglePass: true,
+      uniforms: { uColor: { value: FLIP.clone() } },
+      vertexShader: /* glsl */ `varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }`,
+      fragmentShader: /* glsl */ `
+        uniform vec3 uColor; varying vec2 vUv;
+        void main(){
+          float r = length(vUv - 0.5) * 2.0;
+          float inner = smoothstep(0.36, 0.1, r);
+          float wide = pow(max(0.0, 1.0 - r), 2.2) * 0.55;
+          float a = clamp(inner + wide, 0.0, 1.0);
+          if (a < 0.003) discard;
+          gl_FragColor = vec4(mix(uColor, vec3(1.0), inner * 0.35), a);
+        }`,
+    })),
   );
   halo.name = 'marble-halo';
   halo.raycast = () => undefined;
@@ -241,14 +263,18 @@ export function makeMarbleMesh(radius: number): Object3D {
   return core;
 }
 
-// ---------------------------------------------------------------- trail
+// ---------------------------------------------------------------- trails
 
-/** Camera-facing ribbon behind the marble. One draw call, no per-frame allocation. */
+/**
+ * Camera-facing ribbons: `ribbons` trails of `n` points each in one geometry,
+ * so the marble's trail is one draw call and every toy's trail is one more.
+ * No per-frame allocation.
+ */
 export class Trail {
   readonly mesh: Mesh;
   private readonly points: Float32Array;
-  private count = 0;
-  private readonly n: number;
+  private readonly counts: Int32Array;
+  private readonly gains: Float32Array;
   private readonly pos: Float32Array;
   private readonly alpha: Float32Array;
   private readonly tmpA = new Vector3();
@@ -257,11 +283,17 @@ export class Trail {
   private readonly tmpSide = new Vector3();
   private readonly tmpView = new Vector3();
 
-  constructor(n: number, private readonly width: number) {
-    this.n = n;
-    this.points = new Float32Array(n * 3);
-    this.pos = new Float32Array(n * 2 * 3);
-    this.alpha = new Float32Array(n * 2);
+  constructor(
+    private readonly n: number,
+    private readonly width: number,
+    private readonly ribbons = 1,
+    color: Color = FLIP,
+  ) {
+    this.points = new Float32Array(ribbons * n * 3);
+    this.counts = new Int32Array(ribbons);
+    this.gains = new Float32Array(ribbons).fill(1);
+    this.pos = new Float32Array(ribbons * n * 2 * 3);
+    this.alpha = new Float32Array(ribbons * n * 2);
     const geo = new BufferGeometry();
     const posAttr = new BufferAttribute(this.pos, 3);
     posAttr.setUsage(DynamicDrawUsage);
@@ -270,83 +302,102 @@ export class Trail {
     geo.setAttribute('position', posAttr);
     geo.setAttribute('alpha', aAttr);
     const idx: number[] = [];
-    for (let i = 0; i < n - 1; i++) {
-      const a = i * 2;
-      idx.push(a, a + 1, a + 2, a + 1, a + 3, a + 2);
+    for (let r = 0; r < ribbons; r++) {
+      for (let i = 0; i < n - 1; i++) {
+        const a = (r * n + i) * 2;
+        idx.push(a, a + 1, a + 2, a + 1, a + 3, a + 2);
+      }
     }
     geo.setIndex(idx);
     const mat = glowBlend(new ShaderMaterial({
       side: DoubleSide,
       forceSinglePass: true,
-      uniforms: { uColor: { value: FLIP.clone() } },
+      uniforms: { uColor: { value: color.clone() } },
       vertexShader: /* glsl */ `
         attribute float alpha; varying float vA;
         void main() { vA = alpha; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
       fragmentShader: /* glsl */ `
         uniform vec3 uColor; varying float vA;
-        void main() { gl_FragColor = vec4(uColor, vA); }`,
+        void main() { gl_FragColor = vec4(mix(uColor, vec3(1.0), vA * 0.35), vA); }`,
     }));
     this.mesh = new Mesh(geo, mat);
     this.mesh.frustumCulled = false;
     this.mesh.raycast = () => undefined;
   }
 
-  reset(): void {
-    this.count = 0;
-    this.alpha.fill(0);
+  reset(ribbon = -1): void {
+    if (ribbon < 0) {
+      this.counts.fill(0);
+      this.alpha.fill(0);
+    } else {
+      this.counts[ribbon] = 0;
+      this.alpha.fill(0, ribbon * this.n * 2, (ribbon + 1) * this.n * 2);
+    }
     (this.mesh.geometry.getAttribute('alpha') as BufferAttribute).needsUpdate = true;
   }
 
-  push(x: number, y: number, z: number, eye: Vector3): void {
+  /** Brightness of one ribbon (0 hides it), e.g. from the body's speed. */
+  setGain(ribbon: number, g: number): void {
+    this.gains[ribbon] = g;
+  }
+
+  push(x: number, y: number, z: number, eye: Vector3, ribbon = 0): void {
     const p = this.points;
-    if (this.count > 0) {
-      const dx = x - p[0];
-      const dy = y - p[1];
-      const dz = z - p[2];
+    const n = this.n;
+    const o = ribbon * n * 3;
+    if (this.counts[ribbon] > 0) {
+      const dx = x - p[o];
+      const dy = y - p[o + 1];
+      const dz = z - p[o + 2];
       if (dx * dx + dy * dy + dz * dz < 0.0001) {
         // not moving: let the tail decay toward the head
-        for (let i = this.n - 1; i > 0; i--) {
-          p[i * 3] += (p[(i - 1) * 3] - p[i * 3]) * 0.12;
-          p[i * 3 + 1] += (p[(i - 1) * 3 + 1] - p[i * 3 + 1]) * 0.12;
-          p[i * 3 + 2] += (p[(i - 1) * 3 + 2] - p[i * 3 + 2]) * 0.12;
+        for (let i = n - 1; i > 0; i--) {
+          const a = o + i * 3;
+          p[a] += (p[a - 3] - p[a]) * 0.12;
+          p[a + 1] += (p[a - 2] - p[a + 1]) * 0.12;
+          p[a + 2] += (p[a - 1] - p[a + 2]) * 0.12;
         }
-        this.rebuild(eye);
+        this.rebuild(eye, ribbon);
         return;
       }
     }
-    p.copyWithin(3, 0, (this.n - 1) * 3);
-    p[0] = x;
-    p[1] = y;
-    p[2] = z;
-    if (this.count === 0) for (let i = 1; i < this.n; i++) p.set([x, y, z], i * 3);
-    this.count = Math.min(this.n, this.count + 1);
-    this.rebuild(eye);
+    p.copyWithin(o + 3, o, o + (n - 1) * 3);
+    p[o] = x;
+    p[o + 1] = y;
+    p[o + 2] = z;
+    if (this.counts[ribbon] === 0) for (let i = 1; i < n; i++) p.set([x, y, z], o + i * 3);
+    this.counts[ribbon] = Math.min(n, this.counts[ribbon] + 1);
+    this.rebuild(eye, ribbon);
   }
 
-  private rebuild(eye: Vector3): void {
+  private rebuild(eye: Vector3, ribbon: number): void {
     const p = this.points;
-    for (let i = 0; i < this.n; i++) {
-      const j = Math.min(i + 1, this.n - 1);
-      const k = Math.max(i - 1, 0);
+    const n = this.n;
+    const o = ribbon * n;
+    const gain = this.gains[ribbon];
+    for (let i = 0; i < n; i++) {
+      const j = o + Math.min(i + 1, n - 1);
+      const k = o + Math.max(i - 1, 0);
+      const c = o + i;
       this.tmpA.set(p[k * 3], p[k * 3 + 1], p[k * 3 + 2]);
       this.tmpB.set(p[j * 3], p[j * 3 + 1], p[j * 3 + 2]);
       this.tmpDir.subVectors(this.tmpA, this.tmpB);
-      this.tmpView.set(p[i * 3] - eye.x, p[i * 3 + 1] - eye.y, p[i * 3 + 2] - eye.z);
+      this.tmpView.set(p[c * 3] - eye.x, p[c * 3 + 1] - eye.y, p[c * 3 + 2] - eye.z);
       this.tmpSide.crossVectors(this.tmpDir, this.tmpView);
       const l = this.tmpSide.length();
-      const t = 1 - i / (this.n - 1);
+      const t = 1 - i / (n - 1);
       const w = (this.width * (0.25 + 0.75 * t)) / 2;
       if (l > 1e-6) this.tmpSide.multiplyScalar(w / l);
       else this.tmpSide.set(0, 0, 0);
-      this.pos[i * 6] = p[i * 3] + this.tmpSide.x;
-      this.pos[i * 6 + 1] = p[i * 3 + 1] + this.tmpSide.y;
-      this.pos[i * 6 + 2] = p[i * 3 + 2] + this.tmpSide.z;
-      this.pos[i * 6 + 3] = p[i * 3] - this.tmpSide.x;
-      this.pos[i * 6 + 4] = p[i * 3 + 1] - this.tmpSide.y;
-      this.pos[i * 6 + 5] = p[i * 3 + 2] - this.tmpSide.z;
-      const a = i < this.count ? t * t * 0.9 : 0;
-      this.alpha[i * 2] = a;
-      this.alpha[i * 2 + 1] = a;
+      this.pos[c * 6] = p[c * 3] + this.tmpSide.x;
+      this.pos[c * 6 + 1] = p[c * 3 + 1] + this.tmpSide.y;
+      this.pos[c * 6 + 2] = p[c * 3 + 2] + this.tmpSide.z;
+      this.pos[c * 6 + 3] = p[c * 3] - this.tmpSide.x;
+      this.pos[c * 6 + 4] = p[c * 3 + 1] - this.tmpSide.y;
+      this.pos[c * 6 + 5] = p[c * 3 + 2] - this.tmpSide.z;
+      const a = i < this.counts[ribbon] ? t * t * 0.95 * gain : 0;
+      this.alpha[c * 2] = a;
+      this.alpha[c * 2 + 1] = a;
     }
     const geo = this.mesh.geometry;
     (geo.getAttribute('position') as BufferAttribute).needsUpdate = true;
@@ -438,6 +489,7 @@ export class Sparks {
   private readonly col: Float32Array;
   private readonly vel: Float32Array;
   private readonly life: Float32Array;
+  private readonly tint: Float32Array;
   private next = 0;
   private seed = 7;
 
@@ -446,6 +498,7 @@ export class Sparks {
     this.col = new Float32Array(max * 3);
     this.vel = new Float32Array(max * 3);
     this.life = new Float32Array(max);
+    this.tint = new Float32Array(max * 3);
     const geo = new BufferGeometry();
     const pa = new BufferAttribute(this.pos, 3);
     pa.setUsage(DynamicDrawUsage);
@@ -455,7 +508,7 @@ export class Sparks {
     geo.setAttribute('color', ca);
     this.points = new Points(
       geo,
-      glowBlend(new PointsMaterial({ size: 0.025, map: glowTexture(), vertexColors: true, sizeAttenuation: true })),
+      glowBlend(new PointsMaterial({ size: 0.04, map: glowTexture(), vertexColors: true, sizeAttenuation: true })),
     );
     this.points.frustumCulled = false;
     this.points.raycast = () => undefined;
@@ -466,10 +519,13 @@ export class Sparks {
     return this.seed / 2147483647;
   }
 
-  burst(x: number, y: number, z: number, nx: number, ny: number, nz: number, count: number, speed: number): void {
+  burst(x: number, y: number, z: number, nx: number, ny: number, nz: number, count: number, speed: number, color: Color = FLIP): void {
     for (let k = 0; k < count; k++) {
       const i = this.next;
       this.next = (this.next + 1) % this.max;
+      this.tint[i * 3] = color.r;
+      this.tint[i * 3 + 1] = color.g;
+      this.tint[i * 3 + 2] = color.b;
       this.pos[i * 3] = x;
       this.pos[i * 3 + 1] = y;
       this.pos[i * 3 + 2] = z;
@@ -498,9 +554,9 @@ export class Sparks {
       this.vel[i * 3] *= 0.94;
       this.vel[i * 3 + 1] *= 0.94;
       this.vel[i * 3 + 2] *= 0.94;
-      this.col[i * 3] = FLIP.r * a;
-      this.col[i * 3 + 1] = FLIP.g * a;
-      this.col[i * 3 + 2] = FLIP.b * a;
+      this.col[i * 3] = this.tint[i * 3] * a;
+      this.col[i * 3 + 1] = this.tint[i * 3 + 1] * a;
+      this.col[i * 3 + 2] = this.tint[i * 3 + 2] * a;
     }
     const geo = this.points.geometry;
     (geo.getAttribute('position') as BufferAttribute).needsUpdate = true;
@@ -513,29 +569,38 @@ export class Sparks {
 export function makeGoal(radius: number): Group {
   const g = new Group();
   const ring = new Mesh(
-    new TorusGeometry(radius, radius * 0.09, 8, 40),
+    new TorusGeometry(radius, radius * 0.16, 10, 48),
     new MeshBasicMaterial({ color: FLIP }),
   );
   ring.name = 'goal-ring';
   g.add(ring);
   const disc = new Mesh(
-    new PlaneGeometry(radius * 2.2, radius * 2.2),
-    glowBlend(new MeshBasicMaterial({ map: glowTexture(), color: FLIP, opacity: 0.55 })),
+    new PlaneGeometry(radius * 3, radius * 3),
+    glowBlend(new MeshBasicMaterial({ map: glowTexture(), color: FLIP, opacity: 0.8 })),
   );
   disc.position.z = 0.002;
   g.add(disc);
+  // a ring that keeps rippling outward so the target is findable from the seat
+  const pulse = new Mesh(
+    new TorusGeometry(radius, radius * 0.05, 6, 48),
+    glowBlend(new MeshBasicMaterial({ color: FLIP, opacity: 0.8 })),
+  );
+  pulse.name = 'goal-pulse';
+  pulse.position.z = 0.004;
+  g.add(pulse);
+  const beamH = 1.0;
   const beam = new Mesh(
-    new CylinderGeometry(radius * 0.55, radius * 0.9, 0.5, 16, 1, true),
+    new CylinderGeometry(radius * 0.6, radius * 1.05, beamH, 20, 1, true),
     glowBlend(new ShaderMaterial({
       side: DoubleSide,
       forceSinglePass: true,
       uniforms: { uColor: { value: FLIP.clone() } },
-      vertexShader: /* glsl */ `varying float vY; void main(){ vY = position.y / 0.5 + 0.5; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }`,
-      fragmentShader: /* glsl */ `uniform vec3 uColor; varying float vY; void main(){ float a = (1.0 - vY) * 0.35; gl_FragColor = vec4(uColor, a); }`,
+      vertexShader: /* glsl */ `varying float vY; void main(){ vY = position.y / ${beamH.toFixed(1)} + 0.5; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }`,
+      fragmentShader: /* glsl */ `uniform vec3 uColor; varying float vY; void main(){ float a = pow(1.0 - vY, 1.6) * 0.55; gl_FragColor = vec4(uColor, a); }`,
     })),
   );
   beam.rotation.x = Math.PI / 2;
-  beam.position.z = 0.25;
+  beam.position.z = beamH / 2;
   beam.name = 'goal-beam';
   g.add(beam);
   g.traverse((o) => {
@@ -591,12 +656,20 @@ export function makeCompass(): Group {
   g.add(ring);
   const arrow = new Group();
   arrow.name = 'compass-arrow';
-  const shaft = new Mesh(new CylinderGeometry(0.002, 0.002, 0.02, 6), new MeshBasicMaterial({ color: FLIP }));
-  shaft.position.y = -0.004;
-  const tip = new Mesh(new ConeGeometry(0.006, 0.011, 10), new MeshBasicMaterial({ color: FLIP }));
-  tip.rotation.x = Math.PI;
-  tip.position.y = -0.017;
-  arrow.add(shaft, tip);
+  // shaft and tip merged: one draw call
+  const shaftG = new CylinderGeometry(0.002, 0.002, 0.02, 6).toNonIndexed();
+  shaftG.translate(0, -0.004, 0);
+  const tipG = new ConeGeometry(0.006, 0.011, 10).toNonIndexed();
+  tipG.rotateX(Math.PI);
+  tipG.translate(0, -0.017, 0);
+  const a = shaftG.getAttribute('position').array as Float32Array;
+  const b = tipG.getAttribute('position').array as Float32Array;
+  const pos = new Float32Array(a.length + b.length);
+  pos.set(a, 0);
+  pos.set(b, a.length);
+  const merged = new BufferGeometry();
+  merged.setAttribute('position', new BufferAttribute(pos, 3));
+  arrow.add(new Mesh(merged, new MeshBasicMaterial({ color: FLIP })));
   g.add(arrow);
   g.traverse((o) => {
     o.raycast = () => undefined;

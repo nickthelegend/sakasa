@@ -1,4 +1,5 @@
 import {
+  Color,
   DistanceGrabbable,
   type Entity,
   GrabSystem,
@@ -32,6 +33,7 @@ import {
   dirToWorld,
   dirVector,
   generatePuzzle,
+  pileLayout,
   stars,
   toRoom,
   toWorld,
@@ -42,6 +44,7 @@ import { GoalCup, Marble, PaperBlock, Toy } from './components.js';
 import {
   BlobShadows,
   FLIP,
+  PAPER,
   type ToyKind,
   Sparks,
   Trail,
@@ -52,12 +55,15 @@ import {
 import { GravitySystem } from './gravity-system.js';
 import { emit, logEvent, on, saveProgress, store } from './store.js';
 
+// The marble sits mid-pile (bottom layer, inner row) so it does not roll off the table edge.
 const TOY_KINDS: ToyKind[] = [
-  'marble', 'cube', 'blue-cube', 'ball', 'cube', 'roll',
+  'cube', 'blue-cube', 'ball', 'cube', 'roll', 'marble',
   'ball', 'cube', 'blue-cube', 'ball', 'roll', 'cube',
 ];
 const MAX_BODIES = 16;
 const MARBLE_SLOT = 15;
+/** Paper cube edge in a room, metres (was 12 cm: too small to read from the seat). */
+const TOY_SIZE = 0.18;
 
 interface ToySpec {
   kind: ToyKind;
@@ -70,7 +76,7 @@ interface ToySpec {
 }
 
 function toySpec(kind: ToyKind, scale: number, marbleR: number): ToySpec {
-  const s = 0.12 * scale;
+  const s = TOY_SIZE * scale;
   switch (kind) {
     case 'cube':
     case 'blue-cube':
@@ -100,6 +106,7 @@ export class PlaySystem extends createSystem({
   private physics!: PhysicsSystem;
   private gravity!: GravitySystem;
   private trail!: Trail;
+  private toyTrails!: Trail;
   private shadows!: BlobShadows;
   private sparks!: Sparks;
   private marbleLight!: PointLight;
@@ -122,12 +129,13 @@ export class PlaySystem extends createSystem({
     this.gravity = this.world.getSystem(GravitySystem)!;
     this.fxRoot = new Group();
     this.fxRoot.name = 'fx-root';
-    this.trail = new Trail(40, 0.035);
+    this.trail = new Trail(56, 0.075);
+    this.toyTrails = new Trail(16, 0.07, MAX_BODIES, new Color('#9fdcff'));
     this.shadows = new BlobShadows(MAX_BODIES + 2);
     this.sparks = new Sparks(96);
-    this.marbleLight = new PointLight(FLIP, 0.6, 1.4, 2);
+    this.marbleLight = new PointLight(FLIP, 1.4, 2.2, 2);
     this.marbleLight.visible = false;
-    this.fxRoot.add(this.trail.mesh, this.shadows.mesh, this.sparks.points, this.marbleLight);
+    this.fxRoot.add(this.trail.mesh, this.toyTrails.mesh, this.shadows.mesh, this.sparks.points, this.marbleLight);
     this.world.createTransformEntity(this.fxRoot, { persistent: true });
 
     this.cleanupFuncs.push(
@@ -265,26 +273,23 @@ export class PlaySystem extends createSystem({
     this.clearToys();
     const scale = room.kind === 'tabletop' ? 0.5 : 1;
     const support = this.supportTop(room);
+    store.toyCentre = [support.center[0], support.top, support.center[2]];
     this.homes.length = 0;
-    const cols = 4;
-    const gap = 0.17 * scale;
+    const size = TOY_SIZE * scale;
+    const pile = pileLayout(TOY_KINDS.length, size, support.width, support.depth);
     TOY_KINDS.forEach((kind, i) => {
-      const col = i % cols;
-      const row = Math.floor(i / cols);
-      const local: V3 = [
-        support.center[0] + (col - (cols - 1) / 2) * gap,
-        support.top + 0.22 * scale + row * 0.05 * scale,
-        support.center[2] + (row - 1) * gap,
-      ];
+      const o = pile[i];
+      const local: V3 = [support.center[0] + o[0], support.top + o[1], support.center[2] + o[2]];
       const slot = kind === 'marble' ? MARBLE_SLOT : i;
       this.homes[slot] = local;
       this.spawnBody(kind, toWorld(room.frame, local), slot, scale, room.radius, kind !== 'marble');
     });
+    this.toyTrails.reset();
     logEvent('toys', `12 bodies on ${support.label}`);
   }
 
-  private supportTop(room: RoomModel): { center: V3; top: number; label: string } {
-    let best: { center: V3; top: number; label: string } | null = null;
+  private supportTop(room: RoomModel): { center: V3; top: number; label: string; width: number; depth: number } {
+    let best: { center: V3; top: number; label: string; width: number; depth: number } | null = null;
     let bestScore = Infinity;
     for (const s of room.solids) {
       if (s.kind !== 'table' && s.kind !== 'furniture') continue;
@@ -297,16 +302,18 @@ export class PlaySystem extends createSystem({
       const score = dist + (s.kind === 'table' ? 0 : 0.6);
       if (score < bestScore) {
         bestScore = score;
-        best = { center: c, top: s.max[1], label: s.label };
+        best = { center: c, top: s.max[1], label: s.label, width: s.max[0] - s.min[0], depth: s.max[2] - s.min[2] };
       }
     }
     if (best) return best;
-    if (room.kind === 'tabletop') return { center: [0, 0, 0], top: 0, label: 'paper table' };
+    if (room.kind === 'tabletop') return { center: [0, 0, 0], top: 0, label: 'paper table', width: 0.5, depth: 0.4 };
     const f = room.forward;
     return {
       center: [room.head[0] + f[0] * 1.1, 0, room.head[2] + f[2] * 1.1],
       top: 0,
       label: 'floor',
+      width: 0.9,
+      depth: 0.7,
     };
   }
 
@@ -398,6 +405,7 @@ export class PlaySystem extends createSystem({
   private growIn: { obj: Object3D; t: number } | null = null;
 
   private clearToys(): void {
+    this.toyTrails.reset();
     for (const e of [...this.queries.toys.entities]) e.dispose();
     for (const e of [...this.queries.marbles.entities]) e.dispose();
     this.trail.reset();
@@ -508,8 +516,16 @@ export class PlaySystem extends createSystem({
         const tone = this.toneFor(world, hit.hit, gdir);
         synth.impact(tone, dv / 6, glassy, o.position.x, o.position.y, o.position.z);
         if (glassy) {
-          this.sparks.burst(o.position.x, o.position.y, o.position.z, nw[0], nw[1], nw[2], Math.min(14, 4 + Math.round(dv * 2)), 0.6 + dv * 0.15);
+          this.sparks.burst(o.position.x, o.position.y, o.position.z, nw[0], nw[1], nw[2], Math.min(22, 6 + Math.round(dv * 3)), 0.7 + dv * 0.18);
+        } else if (dv > 1.6) {
+          this.sparks.burst(o.position.x, o.position.y, o.position.z, nw[0], nw[1], nw[2], Math.min(8, 2 + Math.round(dv)), 0.4 + dv * 0.1, PAPER);
         }
+      }
+      if (!glassy) {
+        // every toy leaves a pale trail while it is really moving
+        const speed = Math.hypot(v[0], v[1], v[2]);
+        this.toyTrails.setGain(slot, Math.max(0, Math.min(1, (speed - 0.35) / 1.4)));
+        this.toyTrails.push(o.position.x, o.position.y, o.position.z, this.eye, slot);
       }
       this.prevVel[i3] = v[0];
       this.prevVel[i3 + 1] = v[1];
@@ -544,6 +560,12 @@ export class PlaySystem extends createSystem({
     for (const g of this.queries.goals.entities) {
       const ring = g.object3D?.getObjectByName('goal-ring');
       if (ring) ring.scale.setScalar(1 + 0.06 * Math.sin(this.goalPulse * 4));
+      const pulse = g.object3D?.getObjectByName('goal-pulse') as (Object3D & { material: { opacity: number } }) | undefined;
+      if (pulse) {
+        const k = (this.goalPulse * 0.7) % 1;
+        pulse.scale.setScalar(1 + k * 2.6);
+        pulse.material.opacity = (1 - k) * 0.85;
+      }
     }
     this.checkWin(delta);
   }
@@ -597,7 +619,7 @@ export class PlaySystem extends createSystem({
     const gp = g?.object3D?.position;
     if (gp) {
       this.tmp2.set(0, 0, 1).applyQuaternion(g!.object3D!.quaternion);
-      this.sparks.burst(gp.x, gp.y, gp.z, this.tmp2.x, this.tmp2.y, this.tmp2.z, 40, 1.4);
+      this.sparks.burst(gp.x, gp.y, gp.z, this.tmp2.x, this.tmp2.y, this.tmp2.z, 90, 1.8);
     }
     logEvent('win', `${id} in ${store.puzzleFlips} flips (par ${p.par}) stars ${s}`);
     emit('win');

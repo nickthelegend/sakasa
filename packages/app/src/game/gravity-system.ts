@@ -5,15 +5,13 @@ import {
   VisibilityState,
   createSystem,
 } from '@iwsdk/core';
-import { DIR_NAMES, type Dir, Dir as D, dirToWorld, dirVector } from '@sakasa/core';
+import { DIR_NAMES, type Dir, Dir as D, dirToWorld, dirVector, slowmoDone, slowmoScale } from '@sakasa/core';
 import { type SurfaceTone, synth } from './audio.js';
 import { Marble, Toy } from './components.js';
 import { emit, logEvent, store } from './store.js';
 
 export const EARTH = 9.81;
 export const GENTLE = 4.2;
-const SLOWMO_START = 0.2;
-const SLOWMO_SECONDS = 0.95;
 
 export interface FlipRequest {
   dir: Dir;
@@ -74,18 +72,19 @@ export class GravitySystem extends createSystem({
 
   flip(req: FlipRequest): void {
     const changed = req.dir !== store.gravity;
+    const from = store.gravity;
     store.gravity = req.dir;
     this.applyGravity(req.dir);
     this.wakeAll();
     if (req.source === 'pinch') {
       store.totalFlips++;
       this.slowmoT = 0;
-      store.timeScale = SLOWMO_START;
+      store.timeScale = slowmoScale(0);
       if (req.point) synth.whoomp(req.tone ?? 'wall', req.point.x, req.point.y, req.point.z);
       synth.whoosh();
     }
     logEvent('flip', `${req.source} ${DIR_NAMES[req.dir]}${req.surfaceId ? ` via ${req.surfaceId}` : ''}${changed ? '' : ' (same)'}`);
-    emit('flip', { ...req, changed });
+    emit('flip', { ...req, changed, from });
   }
 
   /** Re-apply the current gravity (after the gentle setting changes). */
@@ -113,10 +112,8 @@ export class GravitySystem extends createSystem({
     }
     if (this.slowmoT >= 0) {
       this.slowmoT += delta;
-      const t = Math.min(1, this.slowmoT / SLOWMO_SECONDS);
-      const ease = t * t * (3 - 2 * t);
-      store.timeScale = SLOWMO_START + (1 - SLOWMO_START) * ease;
-      if (t >= 1) this.slowmoT = -1;
+      store.timeScale = slowmoScale(this.slowmoT);
+      if (slowmoDone(this.slowmoT)) this.slowmoT = -1;
     } else {
       store.timeScale = store.timeOverride ?? 1;
     }

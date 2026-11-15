@@ -1,6 +1,7 @@
 import { VisibilityState, World } from '@iwsdk/core';
 import projectOptions from 'virtual:iwsdk-project';
 import { synth } from './game/audio.js';
+import { FlipFxSystem } from './game/flip-fx.js';
 import { GravitySystem } from './game/gravity-system.js';
 import { installHooks } from './game/hooks.js';
 import { PerfEndSystem, PerfStartSystem, installRenderProbe } from './game/perf.js';
@@ -19,6 +20,7 @@ World.create(document.getElementById('scene-container') as HTMLDivElement, proje
     world.registerSystem(GravitySystem);
     world.registerSystem(PlaySystem, { priority: 5 });
     world.registerSystem(SurfaceSystem, { priority: 6 });
+    world.registerSystem(FlipFxSystem, { priority: 6 });
     world.registerSystem(UiSystem, { priority: 7 });
     world.registerSystem(PerfEndSystem, { priority: 1000 });
     installRenderProbe(world.renderer);

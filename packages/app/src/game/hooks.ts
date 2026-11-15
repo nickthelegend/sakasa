@@ -40,6 +40,7 @@ function segmentBlocked(a: V3, b: V3, boxes: Box[], m: number): boolean {
   }
   return false;
 }
+import { synth } from './audio.js';
 import { GravitySystem } from './gravity-system.js';
 import { perf } from './perf.js';
 import { PlaySystem } from './play-system.js';
@@ -73,6 +74,8 @@ export function installHooks(world: World): void {
         gazeDetected: store.gazeDetected,
         hoveredSurface: store.hoveredSurface,
         timeScale: store.timeScale,
+        toyCentre: store.toyCentre,
+        beacon: store.beacon,
         settings: { ...store.settings },
         room: room && {
           kind: room.kind,
@@ -165,6 +168,14 @@ export function installHooks(world: World): void {
       }
       return best;
     },
+    /** World position of a named scene object (a UIKitML element id, e.g. 'btn-a'), for clip aiming. */
+    objectWorld(name: string) {
+      const o = world.scene.getObjectByName(name);
+      if (!o) return null;
+      o.updateWorldMatrix(true, false);
+      const e = o.matrixWorld.elements;
+      return [r4(e[12]), r4(e[13]), r4(e[14])];
+    },
     /** Bounds of every geometry under a named object (diagnostics for gaze candidate boxes). */
     geometryBounds(name: string) {
       const root = world.scene.getObjectByName(name);
@@ -180,6 +191,43 @@ export function installHooks(world: World): void {
         out.push({ type: o.type, name: o.name, visible: o.visible, box: [wb.min.x, wb.min.y, wb.min.z, wb.max.x, wb.max.y, wb.max.z].map(r4), world: [] });
       });
       return out;
+    },
+    /**
+     * Film support: records the app's own synthesised audio (a tap on the
+     * master bus, after every voice) so the walkthrough carries real app sound.
+     */
+    audio: {
+      recorder: null as MediaRecorder | null,
+      chunks: [] as Blob[],
+      start(): string {
+        synth.resume();
+        const ctx = synth.ctx;
+        const master = synth.master;
+        if (!ctx || !master) return 'no audio context';
+        const dest = ctx.createMediaStreamDestination();
+        master.connect(dest);
+        this.chunks = [];
+        const rec = new MediaRecorder(dest.stream, { mimeType: 'audio/webm;codecs=opus' });
+        rec.ondataavailable = (e) => {
+          if (e.data.size > 0) this.chunks.push(e.data);
+        };
+        rec.start(500);
+        this.recorder = rec;
+        return ctx.state;
+      },
+      async stop(): Promise<string> {
+        const rec = this.recorder;
+        if (!rec) return '';
+        await new Promise<void>((r) => {
+          rec.onstop = () => r();
+          rec.stop();
+        });
+        this.recorder = null;
+        const buf = new Uint8Array(await new Blob(this.chunks).arrayBuffer());
+        let bin = '';
+        for (let i = 0; i < buf.length; i += 0x8000) bin += String.fromCharCode(...buf.subarray(i, i + 0x8000));
+        return btoa(bin);
+      },
     },
     debug: {
       startPuzzle: (i: number) => play().startPuzzle(i),

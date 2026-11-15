@@ -8,6 +8,8 @@ export interface Settings {
   gentle: boolean;
   glasses: GlassesSetting;
   sound: boolean;
+  /** Ghost-room tilt cue on each flip (comfort option). */
+  tilt: boolean;
 }
 
 export interface LogEntry {
@@ -39,7 +41,7 @@ export const store = {
   puzzleFlips: 0,
   lastStars: 0,
   undo: [] as { gravity: Dir; marble: V3 }[],
-  settings: { gentle: false, glasses: 'auto', sound: true } as Settings,
+  settings: { gentle: false, glasses: 'auto', sound: true, tilt: true } as Settings,
   glassesActive: false,
   gazeDetected: false,
   paused: false,
@@ -48,6 +50,10 @@ export const store = {
   /** Set while the win slow-motion plays. */
   timeOverride: null as number | null,
   hoveredSurface: null as string | null,
+  /** Room-frame centre of the toy pile's support (where the onboarding beacon points). */
+  toyCentre: null as V3 | null,
+  /** World point of the onboarding beacon (null when no step is waiting). */
+  beacon: null as V3 | null,
   progress: {} as Record<string, number>,
   log: [] as LogEntry[],
 };

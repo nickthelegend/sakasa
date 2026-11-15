@@ -71,7 +71,7 @@ export class SurfaceSystem extends createSystem({
     this.arrow = makeDownArrow();
     this.arrow.name = 'down-arrow';
     this.arrow.visible = false;
-    this.dots = new Dots(48, 0.008);
+    this.dots = new Dots(48, 0.014);
     const holder = new Group();
     holder.name = 'surface-fx';
     holder.add(this.arrow, this.dots.mesh);
@@ -235,7 +235,7 @@ export class SurfaceSystem extends createSystem({
       const pulseAge = this.time - (m.uPulseT.value as number);
       st.mat.visible =
         st.hover > 0.01 || st.press > 0.01 || st.guide > 0.01 || (m.uActive.value as number) > 0 ||
-        (m.uPaper.value as number) > 0 || (pulseAge >= 0 && pulseAge < 1.4);
+        (m.uPaper.value as number) > 0 || (pulseAge >= 0 && pulseAge < 1.6);
       if (hovered && (best == null || st.hover > best.hover)) best = st;
     }
     this.activeHover = best;
@@ -258,7 +258,7 @@ export class SurfaceSystem extends createSystem({
     this.arrow.position.copy(this.hitWorld).addScaledVector(this.normal, lift);
     this.target.copy(this.arrow.position).add(this.normal);
     this.arrow.lookAt(this.target);
-    this.arrow.scale.setScalar(0.6 + 0.4 * st.hover + 0.3 * st.press);
+    this.arrow.scale.setScalar(1.0 + 0.6 * st.hover + 0.4 * st.press);
     this.arrow.visible = true;
     // chevrons crawl toward the surface
     const c = this.arrow.children[0];
