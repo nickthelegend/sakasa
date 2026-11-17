@@ -21,6 +21,9 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      # the lockfiles were made with legacy-peer-deps (as on the dev Mac); npm ci must match
+      npm_config_legacy_peer_deps: "true"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
